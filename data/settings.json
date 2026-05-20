@@ -4,20 +4,20 @@
     "password_hash": "$2y$12$3QCrZaydyR./PAwpPDG03.RTMjGXULgqioVXMqvWj4l0w8JOgq6Vu"
   },
   "seo": {
-    "title": "Konservatif. Cikupa - Tempat Ngopi Santai & Cozy di Cikupa",
-    "description": "Temukan tempat nongkrong, kerja santai, dan kumpul bersama teman di Konservatif. Cikupa. Kopi nikmat, snack lezat, dan suasana modern-vintage yang hangat."
+    "title": "konservatif.coffe - Tempat Ngopi Santai & Cozy di Cikupa",
+    "description": "Temukan tempat nongkrong, kerja santai, dan kumpul bersama teman di konservatif.coffe. Kopi nikmat, snack lezat, dan suasana modern-vintage yang hangat."
   },
   "general": {
-    "site_name": "Konservatif. Cikupa",
-    "title": "Konservatif. Cikupa",
+    "site_name": "konservatif.coffe",
+    "title": "konservatif.coffe",
     "subtitle": "Tempat ngopi santai dengan suasana nyaman di Cikupa",
     "description": "Tempat yang tepat untuk menikmati kopi berkualitas, minuman favorit, nongkrong bersama teman, menyelesaikan pekerjaan ringan, atau sekadar melepas penat dalam suasana hangat dan modern-vintage.",
     "hero_image": "uploads/hero_cozy_cafe.png",
-    "about_text": "Konservatif. Cikupa adalah coffee shop lokal dengan suasana hangat, santai, dan nyaman. Kami hadir sebagai tempat untuk menikmati kopi, minuman favorit, nongkrong bersama teman, bekerja ringan, atau sekadar melepas penat.",
+    "about_text": "konservatif.coffe adalah coffee shop lokal dengan suasana hangat, santai, dan nyaman. Kami hadir sebagai tempat untuk menikmati kopi, minuman favorit, nongkrong bersama teman, bekerja ringan, atau sekadar melepas penat.",
     "about_image": "uploads/hero_cozy_cafe.png"
   },
   "contact": {
-    "address": "Konservatif. Cikupa, Jl. Raya Cikupa, Kec. Cikupa, Kabupaten Tangerang, Banten 15710",
+    "address": "konservatif.coffe, Jl. Raya Cikupa, Kec. Cikupa, Kabupaten Tangerang, Banten 15710",
     "opening_hours": "Setiap Hari: 10:00 - 22:00 WIB",
     "maps_link": "https://www.google.com/maps/place/Konservatif.+Cikupa/@-6.2348131,106.5064759,17z/data=!4m10!1m2!2m1!1sminuman+terdekat!3m6!1s0x2e69f90f3d134449:0xed45daaafda2ce21!8m2!3d-6.2348131!4d106.5112395!15sChBtaW51bWFuIHRlcmRla2F0IgOQAQFaEiIQbWludW1hbiB0ZXJkZWthdJIBC2NvZmZlZV9zaG9wmgFEQ2k5RFFVbFJRVU52WkVOb2RIbGpSamx2VDIxYVRGbFhaRlJUVmtsNlVtMUZkRmRXYUZKaE1XczFWR3hhY0ZSRlJSQULgAQD6AQQIABAY!16s%2Fg%2F11k4b7q6zh?entry=ttu&g_ep=EgoyMDI2MDUxNy4wIKXMDSoASAFQAw%3D%3D",
     "maps_embed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.368305716183!2d106.50866457498029!3d-6.23481309375355!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f90f3d134449%3A0xed45daaafda2ce21!2sKonservatif.%20Cikupa!5e0!3m2!1sen!2sid!4v1716300000000!5m2!1sen!2sid",
@@ -157,7 +157,7 @@
       "id": "g2",
       "image": "uploads/cafe_front_sign.png",
       "category": "front",
-      "caption": "Tampilan depan Konservatif Cikupa di malam hari yang estetik dan bersahabat."
+      "caption": "Tampilan depan konservatif.coffe di malam hari yang estetik dan bersahabat."
     },
     {
       "id": "g3",

@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Admin - Konservatif. Cikupa</title>
+  <title>Login Admin - konservatif.coffe</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
@@ -259,7 +259,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <div class="login-container">
     <div class="login-header">
       <i class="fa-solid fa-mug-hot"></i>
-      <h1>Konservatif</h1>
+      <h1>konservatif.coffe</h1>
       <p>Panel Kontrol Administrator</p>
     </div>
 
