@@ -69,16 +69,16 @@ function e($text) {
 }
 
 // Fallback configuration values
-$site_name = $data['general']['site_name'] ?? 'konservatif.coffe';
-$hero_title = $data['general']['title'] ?? 'konservatif.coffe';
+$site_name = $data['general']['site_name'] ?? 'konservatif.coffee';
+$hero_title = $data['general']['title'] ?? 'konservatif.coffee';
 $hero_subtitle = $data['general']['subtitle'] ?? 'Tempat ngopi santai dengan suasana nyaman di Cikupa';
 $hero_desc = $data['general']['description'] ?? 'Tempat ngopi, nongkrong, kerja santai, dan kumpul teman.';
 $hero_image = $data['general']['hero_image'] ?? 'uploads/hero_cozy_cafe.png';
-$about_text = $data['general']['about_text'] ?? 'konservatif.coffe adalah coffee shop lokal dengan suasana hangat, santai, dan nyaman.';
+$about_text = $data['general']['about_text'] ?? 'konservatif.coffee adalah coffee shop lokal dengan suasana hangat, santai, dan nyaman.';
 $about_image = $data['general']['about_image'] ?? 'uploads/hero_cozy_cafe.png';
 
-$seo_title = $data['seo']['title'] ?? 'konservatif.coffe - Coffee Shop & Eatery';
-$seo_description = $data['seo']['description'] ?? 'Company profile konservatif.coffe';
+$seo_title = $data['seo']['title'] ?? 'konservatif.coffee - Coffee Shop & Eatery';
+$seo_description = $data['seo']['description'] ?? 'Company profile konservatif.coffee';
 
 $contact = $data['contact'] ?? [];
 $address = $contact['address'] ?? 'Cikupa, Tangerang';
@@ -155,7 +155,7 @@ foreach ($menu_items as $item) {
         <div class="hero-buttons">
           <a href="#menu" class="btn btn-primary"><i class="fa-solid fa-utensils"></i> Lihat Menu</a>
           <a href="<?= e($maps_link) ?>" target="_blank" rel="noopener" class="btn btn-secondary"><i class="fa-solid fa-map-location-dot"></i> Buka Google Maps</a>
-          <a href="https://wa.me/<?= e($whatsapp_number) ?>?text=Halo%20konservatif.coffe,%20saya%20ingin%20tanya-tanya%20info%20menu/reservasi" target="_blank" rel="noopener" class="btn btn-outline" style="border-color: var(--accent-orange); color: var(--text-light);"><i class="fa-brands fa-whatsapp"></i> Chat WhatsApp</a>
+          <a href="https://wa.me/<?= e($whatsapp_number) ?>?text=Halo%20konservatif.coffee,%20saya%20ingin%20tanya-tanya%20info%20menu/reservasi" target="_blank" rel="noopener" class="btn btn-outline" style="border-color: var(--accent-orange); color: var(--text-light);"><i class="fa-brands fa-whatsapp"></i> Chat WhatsApp</a>
         </div>
       </div>
     </div>
@@ -172,9 +172,9 @@ foreach ($menu_items as $item) {
           <a href="#kontak" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Hubungi Kami</a>
         </div>
         <div class="about-image-wrapper reveal reveal-left">
-          <img src="<?= e($about_image) ?>" alt="Suasana konservatif.coffe" class="about-image" loading="lazy">
+          <img src="<?= e($about_image) ?>" alt="Suasana konservatif.coffee" class="about-image" loading="lazy">
           <div class="about-badge">
-            <h4>konservatif.coffe</h4>
+            <h4>konservatif.coffee</h4>
             <p>Modern Vintage Aesthetic</p>
           </div>
         </div>
@@ -362,7 +362,7 @@ foreach ($menu_items as $item) {
       <div class="section-header reveal reveal-up">
         <span class="section-tag">Sudut Estetik Kami</span>
         <h2 class="section-title">Galeri Foto</h2>
-        <p>Intip kehangatan sudut interior, kelezatan minuman, dan momen nongkrong seru di konservatif.coffe.</p>
+        <p>Intip kehangatan sudut interior, kelezatan minuman, dan momen nongkrong seru di konservatif.coffee.</p>
       </div>
 
       <!-- Filter Buttons -->
@@ -446,7 +446,7 @@ foreach ($menu_items as $item) {
               allowfullscreen="" 
               loading="lazy" 
               referrerpolicy="no-referrer-when-downgrade"
-              title="konservatif.coffe Google Maps Location">
+              title="konservatif.coffee Google Maps Location">
             </iframe>
           <?php else: ?>
             <div style="display:flex; align-items:center; justify-content:center; height:100%; background:#e0e0e0;">
@@ -464,7 +464,7 @@ foreach ($menu_items as $item) {
       <div class="section-header reveal reveal-up">
         <span class="section-tag">Ulasan Pengunjung</span>
         <h2 class="section-title">Apa Kata Mereka?</h2>
-        <p>Pendapat jujur dari para penikmat kopi setia konservatif.coffe.</p>
+        <p>Pendapat jujur dari para penikmat kopi setia konservatif.coffee.</p>
       </div>
 
       <div class="testimonial-slider reveal reveal-up">
@@ -521,7 +521,7 @@ foreach ($menu_items as $item) {
               <div class="social-icon" style="color: #E1306C;"><i class="fa-brands fa-instagram"></i></div>
               <div>
                 <p style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal; margin-bottom: 2px;">Ikuti Instagram Kami</p>
-                <p>@konservatif.coffe</p>
+                <p>@konservatif.coffee</p>
               </div>
             </a>
 
@@ -529,7 +529,7 @@ foreach ($menu_items as $item) {
               <div class="social-icon" style="color: #4285F4;"><i class="fa-solid fa-map-location-dot"></i></div>
               <div>
                 <p style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal; margin-bottom: 2px;">Buka di Google Maps</p>
-                <p>konservatif.coffe</p>
+                <p>konservatif.coffee</p>
               </div>
             </a>
           </div>

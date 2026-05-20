@@ -485,7 +485,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard - konservatif.coffe</title>
+  <title>Admin Dashboard - konservatif.coffee</title>
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- Stylesheets -->
@@ -498,7 +498,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     <div class="sidebar-brand">
       <i class="fa-solid fa-mug-hot"></i>
       <div>
-        <h2>konservatif.coffe</h2>
+        <h2>konservatif.coffee</h2>
         <small>Admin Dashboard</small>
       </div>
     </div>
@@ -589,7 +589,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
       <!-- 1. TAB STATS (OVERVIEW) -->
       <div class="tab-content active" id="tab-stats">
         <h1 class="page-title">Ringkasan Website</h1>
-        <p class="page-subtitle">Selamat datang di Panel Administrasi website konservatif.coffe. Berikut statistik data Anda saat ini.</p>
+        <p class="page-subtitle">Selamat datang di Panel Administrasi website konservatif.coffee. Berikut statistik data Anda saat ini.</p>
         
         <!-- Stats Cards Grid -->
         <div class="stats-grid">
