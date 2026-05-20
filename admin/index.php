@@ -15,7 +15,18 @@ function get_settings($file) {
 
 // Helper function to save settings
 function save_settings($file, $data) {
+    if (isset($_SERVER['VERCEL']) || isset($_SERVER['NOW_REGION'])) {
+        return false;
+    }
     return file_put_contents($file, json_encode($data, JSON_PRETTY_PRINT));
+}
+
+// Helper function to save messages
+function save_messages($file, $messages) {
+    if (isset($_SERVER['VERCEL']) || isset($_SERVER['NOW_REGION'])) {
+        return false;
+    }
+    return file_put_contents($file, json_encode($messages, JSON_PRETTY_PRINT));
 }
 
 // Helper to escape output
@@ -76,6 +87,9 @@ $alert_msg = '';
 // Handle file uploads helper
 function upload_image($file_key) {
     if (isset($_FILES[$file_key]) && $_FILES[$file_key]['error'] === UPLOAD_ERR_OK) {
+        if (isset($_SERVER['VERCEL']) || isset($_SERVER['NOW_REGION'])) {
+            return null;
+        }
         $file_tmp = $_FILES[$file_key]['tmp_name'];
         $file_name = $_FILES[$file_key]['name'];
         $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
@@ -399,7 +413,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         }
         
         $messages = $filtered_m;
-        if ($deleted && file_put_contents($messages_file, json_encode($messages, JSON_PRETTY_PRINT))) {
+        if ($deleted && save_messages($messages_file, $messages)) {
             $alert_type = 'success';
             $alert_msg = 'Pesan kotak masuk berhasil dihapus!';
         } else {
@@ -445,6 +459,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $alert_type = 'error';
             $alert_msg = 'Password saat ini salah. Perubahan ditolak!';
         }
+    }
+    
+    // Vercel Read-Only override
+    if (isset($_SERVER['VERCEL']) || isset($_SERVER['NOW_REGION'])) {
+        $alert_type = 'error';
+        $alert_msg = 'Demo Vercel: Perubahan tidak disimpan karena sistem file bersifat Read-Only (Hanya Baca). Jalankan di XAMPP lokal untuk mengelola secara permanen.';
     }
 }
 ?>

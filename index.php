@@ -34,8 +34,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         'date' => date('d M Y, H:i')
     ];
     
-    array_unshift($messages, $new_message); // Newest messages first
-    file_put_contents($messages_file, json_encode($messages, JSON_PRETTY_PRINT));
+    // Only write to file if not on Vercel
+    if (!isset($_SERVER['VERCEL']) && !isset($_SERVER['NOW_REGION'])) {
+        array_unshift($messages, $new_message); // Newest messages first
+        file_put_contents($messages_file, json_encode($messages, JSON_PRETTY_PRINT));
+    }
     
     echo json_encode(['status' => 'success', 'message' => 'Terima kasih! Pesan Anda telah berhasil dikirim.']);
     exit;
