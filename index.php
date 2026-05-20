@@ -2,6 +2,18 @@
 // Set timezone
 date_default_timezone_set('Asia/Jakarta');
 
+// Detect if running on Vercel
+function is_on_vercel() {
+    return (
+        isset($_SERVER['VERCEL']) ||
+        getenv('VERCEL') !== false ||
+        getenv('NOW_REGION') !== false ||
+        isset($_ENV['VERCEL']) ||
+        strpos(__FILE__, '/var/task') !== false ||
+        strpos($_SERVER['DOCUMENT_ROOT'] ?? '', '/var/task') !== false
+    );
+}
+
 // Handle contact form submission (AJAX)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'submit_contact') {
     header('Content-Type: application/json');
@@ -35,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     ];
     
     // Only write to file if not on Vercel
-    if (!isset($_SERVER['VERCEL']) && !isset($_SERVER['NOW_REGION'])) {
+    if (!is_on_vercel()) {
         array_unshift($messages, $new_message); // Newest messages first
         file_put_contents($messages_file, json_encode($messages, JSON_PRETTY_PRINT));
     }

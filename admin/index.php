@@ -4,6 +4,18 @@ session_start();
 $settings_file = __DIR__ . '/../data/settings.json';
 $messages_file = __DIR__ . '/../data/messages.json';
 
+// Detect if running on Vercel
+function is_on_vercel() {
+    return (
+        isset($_SERVER['VERCEL']) ||
+        getenv('VERCEL') !== false ||
+        getenv('NOW_REGION') !== false ||
+        isset($_ENV['VERCEL']) ||
+        strpos(__FILE__, '/var/task') !== false ||
+        strpos($_SERVER['DOCUMENT_ROOT'] ?? '', '/var/task') !== false
+    );
+}
+
 // Helper function to read settings
 function get_settings($file) {
     if (file_exists($file)) {
@@ -15,7 +27,7 @@ function get_settings($file) {
 
 // Helper function to save settings
 function save_settings($file, $data) {
-    if (isset($_SERVER['VERCEL']) || isset($_SERVER['NOW_REGION'])) {
+    if (is_on_vercel()) {
         return false;
     }
     return file_put_contents($file, json_encode($data, JSON_PRETTY_PRINT));
@@ -23,7 +35,7 @@ function save_settings($file, $data) {
 
 // Helper function to save messages
 function save_messages($file, $messages) {
-    if (isset($_SERVER['VERCEL']) || isset($_SERVER['NOW_REGION'])) {
+    if (is_on_vercel()) {
         return false;
     }
     return file_put_contents($file, json_encode($messages, JSON_PRETTY_PRINT));
@@ -87,7 +99,7 @@ $alert_msg = '';
 // Handle file uploads helper
 function upload_image($file_key) {
     if (isset($_FILES[$file_key]) && $_FILES[$file_key]['error'] === UPLOAD_ERR_OK) {
-        if (isset($_SERVER['VERCEL']) || isset($_SERVER['NOW_REGION'])) {
+        if (is_on_vercel()) {
             return null;
         }
         $file_tmp = $_FILES[$file_key]['tmp_name'];
@@ -462,7 +474,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     }
     
     // Vercel Read-Only override
-    if (isset($_SERVER['VERCEL']) || isset($_SERVER['NOW_REGION'])) {
+    if (is_on_vercel()) {
         $alert_type = 'error';
         $alert_msg = 'Demo Vercel: Perubahan tidak disimpan karena sistem file bersifat Read-Only (Hanya Baca). Jalankan di XAMPP lokal untuk mengelola secara permanen.';
     }
