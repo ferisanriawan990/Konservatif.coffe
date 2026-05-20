@@ -1,201 +1,201 @@
 {
-  "admin": {
-    "username": "admin",
-    "password_hash": "$2y$12$3QCrZaydyR./PAwpPDG03.RTMjGXULgqioVXMqvWj4l0w8JOgq6Vu"
-  },
-  "seo": {
-    "title": "konservatif.coffe - Tempat Ngopi Santai & Cozy di Cikupa",
-    "description": "Temukan tempat nongkrong, kerja santai, dan kumpul bersama teman di konservatif.coffe. Kopi nikmat, snack lezat, dan suasana modern-vintage yang hangat."
-  },
-  "general": {
-    "site_name": "konservatif.coffe",
-    "title": "konservatif.coffe",
-    "subtitle": "Tempat ngopi santai dengan suasana nyaman di Cikupa",
-    "description": "Tempat yang tepat untuk menikmati kopi berkualitas, minuman favorit, nongkrong bersama teman, menyelesaikan pekerjaan ringan, atau sekadar melepas penat dalam suasana hangat dan modern-vintage.",
-    "hero_image": "uploads/hero_cozy_cafe.png",
-    "about_text": "konservatif.coffe adalah coffee shop lokal dengan suasana hangat, santai, dan nyaman. Kami hadir sebagai tempat untuk menikmati kopi, minuman favorit, nongkrong bersama teman, bekerja ringan, atau sekadar melepas penat.",
-    "about_image": "uploads/hero_cozy_cafe.png"
-  },
-  "contact": {
-    "address": "konservatif.coffe, Jl. Raya Cikupa, Kec. Cikupa, Kabupaten Tangerang, Banten 15710",
-    "opening_hours": "Setiap Hari: 10:00 - 22:00 WIB",
-    "maps_link": "https://www.google.com/maps/place/Konservatif.+Cikupa/@-6.2348131,106.5064759,17z/data=!4m10!1m2!2m1!1sminuman+terdekat!3m6!1s0x2e69f90f3d134449:0xed45daaafda2ce21!8m2!3d-6.2348131!4d106.5112395!15sChBtaW51bWFuIHRlcmRla2F0IgOQAQFaEiIQbWludW1hbiB0ZXJkZWthdJIBC2NvZmZlZV9zaG9wmgFEQ2k5RFFVbFJRVU52WkVOb2RIbGpSamx2VDIxYVRGbFhaRlJUVmtsNlVtMUZkRmRXYUZKaE1XczFWR3hhY0ZSRlJSQULgAQD6AQQIABAY!16s%2Fg%2F11k4b7q6zh?entry=ttu&g_ep=EgoyMDI2MDUxNy4wIKXMDSoASAFQAw%3D%3D",
-    "maps_embed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.368305716183!2d106.50866457498029!3d-6.23481309375355!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f90f3d134449%3A0xed45daaafda2ce21!2sKonservatif.%20Cikupa!5e0!3m2!1sen!2sid!4v1716300000000!5m2!1sen!2sid",
-    "whatsapp_number": "6285172007875",
-    "instagram_link": "https://www.instagram.com/konservatif.cikupa"
-  },
-  "menu": [
-    {
-      "id": "m1",
-      "category": "coffee",
-      "name": "Es Kopi Susu Konservatif",
-      "description": "Kopi susu signature dengan paduan gula aren pilihan, susu creamy, dan espresso premium.",
-      "price": 22000,
-      "image": "uploads/iced_coffee_susu.png"
+    "admin": {
+        "username": "admin",
+        "password_hash": "$2y$12$3QCrZaydyR.\/PAwpPDG03.RTMjGXULgqioVXMqvWj4l0w8JOgq6Vu"
     },
-    {
-      "id": "m2",
-      "category": "coffee",
-      "name": "Americano",
-      "description": "Espresso shot premium dipadukan dengan air panas, menyajikan rasa kopi yang bold dan bersih.",
-      "price": 18000,
-      "image": ""
+    "seo": {
+        "title": "konservatif.coffee - Tempat Ngopi Santai & Cozy di Cikupa",
+        "description": "Temukan tempat nongkrong, kerja santai, dan kumpul bersama teman di konservatif.coffe. Kopi nikmat, snack lezat, dan suasana modern-vintage yang hangat."
     },
-    {
-      "id": "m3",
-      "category": "coffee",
-      "name": "Cappuccino",
-      "description": "Espresso dengan susu hangat dan foam susu tebal berlimpah, ditaburi sedikit bubuk cokelat.",
-      "price": 22000,
-      "image": ""
+    "general": {
+        "site_name": "konservatif.coffee",
+        "title": "konservatif.coffee",
+        "subtitle": "Tempat ngopi santai dengan suasana nyaman di Cikupa",
+        "description": "Tempat yang tepat untuk menikmati kopi berkualitas, minuman favorit, nongkrong bersama teman, menyelesaikan pekerjaan ringan, atau sekadar melepas penat dalam suasana hangat dan modern-vintage.",
+        "hero_image": "uploads\/hero_cozy_cafe.png",
+        "about_text": "konservatif.coffee adalah coffee shop lokal dengan suasana hangat, santai, dan nyaman. Kami hadir sebagai tempat untuk menikmati kopi, minuman favorit, nongkrong bersama teman, bekerja ringan, atau sekadar melepas penat.",
+        "about_image": "uploads\/hero_cozy_cafe.png"
     },
-    {
-      "id": "m4",
-      "category": "coffee",
-      "name": "Latte",
-      "description": "Kombinasi espresso yang smooth dengan steamed milk lembut dan sentuhan latte art cantik.",
-      "price": 22000,
-      "image": ""
+    "contact": {
+        "address": "konservatif.coffee, Jl. Raya Cikupa, Kec. Cikupa, Kabupaten Tangerang, Banten 15710",
+        "opening_hours": "Setiap Hari: 10:00 - 22:00 WIB",
+        "maps_link": "https:\/\/www.google.com\/maps\/place\/Konservatif.+Cikupa\/@-6.2348131,106.5064759,17z\/data=!4m10!1m2!2m1!1sminuman+terdekat!3m6!1s0x2e69f90f3d134449:0xed45daaafda2ce21!8m2!3d-6.2348131!4d106.5112395!15sChBtaW51bWFuIHRlcmRla2F0IgOQAQFaEiIQbWludW1hbiB0ZXJkZWthdJIBC2NvZmZlZV9zaG9wmgFEQ2k5RFFVbFJRVU52WkVOb2RIbGpSamx2VDIxYVRGbFhaRlJUVmtsNlVtMUZkRmRXYUZKaE1XczFWR3hhY0ZSRlJSQULgAQD6AQQIABAY!16s%2Fg%2F11k4b7q6zh?entry=ttu&g_ep=EgoyMDI2MDUxNy4wIKXMDSoASAFQAw%3D%3D",
+        "maps_embed": "https:\/\/www.google.com\/maps\/embed?pb=!1m18!1m12!1m3!1d3966.368305716183!2d106.50866457498029!3d-6.23481309375355!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f90f3d134449%3A0xed45daaafda2ce21!2sKonservatif.%20Cikupa!5e0!3m2!1sen!2sid!4v1716300000000!5m2!1sen!2sid",
+        "whatsapp_number": "6285172007875",
+        "instagram_link": "https:\/\/www.instagram.com\/konservatif.coffee"
     },
-    {
-      "id": "m5",
-      "category": "coffee",
-      "name": "Manual Brew",
-      "description": "Kopi seduh manual V60 menggunakan pilihan biji kopi single origin nusantara berkualitas tinggi.",
-      "price": 24000,
-      "image": ""
-    },
-    {
-      "id": "m6",
-      "category": "non_coffee",
-      "name": "Matcha Latte",
-      "description": "Bubuk matcha Jepang premium yang dipadukan dengan susu segar hangat/dingin yang creamy.",
-      "price": 22000,
-      "image": "uploads/matcha_latte.png"
-    },
-    {
-      "id": "m7",
-      "category": "non_coffee",
-      "name": "Chocolate",
-      "description": "Minuman cokelat premium yang pekat dengan rasa manis gurih yang pas di lidah.",
-      "price": 22000,
-      "image": ""
-    },
-    {
-      "id": "m8",
-      "category": "non_coffee",
-      "name": "Red Velvet",
-      "description": "Minuman rasa red velvet yang manis lembut dengan aroma vanilla yang harum.",
-      "price": 22000,
-      "image": ""
-    },
-    {
-      "id": "m9",
-      "category": "non_coffee",
-      "name": "Taro",
-      "description": "Minuman taro dengan rasa ubi ungu manis-gurih yang khas dan disukai semua kalangan.",
-      "price": 22000,
-      "image": ""
-    },
-    {
-      "id": "m10",
-      "category": "non_coffee",
-      "name": "Lemon Tea",
-      "description": "Seduhan teh hitam berpadu dengan keasaman segar buah lemon asli.",
-      "price": 15000,
-      "image": ""
-    },
-    {
-      "id": "m11",
-      "category": "snack",
-      "name": "French Fries",
-      "description": "Kentang goreng renyah yang ditaburi garam gurih, disajikan dengan saus cocolan hangat.",
-      "price": 18000,
-      "image": ""
-    },
-    {
-      "id": "m12",
-      "category": "snack",
-      "name": "Roti Bakar",
-      "description": "Roti panggang mentega dengan isian cokelat melimpah dan taburan keju cheddar parut.",
-      "price": 20000,
-      "image": ""
-    },
-    {
-      "id": "m13",
-      "category": "snack",
-      "name": "Pisang Goreng",
-      "description": "Pisang goreng renyah crispy dengan rasa manis alami, pas untuk menemani secangkir kopi hangat.",
-      "price": 18000,
-      "image": ""
-    },
-    {
-      "id": "m14",
-      "category": "snack",
-      "name": "Cireng",
-      "description": "Cireng goreng kenyal di dalam renyah di luar, disajikan dengan saus rujak asam pedas manis.",
-      "price": 15000,
-      "image": ""
-    },
-    {
-      "id": "m15",
-      "category": "snack",
-      "name": "Mix Platter",
-      "description": "Piring kombinasi yang berisi kentang goreng, sosis panggang, dan chicken nugget garing.",
-      "price": 28000,
-      "image": "uploads/mix_platter.png"
-    }
-  ],
-  "gallery": [
-    {
-      "id": "g1",
-      "image": "uploads/hero_cozy_cafe.png",
-      "category": "atmosphere",
-      "caption": "Suasana interior cafe yang hangat dan nyaman dengan detail vintage kayu."
-    },
-    {
-      "id": "g2",
-      "image": "uploads/cafe_front_sign.png",
-      "category": "front",
-      "caption": "Tampilan depan konservatif.coffe di malam hari yang estetik dan bersahabat."
-    },
-    {
-      "id": "g3",
-      "image": "uploads/iced_coffee_susu.png",
-      "category": "drinks",
-      "caption": "Es Kopi Susu Konservatif dengan gula aren legit khas kami."
-    },
-    {
-      "id": "g4",
-      "image": "uploads/matcha_latte.png",
-      "category": "drinks",
-      "caption": "Matcha Latte hangat dengan foam lembut dan seni latte yang indah."
-    },
-    {
-      "id": "g5",
-      "image": "uploads/mix_platter.png",
-      "category": "food",
-      "caption": "Mix Platter lezat untuk dinikmati beramai-ramai saat kumpul teman."
-    }
-  ],
-  "testimonials": [
-    {
-      "id": "t1",
-      "name": "Budi Santoso",
-      "role": "Local Guide",
-      "text": "Tempatnya nyaman banget buat nongkrong, suasananya santai, kopinya enak dan harganya terjangkau untuk kualitas premium seperti ini!"
-    },
-    {
-      "id": "t2",
-      "name": "Amelia Putri",
-      "role": "Freelancer",
-      "text": "Cocok banget buat kerja sambil ngopi. Tempatnya adem, colokannya banyak, suasananya tenang di siang hari, dan stafnya sangat ramah."
-    },
-    {
-      "id": "t3",
-      "name": "Rian Hidayat",
-      "role": "Mahasiswa",
-      "text": "Salah satu coffee shop hidden gem di Cikupa. Paling suka nongkrong di sini pas malam minggu bersama teman-teman."
-    }
-  ]
+    "menu": [
+        {
+            "id": "m1",
+            "category": "coffee",
+            "name": "Es Kopi Susu Konservatif",
+            "description": "Kopi susu signature dengan paduan gula aren pilihan, susu creamy, dan espresso premium.",
+            "price": 22000,
+            "image": "uploads\/iced_coffee_susu.png"
+        },
+        {
+            "id": "m2",
+            "category": "coffee",
+            "name": "Americano",
+            "description": "Espresso shot premium dipadukan dengan air panas, menyajikan rasa kopi yang bold dan bersih.",
+            "price": 18000,
+            "image": ""
+        },
+        {
+            "id": "m3",
+            "category": "coffee",
+            "name": "Cappuccino",
+            "description": "Espresso dengan susu hangat dan foam susu tebal berlimpah, ditaburi sedikit bubuk cokelat.",
+            "price": 22000,
+            "image": ""
+        },
+        {
+            "id": "m4",
+            "category": "coffee",
+            "name": "Latte",
+            "description": "Kombinasi espresso yang smooth dengan steamed milk lembut dan sentuhan latte art cantik.",
+            "price": 22000,
+            "image": ""
+        },
+        {
+            "id": "m5",
+            "category": "coffee",
+            "name": "Manual Brew",
+            "description": "Kopi seduh manual V60 menggunakan pilihan biji kopi single origin nusantara berkualitas tinggi.",
+            "price": 24000,
+            "image": ""
+        },
+        {
+            "id": "m6",
+            "category": "non_coffee",
+            "name": "Matcha Latte",
+            "description": "Bubuk matcha Jepang premium yang dipadukan dengan susu segar hangat\/dingin yang creamy.",
+            "price": 22000,
+            "image": "uploads\/matcha_latte.png"
+        },
+        {
+            "id": "m7",
+            "category": "non_coffee",
+            "name": "Chocolate",
+            "description": "Minuman cokelat premium yang pekat dengan rasa manis gurih yang pas di lidah.",
+            "price": 22000,
+            "image": ""
+        },
+        {
+            "id": "m8",
+            "category": "non_coffee",
+            "name": "Red Velvet",
+            "description": "Minuman rasa red velvet yang manis lembut dengan aroma vanilla yang harum.",
+            "price": 22000,
+            "image": ""
+        },
+        {
+            "id": "m9",
+            "category": "non_coffee",
+            "name": "Taro",
+            "description": "Minuman taro dengan rasa ubi ungu manis-gurih yang khas dan disukai semua kalangan.",
+            "price": 22000,
+            "image": ""
+        },
+        {
+            "id": "m10",
+            "category": "non_coffee",
+            "name": "Lemon Tea",
+            "description": "Seduhan teh hitam berpadu dengan keasaman segar buah lemon asli.",
+            "price": 15000,
+            "image": ""
+        },
+        {
+            "id": "m11",
+            "category": "snack",
+            "name": "French Fries",
+            "description": "Kentang goreng renyah yang ditaburi garam gurih, disajikan dengan saus cocolan hangat.",
+            "price": 18000,
+            "image": ""
+        },
+        {
+            "id": "m12",
+            "category": "snack",
+            "name": "Roti Bakar",
+            "description": "Roti panggang mentega dengan isian cokelat melimpah dan taburan keju cheddar parut.",
+            "price": 20000,
+            "image": ""
+        },
+        {
+            "id": "m13",
+            "category": "snack",
+            "name": "Pisang Goreng",
+            "description": "Pisang goreng renyah crispy dengan rasa manis alami, pas untuk menemani secangkir kopi hangat.",
+            "price": 18000,
+            "image": ""
+        },
+        {
+            "id": "m14",
+            "category": "snack",
+            "name": "Cireng",
+            "description": "Cireng goreng kenyal di dalam renyah di luar, disajikan dengan saus rujak asam pedas manis.",
+            "price": 15000,
+            "image": ""
+        },
+        {
+            "id": "m15",
+            "category": "snack",
+            "name": "Mix Platter",
+            "description": "Piring kombinasi yang berisi kentang goreng, sosis panggang, dan chicken nugget garing.",
+            "price": 28000,
+            "image": "uploads\/mix_platter.png"
+        }
+    ],
+    "gallery": [
+        {
+            "id": "g1",
+            "image": "uploads\/hero_cozy_cafe.png",
+            "category": "atmosphere",
+            "caption": "Suasana interior cafe yang hangat dan nyaman dengan detail vintage kayu."
+        },
+        {
+            "id": "g2",
+            "image": "uploads\/cafe_front_sign.png",
+            "category": "front",
+            "caption": "Tampilan depan konservatif.coffe di malam hari yang estetik dan bersahabat."
+        },
+        {
+            "id": "g3",
+            "image": "uploads\/iced_coffee_susu.png",
+            "category": "drinks",
+            "caption": "Es Kopi Susu Konservatif dengan gula aren legit khas kami."
+        },
+        {
+            "id": "g4",
+            "image": "uploads\/matcha_latte.png",
+            "category": "drinks",
+            "caption": "Matcha Latte hangat dengan foam lembut dan seni latte yang indah."
+        },
+        {
+            "id": "g5",
+            "image": "uploads\/mix_platter.png",
+            "category": "food",
+            "caption": "Mix Platter lezat untuk dinikmati beramai-ramai saat kumpul teman."
+        }
+    ],
+    "testimonials": [
+        {
+            "id": "t1",
+            "name": "Budi Santoso",
+            "role": "Local Guide",
+            "text": "Tempatnya nyaman banget buat nongkrong, suasananya santai, kopinya enak dan harganya terjangkau untuk kualitas premium seperti ini!"
+        },
+        {
+            "id": "t2",
+            "name": "Amelia Putri",
+            "role": "Freelancer",
+            "text": "Cocok banget buat kerja sambil ngopi. Tempatnya adem, colokannya banyak, suasananya tenang di siang hari, dan stafnya sangat ramah."
+        },
+        {
+            "id": "t3",
+            "name": "Rian Hidayat",
+            "role": "Mahasiswa",
+            "text": "Salah satu coffee shop hidden gem di Cikupa. Paling suka nongkrong di sini pas malam minggu bersama teman-teman."
+        }
+    ]
 }
