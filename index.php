@@ -93,17 +93,33 @@ $gallery_items = $data['gallery'] ?? [];
 $testimonials = $data['testimonials'] ?? [];
 
 // Group menus by category
-$categories = [
-    'coffee' => [],
-    'non_coffee' => [],
-    'snack' => []
-];
+$cat_keys = ['signature','coffee','manual_brew','non_coffee','mocktail','food','snack'];
+$categories = array_fill_keys($cat_keys, []);
 foreach ($menu_items as $item) {
     $cat = $item['category'] ?? '';
     if (array_key_exists($cat, $categories)) {
         $categories[$cat][] = $item;
     }
 }
+
+// Helper: format price as "25k"
+function format_k($price) {
+    if (empty($price) || $price <= 0) return '-';
+    return number_format($price / 1000, 0) . 'k';
+}
+
+// Category display config
+$cat_labels = [
+    'signature' => ['label' => 'Signature', 'icon' => 'fa-star', 'type' => 'single'],
+    'coffee' => ['label' => 'Coffee', 'icon' => 'fa-mug-hot', 'type' => 'hot_ice'],
+    'manual_brew' => ['label' => 'Manual Brew', 'icon' => 'fa-fire-burner', 'type' => 'hot_ice'],
+    'non_coffee' => ['label' => 'Non Coffee', 'icon' => 'fa-glass-water', 'type' => 'hot_ice'],
+    'mocktail' => ['label' => 'Mocktail', 'icon' => 'fa-champagne-glasses', 'type' => 'single'],
+    'food' => ['label' => 'Food', 'icon' => 'fa-utensils', 'type' => 'food'],
+    'snack' => ['label' => 'Snack', 'icon' => 'fa-cookie-bite', 'type' => 'food'],
+];
+
+$wa_text = urlencode("Halo kak, saya mau tanya menu di Konservatif. Cikupa.");
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -187,107 +203,125 @@ foreach ($menu_items as $item) {
     <div class="container">
       <div class="section-header reveal reveal-up">
         <span class="section-tag">Sajian Terbaik Kami</span>
-        <h2 class="section-title">Menu Favorit</h2>
+        <h2 class="section-title">Menu</h2>
         <p>Nikmati pilihan sajian rasa autentik yang diseduh dan dimasak dengan penuh cinta.</p>
       </div>
 
       <!-- Menu Category Tabs -->
       <div class="menu-tabs reveal reveal-up">
-        <button class="tab-btn active" data-target="coffee-menu"><i class="fa-solid fa-mug-hot"></i> Coffee</button>
-        <button class="tab-btn" data-target="non-coffee-menu"><i class="fa-solid fa-glass-water"></i> Non Coffee</button>
-        <button class="tab-btn" data-target="snack-menu"><i class="fa-solid fa-cookie"></i> Snack</button>
+        <?php $first = true; foreach ($cat_labels as $key => $cfg): ?>
+          <button class="tab-btn<?= $first ? ' active' : '' ?>" data-target="menu-<?= $key ?>">
+            <i class="fa-solid <?= $cfg['icon'] ?>"></i> <?= $cfg['label'] ?>
+          </button>
+        <?php $first = false; endforeach; ?>
       </div>
 
       <!-- Tab Contents -->
       <div class="menu-content-wrapper reveal reveal-up">
-        
-        <!-- Coffee Grid -->
-        <div class="menu-grid active" id="coffee-menu">
-          <?php if (empty($categories['coffee'])): ?>
-            <p style="grid-column: 1/-1; text-align: center;">Belum ada menu kopi tersedia.</p>
-          <?php else: ?>
-            <?php foreach ($categories['coffee'] as $item): ?>
-              <div class="menu-card">
-                <?php if (!empty($item['image'])): ?>
-                  <div class="menu-img-container">
-                    <img src="<?= e($item['image']) ?>" alt="<?= e($item['name']) ?>" loading="lazy">
-                  </div>
-                <?php else: ?>
-                  <div class="menu-img-container" style="display:flex; align-items:center; justify-content:center; background-color: var(--cream-medium); color: var(--primary-coffee-light);">
-                    <i class="fa-solid fa-mug-saucer fa-3x"></i>
-                  </div>
-                <?php endif; ?>
-                <div class="menu-info">
-                  <div class="menu-card-header">
-                    <h3 class="menu-name"><?= e($item['name']) ?></h3>
-                    <span class="menu-price">Rp <?= number_format($item['price'], 0, ',', '.') ?></span>
-                  </div>
-                  <p class="menu-description"><?= e($item['description']) ?></p>
-                </div>
-              </div>
-            <?php endforeach; ?>
-          <?php endif; ?>
-        </div>
+        <?php $first = true; foreach ($cat_labels as $key => $cfg):
+          $items = $categories[$key];
+        ?>
+        <div class="menu-panel<?= $first ? ' active' : '' ?>" id="menu-<?= $key ?>">
+          
+          <?php if ($cfg['type'] === 'hot_ice'): ?>
+            <!-- Drink table with Hot/Ice columns -->
+            <div class="menu-table-wrap">
+              <table class="menu-table">
+                <thead>
+                  <tr>
+                    <th class="col-name">Menu</th>
+                    <th class="col-price"><i class="fa-solid fa-mug-hot"></i> Hot</th>
+                    <th class="col-price"><i class="fa-solid fa-snowflake"></i> Ice</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php if (empty($items)): ?>
+                    <tr><td colspan="3" style="text-align:center; padding:24px;">Belum ada menu tersedia.</td></tr>
+                  <?php else: ?>
+                    <?php foreach ($items as $item): ?>
+                      <tr>
+                        <td class="col-name">
+                          <span class="menu-item-name"><?= e($item['name']) ?></span>
+                          <?php if (!empty($item['description'])): ?>
+                            <span class="menu-item-desc"><?= e($item['description']) ?></span>
+                          <?php endif; ?>
+                        </td>
+                        <td class="col-price"><?= format_k($item['hot_price'] ?? 0) ?></td>
+                        <td class="col-price"><?= format_k($item['ice_price'] ?? 0) ?></td>
+                      </tr>
+                    <?php endforeach; ?>
+                  <?php endif; ?>
+                </tbody>
+              </table>
+            </div>
 
-        <!-- Non-Coffee Grid -->
-        <div class="menu-grid" id="non-coffee-menu">
-          <?php if (empty($categories['non_coffee'])): ?>
-            <p style="grid-column: 1/-1; text-align: center;">Belum ada menu non-kopi tersedia.</p>
-          <?php else: ?>
-            <?php foreach ($categories['non_coffee'] as $item): ?>
-              <div class="menu-card">
-                <?php if (!empty($item['image'])): ?>
-                  <div class="menu-img-container">
-                    <img src="<?= e($item['image']) ?>" alt="<?= e($item['name']) ?>" loading="lazy">
-                  </div>
-                <?php else: ?>
-                  <div class="menu-img-container" style="display:flex; align-items:center; justify-content:center; background-color: var(--cream-medium); color: var(--primary-coffee-light);">
-                    <i class="fa-solid fa-glass-water-droplet fa-3x"></i>
-                  </div>
-                <?php endif; ?>
-                <div class="menu-info">
-                  <div class="menu-card-header">
-                    <h3 class="menu-name"><?= e($item['name']) ?></h3>
-                    <span class="menu-price">Rp <?= number_format($item['price'], 0, ',', '.') ?></span>
-                  </div>
-                  <p class="menu-description"><?= e($item['description']) ?></p>
-                </div>
-              </div>
-            <?php endforeach; ?>
-          <?php endif; ?>
-        </div>
+          <?php elseif ($cfg['type'] === 'single'): ?>
+            <!-- Single price drink (Signature / Mocktail) -->
+            <div class="menu-table-wrap">
+              <table class="menu-table">
+                <thead>
+                  <tr>
+                    <th class="col-name">Menu</th>
+                    <th class="col-price">Harga</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php if (empty($items)): ?>
+                    <tr><td colspan="2" style="text-align:center; padding:24px;">Belum ada menu tersedia.</td></tr>
+                  <?php else: ?>
+                    <?php foreach ($items as $item): ?>
+                      <tr>
+                        <td class="col-name">
+                          <span class="menu-item-name"><?= e($item['name']) ?></span>
+                          <?php if (!empty($item['description'])): ?>
+                            <span class="menu-item-desc"><?= e($item['description']) ?></span>
+                          <?php endif; ?>
+                        </td>
+                        <td class="col-price"><?= format_k($item['price'] ?? 0) ?></td>
+                      </tr>
+                    <?php endforeach; ?>
+                  <?php endif; ?>
+                </tbody>
+              </table>
+            </div>
 
-        <!-- Snack Grid -->
-        <div class="menu-grid" id="snack-menu">
-          <?php if (empty($categories['snack'])): ?>
-            <p style="grid-column: 1/-1; text-align: center;">Belum ada menu snack tersedia.</p>
           <?php else: ?>
-            <?php foreach ($categories['snack'] as $item): ?>
-              <div class="menu-card">
-                <?php if (!empty($item['image'])): ?>
-                  <div class="menu-img-container">
-                    <img src="<?= e($item['image']) ?>" alt="<?= e($item['name']) ?>" loading="lazy">
+            <!-- Food / Snack cards -->
+            <div class="menu-food-grid">
+              <?php if (empty($items)): ?>
+                <p style="grid-column: 1/-1; text-align: center;">Belum ada menu tersedia.</p>
+              <?php else: ?>
+                <?php foreach ($items as $item): ?>
+                  <div class="menu-food-card">
+                    <div class="food-card-info">
+                      <h3 class="food-card-name"><?= e($item['name']) ?></h3>
+                      <?php if (!empty($item['description'])): ?>
+                        <p class="food-card-desc"><?= e($item['description']) ?></p>
+                      <?php endif; ?>
+                      <?php if (!empty($item['variant'])): ?>
+                        <span class="food-card-variant">Varian: <?= e($item['variant']) ?></span>
+                      <?php endif; ?>
+                    </div>
+                    <span class="food-card-price"><?= format_k($item['price'] ?? 0) ?></span>
                   </div>
-                <?php else: ?>
-                  <div class="menu-img-container" style="display:flex; align-items:center; justify-content:center; background-color: var(--cream-medium); color: var(--primary-coffee-light);">
-                    <i class="fa-solid fa-bowl-food fa-3x"></i>
-                  </div>
-                <?php endif; ?>
-                <div class="menu-info">
-                  <div class="menu-card-header">
-                    <h3 class="menu-name"><?= e($item['name']) ?></h3>
-                    <span class="menu-price">Rp <?= number_format($item['price'], 0, ',', '.') ?></span>
-                  </div>
-                  <p class="menu-description"><?= e($item['description']) ?></p>
-                </div>
-              </div>
-            <?php endforeach; ?>
+                <?php endforeach; ?>
+              <?php endif; ?>
+            </div>
           <?php endif; ?>
-        </div>
 
+          <!-- WhatsApp Order Button -->
+          <div class="menu-wa-btn-wrap">
+            <a href="https://wa.me/<?= e($whatsapp_number) ?>?text=<?= $wa_text ?>" target="_blank" rel="noopener" class="btn btn-wa-order">
+              <i class="fa-brands fa-whatsapp"></i> Pesan via WhatsApp
+            </a>
+          </div>
+        </div>
+        <?php $first = false; endforeach; ?>
       </div>
     </div>
   </section>
+
+
 
   <!-- Fitur Unggulan Section -->
   <section class="features-section" id="keunggulan">

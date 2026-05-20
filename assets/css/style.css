@@ -462,7 +462,8 @@ img {
 .menu-tabs {
   display: flex;
   justify-content: center;
-  gap: 16px;
+  flex-wrap: wrap;
+  gap: 10px;
   margin-bottom: 48px;
 }
 
@@ -470,13 +471,14 @@ img {
   background-color: var(--cream-medium);
   color: var(--primary-coffee-dark);
   border: none;
-  padding: 12px 30px;
+  padding: 10px 22px;
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   border-radius: 50px;
   cursor: pointer;
   transition: var(--transition-normal);
+  white-space: nowrap;
 }
 
 .tab-btn:hover {
@@ -491,91 +493,201 @@ img {
 
 .menu-content-wrapper {
   position: relative;
-  min-height: 350px;
+  min-height: 200px;
 }
 
-.menu-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 30px;
-  display: none; /* Controlled by JS */
+/* Panel visibility (replaces .menu-grid) */
+.menu-panel {
+  display: none;
+  animation: fadeIn 0.5s ease;
 }
 
-.menu-grid.active {
-  display: grid;
-  animation: fadeIn 0.6s var(--transition-normal);
+.menu-panel.active {
+  display: block;
 }
 
-.menu-card {
-  background-color: var(--bone-white);
+/* --- Menu Table (Drinks) --- */
+.menu-table-wrap {
+  max-width: 700px;
+  margin: 0 auto;
   border-radius: var(--radius-md);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
-  transition: var(--transition-normal);
-  border: 1px solid rgba(74, 59, 50, 0.04);
-  display: flex;
-  flex-direction: column;
+  border: 1px solid rgba(74, 59, 50, 0.06);
+  background-color: #fff;
 }
 
-.menu-card:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-lg);
-  border-color: rgba(74, 59, 50, 0.1);
-}
-
-.menu-img-container {
-  height: 220px;
+.menu-table {
   width: 100%;
-  overflow: hidden;
-  background-color: var(--cream-medium);
-  position: relative;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
 }
 
-.menu-img-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: var(--transition-slow);
+.menu-table thead {
+  background: linear-gradient(135deg, var(--primary-coffee-dark), var(--primary-coffee));
 }
 
-.menu-card:hover .menu-img-container img {
-  transform: scale(1.05);
+.menu-table thead th {
+  color: var(--text-light);
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 14px 20px;
+  text-align: left;
+  letter-spacing: 0.5px;
 }
 
-.menu-info {
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
+.menu-table thead th.col-price {
+  text-align: center;
+  width: 100px;
 }
 
-.menu-card-header {
+.menu-table thead th i {
+  margin-right: 6px;
+  font-size: 0.8rem;
+}
+
+.menu-table tbody tr {
+  border-bottom: 1px solid rgba(74, 59, 50, 0.06);
+  transition: background-color var(--transition-fast);
+}
+
+.menu-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.menu-table tbody tr:hover {
+  background-color: var(--cream-light);
+}
+
+.menu-table tbody td {
+  padding: 14px 20px;
+  vertical-align: middle;
+}
+
+.menu-table tbody td.col-price {
+  text-align: center;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--accent-orange);
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+.menu-item-name {
+  display: block;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--primary-coffee-dark);
+}
+
+.menu-item-desc {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 3px;
+  line-height: 1.4;
+}
+
+/* --- Food / Snack Grid --- */
+.menu-food-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.menu-food-card {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 16px;
-  margin-bottom: 12px;
+  padding: 20px 24px;
+  background-color: #fff;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(74, 59, 50, 0.05);
+  transition: var(--transition-normal);
 }
 
-.menu-name {
-  font-size: 1.25rem;
-  color: var(--primary-coffee-dark);
+.menu-food-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.food-card-info {
+  flex: 1;
+}
+
+.food-card-name {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
   font-weight: 600;
+  color: var(--primary-coffee-dark);
+  margin-bottom: 4px;
 }
 
-.menu-price {
-  font-family: var(--font-sans);
-  font-weight: 700;
-  color: var(--accent-orange);
-  font-size: 1.15rem;
-  white-space: nowrap;
-}
-
-.menu-description {
-  font-size: 0.95rem;
+.food-card-desc {
+  font-size: 0.85rem;
   color: var(--text-muted);
   line-height: 1.5;
-  flex-grow: 1;
+  margin-bottom: 4px;
+}
+
+.food-card-variant {
+  display: inline-block;
+  font-size: 0.78rem;
+  color: var(--accent-orange);
+  font-weight: 600;
+  background-color: rgba(211, 84, 0, 0.08);
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-top: 4px;
+}
+
+.food-card-price {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--accent-orange);
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+/* --- WhatsApp Order Button --- */
+.menu-wa-btn-wrap {
+  text-align: center;
+  margin-top: 36px;
+}
+
+.btn-wa-order {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 36px;
+  background-color: #25D366;
+  color: #fff;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-normal);
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+}
+
+.btn-wa-order:hover {
+  background-color: #1da851;
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-wa-order i {
+  font-size: 1.2rem;
 }
 
 @keyframes fadeIn {
@@ -1344,14 +1456,56 @@ textarea.form-control {
   
   .menu-tabs {
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 8px;
   }
   
   .tab-btn {
-    padding: 10px 20px;
-    font-size: 0.85rem;
-    flex-grow: 1;
+    padding: 8px 14px;
+    font-size: 0.78rem;
+    flex-grow: 0;
     text-align: center;
+  }
+
+  .menu-table thead th {
+    padding: 10px 12px;
+    font-size: 0.8rem;
+  }
+
+  .menu-table tbody td {
+    padding: 10px 12px;
+  }
+
+  .menu-item-name {
+    font-size: 0.95rem;
+  }
+
+  .menu-table tbody td.col-price {
+    font-size: 0.9rem;
+  }
+
+  .menu-table thead th.col-price {
+    width: 70px;
+  }
+
+  .menu-food-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .menu-food-card {
+    padding: 16px 18px;
+  }
+
+  .food-card-name {
+    font-size: 1rem;
+  }
+
+  .food-card-price {
+    font-size: 1.05rem;
+  }
+
+  .btn-wa-order {
+    padding: 12px 28px;
+    font-size: 0.9rem;
   }
 
   .footer-grid {

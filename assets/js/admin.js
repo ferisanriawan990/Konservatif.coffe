@@ -111,14 +111,17 @@ function switchTab(tabId) {
 }
 
 // Menu Edit populate function
-function populateMenuEdit(id, name, category, price, description) {
+function populateMenuEdit(id, name, category, price, description, hot_price, ice_price, variant) {
   const cardHeader = document.getElementById('menuFormHeader');
   const formAction = document.getElementById('menuFormAction');
   const formId = document.getElementById('menuFormId');
   const formName = document.getElementById('menuFormName');
   const formCategory = document.getElementById('menuFormCategory');
   const formPrice = document.getElementById('menuFormPrice');
+  const formHotPrice = document.getElementById('menuFormHotPrice');
+  const formIcePrice = document.getElementById('menuFormIcePrice');
   const formDescription = document.getElementById('menuFormDescription');
+  const formVariant = document.getElementById('menuFormVariant');
   const btnReset = document.getElementById('btnResetMenu');
   const imageHelp = document.getElementById('menuImageHelp');
 
@@ -127,8 +130,11 @@ function populateMenuEdit(id, name, category, price, description) {
   formId.value = id;
   formName.value = name;
   formCategory.value = category;
-  formPrice.value = price;
-  formDescription.value = description;
+  formPrice.value = price || 0;
+  formHotPrice.value = hot_price || 0;
+  formIcePrice.value = ice_price || 0;
+  formDescription.value = description || '';
+  formVariant.value = variant || '';
 
   // UI adjustments
   cardHeader.textContent = 'Edit Menu Sajian';
@@ -154,6 +160,11 @@ if (btnResetMenu) {
     form.reset();
     formAction.value = 'add_menu';
     formId.value = '';
+    
+    // Reset new fields to 0
+    document.getElementById('menuFormPrice').value = 0;
+    document.getElementById('menuFormHotPrice').value = 0;
+    document.getElementById('menuFormIcePrice').value = 0;
     
     cardHeader.textContent = 'Tambah Menu Baru';
     cardHeader.style.color = 'var(--cream-medium)';

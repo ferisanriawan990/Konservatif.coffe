@@ -35,20 +35,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* 3. MENU CATEGORY TAB SWITCHER */
   const tabButtons = document.querySelectorAll('.tab-btn');
-  const menuGrids = document.querySelectorAll('.menu-grid');
+  const menuPanels = document.querySelectorAll('.menu-panel');
 
   tabButtons.forEach(button => {
     button.addEventListener('click', () => {
       // Deactivate current active tab
       tabButtons.forEach(btn => btn.classList.remove('active'));
-      menuGrids.forEach(grid => grid.classList.remove('active'));
+      menuPanels.forEach(panel => panel.classList.remove('active'));
 
       // Activate clicked tab
       button.classList.add('active');
       const targetId = button.getAttribute('data-target');
-      const targetGrid = document.getElementById(targetId);
-      if (targetGrid) {
-        targetGrid.classList.add('active');
+      const targetPanel = document.getElementById(targetId);
+      if (targetPanel) {
+        targetPanel.classList.add('active');
       }
     });
   });

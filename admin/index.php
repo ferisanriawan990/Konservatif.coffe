@@ -183,6 +183,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         $category = trim($_POST['category'] ?? '');
         $description = trim($_POST['description'] ?? '');
         $price = intval($_POST['price'] ?? 0);
+        $hot_price = intval($_POST['hot_price'] ?? 0);
+        $ice_price = intval($_POST['ice_price'] ?? 0);
+        $variant = trim($_POST['variant'] ?? '');
         
         $image_path = upload_image('menu_image') ?? '';
         
@@ -193,6 +196,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 'name' => $name,
                 'description' => $description,
                 'price' => $price,
+                'hot_price' => $hot_price,
+                'ice_price' => $ice_price,
+                'variant' => $variant,
                 'image' => $image_path
             ];
             
@@ -215,6 +221,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         $category = trim($_POST['category'] ?? '');
         $description = trim($_POST['description'] ?? '');
         $price = intval($_POST['price'] ?? 0);
+        $hot_price = intval($_POST['hot_price'] ?? 0);
+        $ice_price = intval($_POST['ice_price'] ?? 0);
+        $variant = trim($_POST['variant'] ?? '');
         
         $found = false;
         foreach ($data['menu'] as &$item) {
@@ -223,6 +232,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 $item['category'] = $category;
                 $item['description'] = $description;
                 $item['price'] = $price;
+                $item['hot_price'] = $hot_price;
+                $item['ice_price'] = $ice_price;
+                $item['variant'] = $variant;
                 
                 // If new image uploaded, replace
                 $new_image = upload_image('menu_image');
@@ -786,7 +798,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
       <!-- 4. TAB MENU -->
       <div class="tab-content" id="tab-menu">
         <h1 class="page-title">Kelola Menu Sajian</h1>
-        <p class="page-subtitle">Tambah, edit, dan hapus sajian Coffee, Non-Coffee, dan Snack.</p>
+        <p class="page-subtitle">Tambah, edit, dan hapus sajian di 7 kategori menu.</p>
         
         <div class="dashboard-split">
           <!-- Add Form -->
@@ -806,20 +818,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                   <div class="form-group">
                     <label class="form-label">Kategori</label>
                     <select name="category" id="menuFormCategory" class="form-control" required>
+                      <option value="signature">Signature</option>
                       <option value="coffee">Coffee</option>
+                      <option value="manual_brew">Manual Brew</option>
                       <option value="non_coffee">Non Coffee</option>
+                      <option value="mocktail">Mocktail</option>
+                      <option value="food">Food</option>
                       <option value="snack">Snack</option>
                     </select>
                   </div>
 
                   <div class="form-group">
-                    <label class="form-label">Harga (Rp)</label>
-                    <input type="number" name="price" id="menuFormPrice" class="form-control" required>
+                    <label class="form-label">Harga Satuan (Rp) — untuk Signature/Mocktail/Food/Snack</label>
+                    <input type="number" name="price" id="menuFormPrice" class="form-control" value="0">
                   </div>
 
                   <div class="form-group">
-                    <label class="form-label">Deskripsi Singkat</label>
-                    <textarea name="description" id="menuFormDescription" class="form-control" rows="3" required></textarea>
+                    <label class="form-label">Harga Hot (Rp) — untuk Coffee/Manual Brew/Non Coffee</label>
+                    <input type="number" name="hot_price" id="menuFormHotPrice" class="form-control" value="0">
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label">Harga Ice (Rp)</label>
+                    <input type="number" name="ice_price" id="menuFormIcePrice" class="form-control" value="0">
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label">Deskripsi (Opsional)</label>
+                    <textarea name="description" id="menuFormDescription" class="form-control" rows="2"></textarea>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label">Varian (Opsional, misal: kuah / goreng)</label>
+                    <input type="text" name="variant" id="menuFormVariant" class="form-control">
                   </div>
 
                   <div class="form-group">
@@ -840,14 +871,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
           <!-- List Table -->
           <div class="table-panel-side">
             <div class="card-dashboard">
-              <div class="card-header">Daftar Sajian</div>
+              <div class="card-header">Daftar Sajian (<?= $total_menu ?> item)</div>
               <div class="table-responsive">
                 <table class="table">
                   <thead>
                     <tr>
-                      <th>Gambar</th>
                       <th>Nama</th>
                       <th>Kategori</th>
+                      <th>Hot</th>
+                      <th>Ice</th>
                       <th>Harga</th>
                       <th>Aksi</th>
                     </tr>
@@ -855,27 +887,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                   <tbody>
                     <?php if (empty($data['menu'])): ?>
                       <tr>
-                        <td colspan="5" style="text-align: center;">Belum ada menu, tambahkan menu baru di samping.</td>
+                        <td colspan="6" style="text-align: center;">Belum ada menu, tambahkan menu baru di samping.</td>
                       </tr>
                     <?php else: ?>
                       <?php foreach ($data['menu'] as $item): ?>
                         <tr>
                           <td>
-                            <?php if (!empty($item['image'])): ?>
-                              <img src="../<?= e($item['image']) ?>" alt="Menu" class="table-thumbnail">
-                            <?php else: ?>
-                              <div class="table-thumbnail-placeholder"><i class="fa-solid fa-mug-hot"></i></div>
+                            <strong><?= e($item['name']) ?></strong>
+                            <?php if (!empty($item['description'])): ?>
+                              <p style="font-size: 0.75rem; color: #888; margin-top: 4px;"><?= e($item['description']) ?></p>
+                            <?php endif; ?>
+                            <?php if (!empty($item['variant'])): ?>
+                              <p style="font-size: 0.7rem; color: var(--accent-orange); margin-top: 2px;">Varian: <?= e($item['variant']) ?></p>
                             <?php endif; ?>
                           </td>
-                          <td>
-                            <strong><?= e($item['name']) ?></strong>
-                            <p style="font-size: 0.75rem; color: #888; margin-top: 4px;"><?= e($item['description']) ?></p>
-                          </td>
                           <td><span class="label-cat cat-<?= e($item['category']) ?>"><?= ucfirst(str_replace('_', ' ', $item['category'])) ?></span></td>
-                          <td>Rp <?= number_format($item['price'], 0, ',', '.') ?></td>
+                          <td><?= ($item['hot_price'] ?? 0) > 0 ? number_format($item['hot_price'], 0, ',', '.') : '-' ?></td>
+                          <td><?= ($item['ice_price'] ?? 0) > 0 ? number_format($item['ice_price'], 0, ',', '.') : '-' ?></td>
+                          <td><?= ($item['price'] ?? 0) > 0 ? number_format($item['price'], 0, ',', '.') : '-' ?></td>
                           <td>
                             <div class="table-actions">
-                              <button class="btn-action-edit" onclick="populateMenuEdit('<?= e($item['id']) ?>', '<?= e($item['name']) ?>', '<?= e($item['category']) ?>', <?= $item['price'] ?>, '<?= e(addslashes($item['description'])) ?>')">
+                              <button class="btn-action-edit" onclick="populateMenuEdit('<?= e($item['id']) ?>', '<?= e($item['name']) ?>', '<?= e($item['category']) ?>', <?= $item['price'] ?? 0 ?>, '<?= e(addslashes($item['description'] ?? '')) ?>', <?= $item['hot_price'] ?? 0 ?>, <?= $item['ice_price'] ?? 0 ?>, '<?= e(addslashes($item['variant'] ?? '')) ?>')">
                                 <i class="fa-solid fa-pen-to-square"></i>
                               </button>
                               <form action="" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus menu <?= e($item['name']) ?>?');" style="display: inline;">

@@ -25,126 +25,59 @@
         "instagram_link": "https:\/\/www.instagram.com\/konservatif.coffee"
     },
     "menu": [
-        {
-            "id": "m1",
-            "category": "coffee",
-            "name": "Es Kopi Susu Konservatif",
-            "description": "Kopi susu signature dengan paduan gula aren pilihan, susu creamy, dan espresso premium.",
-            "price": 22000,
-            "image": "uploads\/iced_coffee_susu.png"
-        },
-        {
-            "id": "m2",
-            "category": "coffee",
-            "name": "Americano",
-            "description": "Espresso shot premium dipadukan dengan air panas, menyajikan rasa kopi yang bold dan bersih.",
-            "price": 18000,
-            "image": ""
-        },
-        {
-            "id": "m3",
-            "category": "coffee",
-            "name": "Cappuccino",
-            "description": "Espresso dengan susu hangat dan foam susu tebal berlimpah, ditaburi sedikit bubuk cokelat.",
-            "price": 22000,
-            "image": ""
-        },
-        {
-            "id": "m4",
-            "category": "coffee",
-            "name": "Latte",
-            "description": "Kombinasi espresso yang smooth dengan steamed milk lembut dan sentuhan latte art cantik.",
-            "price": 22000,
-            "image": ""
-        },
-        {
-            "id": "m5",
-            "category": "coffee",
-            "name": "Manual Brew",
-            "description": "Kopi seduh manual V60 menggunakan pilihan biji kopi single origin nusantara berkualitas tinggi.",
-            "price": 24000,
-            "image": ""
-        },
-        {
-            "id": "m6",
-            "category": "non_coffee",
-            "name": "Matcha Latte",
-            "description": "Bubuk matcha Jepang premium yang dipadukan dengan susu segar hangat\/dingin yang creamy.",
-            "price": 22000,
-            "image": "uploads\/matcha_latte.png"
-        },
-        {
-            "id": "m7",
-            "category": "non_coffee",
-            "name": "Chocolate",
-            "description": "Minuman cokelat premium yang pekat dengan rasa manis gurih yang pas di lidah.",
-            "price": 22000,
-            "image": ""
-        },
-        {
-            "id": "m8",
-            "category": "non_coffee",
-            "name": "Red Velvet",
-            "description": "Minuman rasa red velvet yang manis lembut dengan aroma vanilla yang harum.",
-            "price": 22000,
-            "image": ""
-        },
-        {
-            "id": "m9",
-            "category": "non_coffee",
-            "name": "Taro",
-            "description": "Minuman taro dengan rasa ubi ungu manis-gurih yang khas dan disukai semua kalangan.",
-            "price": 22000,
-            "image": ""
-        },
-        {
-            "id": "m10",
-            "category": "non_coffee",
-            "name": "Lemon Tea",
-            "description": "Seduhan teh hitam berpadu dengan keasaman segar buah lemon asli.",
-            "price": 15000,
-            "image": ""
-        },
-        {
-            "id": "m11",
-            "category": "snack",
-            "name": "French Fries",
-            "description": "Kentang goreng renyah yang ditaburi garam gurih, disajikan dengan saus cocolan hangat.",
-            "price": 18000,
-            "image": ""
-        },
-        {
-            "id": "m12",
-            "category": "snack",
-            "name": "Roti Bakar",
-            "description": "Roti panggang mentega dengan isian cokelat melimpah dan taburan keju cheddar parut.",
-            "price": 20000,
-            "image": ""
-        },
-        {
-            "id": "m13",
-            "category": "snack",
-            "name": "Pisang Goreng",
-            "description": "Pisang goreng renyah crispy dengan rasa manis alami, pas untuk menemani secangkir kopi hangat.",
-            "price": 18000,
-            "image": ""
-        },
-        {
-            "id": "m14",
-            "category": "snack",
-            "name": "Cireng",
-            "description": "Cireng goreng kenyal di dalam renyah di luar, disajikan dengan saus rujak asam pedas manis.",
-            "price": 15000,
-            "image": ""
-        },
-        {
-            "id": "m15",
-            "category": "snack",
-            "name": "Mix Platter",
-            "description": "Piring kombinasi yang berisi kentang goreng, sosis panggang, dan chicken nugget garing.",
-            "price": 28000,
-            "image": "uploads\/mix_platter.png"
-        }
+        {"id":"s1","category":"signature","name":"Konservatif Coffee","description":"","hot_price":0,"ice_price":25000,"price":25000,"image":"","variant":""},
+        {"id":"s2","category":"signature","name":"Charming Man","description":"","hot_price":0,"ice_price":23000,"price":23000,"image":"","variant":""},
+        {"id":"s3","category":"signature","name":"Blue Sky","description":"","hot_price":0,"ice_price":23000,"price":23000,"image":"","variant":""},
+
+        {"id":"c1","category":"coffee","name":"Americano","description":"","hot_price":18000,"ice_price":20000,"price":0,"image":"","variant":""},
+        {"id":"c2","category":"coffee","name":"Caffe Latte","description":"","hot_price":23000,"ice_price":23000,"price":0,"image":"","variant":""},
+        {"id":"c3","category":"coffee","name":"Cappuccino","description":"","hot_price":23000,"ice_price":23000,"price":0,"image":"","variant":""},
+        {"id":"c4","category":"coffee","name":"Caramel Latte","description":"","hot_price":23000,"ice_price":25000,"price":0,"image":"","variant":""},
+        {"id":"c5","category":"coffee","name":"Hazelnut Latte","description":"","hot_price":23000,"ice_price":25000,"price":0,"image":"","variant":""},
+        {"id":"c6","category":"coffee","name":"Vanilla Latte","description":"","hot_price":23000,"ice_price":25000,"price":0,"image":"","variant":""},
+        {"id":"c7","category":"coffee","name":"Gula Aren","description":"","hot_price":0,"ice_price":24000,"price":0,"image":"","variant":""},
+        {"id":"c8","category":"coffee","name":"Double Espresso","description":"","hot_price":18000,"ice_price":0,"price":0,"image":"","variant":""},
+        {"id":"c9","category":"coffee","name":"Long Black","description":"","hot_price":18000,"ice_price":20000,"price":0,"image":"","variant":""},
+
+        {"id":"mb1","category":"manual_brew","name":"V60","description":"","hot_price":20000,"ice_price":0,"price":0,"image":"","variant":""},
+        {"id":"mb2","category":"manual_brew","name":"Javanese","description":"","hot_price":0,"ice_price":23000,"price":0,"image":"","variant":""},
+        {"id":"mb3","category":"manual_brew","name":"Vietnam Drip","description":"","hot_price":18000,"ice_price":20000,"price":0,"image":"","variant":""},
+        {"id":"mb4","category":"manual_brew","name":"Kopi Tubruk","description":"","hot_price":15000,"ice_price":0,"price":0,"image":"","variant":""},
+
+        {"id":"nc1","category":"non_coffee","name":"Red Velvet","description":"","hot_price":23000,"ice_price":23000,"price":0,"image":"","variant":""},
+        {"id":"nc2","category":"non_coffee","name":"Green Tea","description":"","hot_price":23000,"ice_price":23000,"price":0,"image":"","variant":""},
+        {"id":"nc3","category":"non_coffee","name":"Chocolate","description":"","hot_price":22000,"ice_price":23000,"price":0,"image":"","variant":""},
+        {"id":"nc4","category":"non_coffee","name":"Milk Strawberry","description":"","hot_price":0,"ice_price":22000,"price":0,"image":"","variant":""},
+        {"id":"nc5","category":"non_coffee","name":"Milk Mango","description":"","hot_price":0,"ice_price":22000,"price":0,"image":"","variant":""},
+        {"id":"nc6","category":"non_coffee","name":"Milk Caramel","description":"","hot_price":0,"ice_price":22000,"price":0,"image":"","variant":""},
+        {"id":"nc7","category":"non_coffee","name":"Milk Hazelnut","description":"","hot_price":0,"ice_price":22000,"price":0,"image":"","variant":""},
+        {"id":"nc8","category":"non_coffee","name":"Yakult Mango","description":"","hot_price":0,"ice_price":23000,"price":0,"image":"","variant":""},
+        {"id":"nc9","category":"non_coffee","name":"Yakult Grape","description":"","hot_price":0,"ice_price":23000,"price":0,"image":"","variant":""},
+        {"id":"nc10","category":"non_coffee","name":"Yakult Lychee","description":"","hot_price":0,"ice_price":23000,"price":0,"image":"","variant":""},
+        {"id":"nc11","category":"non_coffee","name":"Grape Tea","description":"","hot_price":0,"ice_price":18000,"price":0,"image":"","variant":""},
+        {"id":"nc12","category":"non_coffee","name":"Lemon Tea","description":"","hot_price":0,"ice_price":18000,"price":0,"image":"","variant":""},
+        {"id":"nc13","category":"non_coffee","name":"Lychee Tea","description":"","hot_price":0,"ice_price":20000,"price":0,"image":"","variant":""},
+
+        {"id":"mc1","category":"mocktail","name":"Butterfly Pea Tea","description":"","hot_price":0,"ice_price":0,"price":22000,"image":"","variant":""},
+        {"id":"mc2","category":"mocktail","name":"Red Blue Ocean","description":"","hot_price":0,"ice_price":0,"price":22000,"image":"","variant":""},
+        {"id":"mc3","category":"mocktail","name":"Sunrise","description":"","hot_price":0,"ice_price":0,"price":22000,"image":"","variant":""},
+        {"id":"mc4","category":"mocktail","name":"Mocktail Grape","description":"","hot_price":0,"ice_price":0,"price":20000,"image":"","variant":""},
+        {"id":"mc5","category":"mocktail","name":"Mocktail Strawberry","description":"","hot_price":0,"ice_price":0,"price":20000,"image":"","variant":""},
+        {"id":"mc6","category":"mocktail","name":"Mocktail Mango","description":"","hot_price":0,"ice_price":0,"price":20000,"image":"","variant":""},
+
+        {"id":"f1","category":"food","name":"Rice Bowl Konservatif Beef Teriyaki","description":"Nasi, beef teriyaki, sayuran, dan fried egg","hot_price":0,"ice_price":0,"price":30000,"image":"","variant":""},
+        {"id":"f2","category":"food","name":"Rice Bowl Konservatif Katsu Cream Sauce","description":"Nasi, katsu, saus cream, sayuran, dan fried egg","hot_price":0,"ice_price":0,"price":30000,"image":"","variant":""},
+        {"id":"f3","category":"food","name":"Nasi Goreng Pucet","description":"Nasi, telur, dan sosis","hot_price":0,"ice_price":0,"price":25000,"image":"","variant":""},
+        {"id":"f4","category":"food","name":"Nasi Goreng Ireng","description":"Nasi, telur, dan katsu","hot_price":0,"ice_price":0,"price":25000,"image":"","variant":""},
+        {"id":"f5","category":"food","name":"Spaghetti Bolognese Katsu","description":"","hot_price":0,"ice_price":0,"price":23000,"image":"","variant":""},
+        {"id":"f6","category":"food","name":"Mie Tektek","description":"","hot_price":0,"ice_price":0,"price":20000,"image":"","variant":"kuah \/ goreng"},
+
+        {"id":"sn1","category":"snack","name":"Cireng Sambal Rujak","description":"","hot_price":0,"ice_price":0,"price":15000,"image":"","variant":""},
+        {"id":"sn2","category":"snack","name":"Piscok","description":"","hot_price":0,"ice_price":0,"price":15000,"image":"","variant":""},
+        {"id":"sn3","category":"snack","name":"French Fries","description":"","hot_price":0,"ice_price":0,"price":15000,"image":"","variant":""},
+        {"id":"sn4","category":"snack","name":"French Fries Katsu","description":"","hot_price":0,"ice_price":0,"price":20000,"image":"","variant":""},
+        {"id":"sn5","category":"snack","name":"Sosis","description":"","hot_price":0,"ice_price":0,"price":15000,"image":"","variant":""},
+        {"id":"sn6","category":"snack","name":"Pisrol","description":"","hot_price":0,"ice_price":0,"price":15000,"image":"","variant":""}
     ],
     "gallery": [
         {
