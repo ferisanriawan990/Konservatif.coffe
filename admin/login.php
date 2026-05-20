@@ -1,8 +1,40 @@
 <?php
 session_start();
 
-// If already logged in, redirect to index
-if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
+$settings_file = __DIR__ . '/../data/settings.json';
+$data = [];
+if (file_exists($settings_file)) {
+    $data = json_decode(file_get_contents($settings_file), true) ?? [];
+}
+
+// Function to check if admin is logged in (session or cookie fallback)
+function is_admin_logged_in($data) {
+    if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
+        return true;
+    }
+    
+    // Cookie fallback for serverless environments (Vercel)
+    if (isset($_COOKIE['admin_user']) && isset($_COOKIE['admin_token'])) {
+        $username = $_COOKIE['admin_user'];
+        $token = $_COOKIE['admin_token'];
+        
+        $admin_user = $data['admin']['username'] ?? 'admin';
+        $admin_hash = $data['admin']['password_hash'] ?? '';
+        
+        if ($username === $admin_user && !empty($admin_hash)) {
+            $expected_token = hash_hmac('sha256', $username, $admin_hash);
+            if (hash_equals($expected_token, $token)) {
+                // Restore session
+                $_SESSION['admin_logged_in'] = true;
+                $_SESSION['admin_username'] = $username;
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+if (is_admin_logged_in($data)) {
     header('Location: index.php');
     exit;
 }
@@ -16,23 +48,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($username) || empty($password)) {
         $error = 'Username dan password wajib diisi!';
     } else {
-        $settings_file = __DIR__ . '/../data/settings.json';
-        if (file_exists($settings_file)) {
-            $data = json_decode(file_get_contents($settings_file), true);
-            $admin_user = $data['admin']['username'] ?? 'admin';
-            $admin_hash = $data['admin']['password_hash'] ?? '';
+        $admin_user = $data['admin']['username'] ?? 'admin';
+        $admin_hash = $data['admin']['password_hash'] ?? '';
 
-            if ($username === $admin_user && password_verify($password, $admin_hash)) {
-                // Login successful
-                $_SESSION['admin_logged_in'] = true;
-                $_SESSION['admin_username'] = $username;
-                header('Location: index.php');
-                exit;
-            } else {
-                $error = 'Username atau password salah!';
+        if ($username === $admin_user && password_verify($password, $admin_hash)) {
+            // Login successful in session
+            $_SESSION['admin_logged_in'] = true;
+            $_SESSION['admin_username'] = $username;
+
+            // Set secure cookies for serverless (Vercel) compatibility
+            // Determine if request is secure (HTTPS)
+            $is_secure = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on';
+            if (!$is_secure && isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
+                $is_secure = true;
             }
+
+            $token = hash_hmac('sha256', $username, $admin_hash);
+            // Cookie expires in 7 days
+            setcookie('admin_user', $username, time() + 86400 * 7, '/', '', $is_secure, true);
+            setcookie('admin_token', $token, time() + 86400 * 7, '/', '', $is_secure, true);
+
+            header('Location: index.php');
+            exit;
         } else {
-            $error = 'File data pengaturan tidak ditemukan!';
+            $error = 'Username atau password salah!';
         }
     }
 }

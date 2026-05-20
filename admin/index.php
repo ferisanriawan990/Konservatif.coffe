@@ -1,12 +1,6 @@
 <?php
 session_start();
 
-// Redirect to login if not authenticated
-if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
-    header('Location: login.php');
-    exit;
-}
-
 $settings_file = __DIR__ . '/../data/settings.json';
 $messages_file = __DIR__ . '/../data/messages.json';
 
@@ -30,6 +24,40 @@ function e($text) {
 }
 
 $data = get_settings($settings_file);
+$contact = $data['contact'] ?? [];
+
+// Function to check if admin is logged in (session or cookie fallback)
+function is_admin_logged_in($data) {
+    if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
+        return true;
+    }
+    
+    // Cookie fallback for serverless environments (Vercel)
+    if (isset($_COOKIE['admin_user']) && isset($_COOKIE['admin_token'])) {
+        $username = $_COOKIE['admin_user'];
+        $token = $_COOKIE['admin_token'];
+        
+        $admin_user = $data['admin']['username'] ?? 'admin';
+        $admin_hash = $data['admin']['password_hash'] ?? '';
+        
+        if ($username === $admin_user && !empty($admin_hash)) {
+            $expected_token = hash_hmac('sha256', $username, $admin_hash);
+            if (hash_equals($expected_token, $token)) {
+                // Restore session
+                $_SESSION['admin_logged_in'] = true;
+                $_SESSION['admin_username'] = $username;
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+if (!is_admin_logged_in($data)) {
+    header('Location: login.php');
+    exit;
+}
+
 
 // Stats for dashboard overview
 $total_menu = isset($data['menu']) ? count($data['menu']) : 0;

@@ -9,6 +9,11 @@ if (ini_get("session.use_cookies")) {
     );
 }
 session_destroy();
+
+// Clear stateless admin cookies
+setcookie('admin_user', '', time() - 3600, '/');
+setcookie('admin_token', '', time() - 3600, '/');
+
 header("Location: login.php");
 exit;
 ?>
