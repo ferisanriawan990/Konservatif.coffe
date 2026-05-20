@@ -1394,6 +1394,35 @@ textarea.form-control {
 }
 
 @media (max-width: 768px) {
+
+  /* --- General --- */
+  section {
+    padding: 60px 16px;
+  }
+
+  .container {
+    padding: 0;
+  }
+
+  .section-header {
+    margin-bottom: 36px;
+    padding: 0 8px;
+  }
+
+  .section-tag {
+    font-size: 0.78rem;
+    letter-spacing: 1.5px;
+  }
+
+  .section-title {
+    font-size: 1.75rem;
+  }
+
+  .section-header p {
+    font-size: 0.92rem;
+  }
+
+  /* --- Navbar --- */
   .hamburger {
     display: block;
   }
@@ -1435,89 +1464,329 @@ textarea.form-control {
     background-color: var(--text-light) !important;
   }
 
+  /* --- Hero --- */
   .hero {
     height: auto;
     min-height: 100vh;
-    padding-top: 140px;
-    padding-bottom: 80px;
+    min-height: 100dvh;
+    padding-top: 120px;
+    padding-bottom: 60px;
+  }
+
+  .hero-subtitle {
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 8vw, 2.8rem);
+    margin-bottom: 16px;
+  }
+
+  .hero-desc {
+    font-size: 0.95rem;
+    margin-bottom: 28px;
+    line-height: 1.6;
   }
 
   .hero-buttons {
     flex-direction: column;
+    gap: 12px;
   }
   
   .hero-buttons .btn {
     width: 100%;
-  }
-
-  .section-title {
-    font-size: 2rem;
-  }
-  
-  .menu-tabs {
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  
-  .tab-btn {
-    padding: 8px 14px;
-    font-size: 0.78rem;
-    flex-grow: 0;
-    text-align: center;
-  }
-
-  .menu-table thead th {
-    padding: 10px 12px;
-    font-size: 0.8rem;
-  }
-
-  .menu-table tbody td {
-    padding: 10px 12px;
-  }
-
-  .menu-item-name {
-    font-size: 0.95rem;
-  }
-
-  .menu-table tbody td.col-price {
+    padding: 13px 20px;
     font-size: 0.9rem;
   }
 
-  .menu-table thead th.col-price {
-    width: 70px;
+  /* --- About --- */
+  .about-title {
+    font-size: 1.6rem;
   }
 
+  .about-desc {
+    font-size: 0.95rem;
+  }
+
+  .about-badge {
+    bottom: 16px;
+    left: 16px;
+    padding: 12px 18px;
+  }
+
+  .about-badge h4 {
+    font-size: 1.05rem;
+  }
+
+  .about-badge p {
+    font-size: 0.8rem;
+  }
+
+  /* --- Menu Tabs (horizontal scroll on mobile) --- */
+  .menu-tabs {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 8px;
+    padding-bottom: 8px;
+    scrollbar-width: none;
+    justify-content: flex-start;
+  }
+
+  .menu-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab-btn {
+    padding: 9px 16px;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+    flex-grow: 0;
+  }
+
+  /* --- Menu Table --- */
+  .menu-table-wrap {
+    border-radius: 10px;
+    margin: 0 4px;
+  }
+
+  .menu-table thead th {
+    padding: 11px 10px;
+    font-size: 0.78rem;
+    letter-spacing: 0;
+  }
+
+  .menu-table thead th.col-price {
+    width: 60px;
+    padding: 11px 6px;
+  }
+
+  .menu-table thead th i {
+    display: none;
+  }
+
+  .menu-table tbody td {
+    padding: 12px 10px;
+  }
+
+  .menu-table tbody td.col-price {
+    font-size: 0.88rem;
+    padding: 12px 6px;
+  }
+
+  .menu-item-name {
+    font-size: 0.92rem;
+  }
+
+  .menu-item-desc {
+    font-size: 0.76rem;
+  }
+
+  /* --- Food / Snack Cards --- */
   .menu-food-grid {
     grid-template-columns: 1fr;
+    gap: 12px;
+    margin: 0 4px;
   }
 
   .menu-food-card {
-    padding: 16px 18px;
+    padding: 16px;
+    gap: 12px;
   }
 
   .food-card-name {
-    font-size: 1rem;
+    font-size: 0.98rem;
+  }
+
+  .food-card-desc {
+    font-size: 0.82rem;
   }
 
   .food-card-price {
     font-size: 1.05rem;
   }
 
+  .food-card-variant {
+    font-size: 0.72rem;
+    padding: 2px 8px;
+  }
+
+  /* --- WhatsApp Order Button --- */
+  .menu-wa-btn-wrap {
+    margin-top: 28px;
+  }
+
   .btn-wa-order {
     padding: 12px 28px;
+    font-size: 0.88rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* --- Features --- */
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .feature-card {
+    padding: 28px 24px;
+  }
+
+  .feature-card h3 {
+    font-size: 1.15rem;
+  }
+
+  .feature-card p {
     font-size: 0.9rem;
   }
 
+  /* --- Gallery --- */
+  .gallery-filter {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    justify-content: flex-start;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+  }
+
+  .gallery-filter::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-btn {
+    flex-shrink: 0;
+    font-size: 0.82rem;
+    padding: 7px 16px;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .gallery-overlay {
+    padding: 14px;
+  }
+
+  .gallery-item-title {
+    font-size: 0.8rem;
+  }
+
+  .gallery-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+  }
+
+  /* --- Testimonials --- */
+  .testimonial-slider {
+    height: auto;
+    min-height: 200px;
+  }
+
+  .testimonial-slide {
+    padding: 0 12px;
+  }
+
+  .testimonial-text {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .quote-icon {
+    font-size: 2rem;
+    margin-bottom: 12px;
+  }
+
+  .slider-dots {
+    margin-top: 20px;
+  }
+
+  /* --- Location --- */
+  .location-info {
+    padding: 28px 20px;
+  }
+
+  .loc-title {
+    font-size: 1.5rem;
+  }
+
+  .info-text p {
+    font-size: 0.88rem;
+  }
+
+  .map-wrapper {
+    height: 280px;
+    min-height: 280px;
+  }
+
+  /* --- Contact --- */
+  .social-buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .social-btn {
+    padding: 14px 16px;
+    font-size: 0.88rem;
+  }
+
+  .contact-form-container h3 {
+    font-size: 1.3rem;
+  }
+
+  .form-control {
+    font-size: 0.92rem;
+    padding: 12px 14px;
+  }
+
+  .form-label {
+    font-size: 0.85rem;
+  }
+
+  /* --- Footer --- */
   .footer-grid {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 32px;
   }
-  
+
+  .footer-info h3 {
+    font-size: 1.3rem;
+  }
+
+  .footer-info p {
+    font-size: 0.88rem;
+  }
+
+  .footer-bottom p {
+    font-size: 0.78rem;
+  }
+
+  /* --- Floating WA --- */
   .floating-whatsapp {
     bottom: 20px;
     right: 20px;
     width: 50px;
     height: 50px;
+    font-size: 1.6rem;
+  }
+
+  /* --- Lightbox --- */
+  .lightbox-content {
+    max-width: 95%;
+  }
+
+  .lightbox-caption {
+    font-size: 0.88rem;
+  }
+
+  .lightbox-close {
+    top: -35px;
     font-size: 1.6rem;
   }
 }
