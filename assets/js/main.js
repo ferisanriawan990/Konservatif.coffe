@@ -1,39 +1,243 @@
 /* -------------------------------------------------------------
    KONSERVATIF. CIKUPA - INTERACTIVE JAVASCRIPT
+   All interactive logic, 3D effects, and animations
    ------------------------------------------------------------- */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* 1. STICKY NAVBAR */
+  /* -------------------------------------------------------------
+     1. PRELOADER TRANSITION
+     ------------------------------------------------------------- */
+  const loader = document.getElementById('loader');
+  if (loader) {
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        loader.classList.add('loaded');
+        document.body.classList.remove('no-scroll');
+      }, 600); // Elegant brief pause
+    });
+
+    // Fallback if load event takes too long
+    setTimeout(() => {
+      if (!loader.classList.contains('loaded')) {
+        loader.classList.add('loaded');
+        document.body.classList.remove('no-scroll');
+      }
+    }, 3000);
+  }
+
+
+  /* -------------------------------------------------------------
+     2. STICKY NAVBAR
+     ------------------------------------------------------------- */
   const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
-  });
+  if (navbar) {
+    const handleScroll = () => {
+      if (window.scrollY > 40) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Trigger initial state
+  }
 
 
-  /* 2. MOBILE MENU HAMBURGER */
-  const hamburger = document.getElementById('hamburger-btn');
+  /* -------------------------------------------------------------
+     3. MOBILE NAV MENU TOGGLE
+     ------------------------------------------------------------- */
+  const navToggle = document.getElementById('nav-toggle');
   const navMenu = document.getElementById('nav-menu');
+  const navOverlay = document.getElementById('nav-overlay');
   const navLinks = document.querySelectorAll('.nav-link');
 
-  hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
-  });
+  if (navToggle && navMenu) {
+    const toggleMenu = () => {
+      navToggle.classList.toggle('active');
+      navMenu.classList.toggle('active');
+      if (navOverlay) navOverlay.classList.toggle('visible');
+      document.body.classList.toggle('no-scroll');
+    };
 
-  navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      hamburger.classList.remove('active');
+    const closeMenu = () => {
+      navToggle.classList.remove('active');
       navMenu.classList.remove('active');
+      if (navOverlay) navOverlay.classList.remove('visible');
+      document.body.classList.remove('no-scroll');
+    };
+
+    navToggle.addEventListener('click', toggleMenu);
+    if (navOverlay) navOverlay.addEventListener('click', closeMenu);
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+  }
+
+
+  /* -------------------------------------------------------------
+     4. STATS COUNTER UP ANIMATION
+     ------------------------------------------------------------- */
+  const statNumbers = document.querySelectorAll('.hero-stat-number');
+  
+  const animateCount = (el) => {
+    const target = parseFloat(el.getAttribute('data-count'));
+    const suffix = el.getAttribute('data-suffix') || '';
+    const duration = 2000; // 2 seconds
+    const start = 0;
+    const startTime = performance.now();
+
+    const update = (now) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Ease out quad formula
+      const ease = progress * (2 - progress);
+      const current = start + ease * (target - start);
+
+      if (target % 1 === 0) {
+        // Integer
+        el.textContent = Math.floor(current) + suffix;
+      } else {
+        // Float (like rating 4.8)
+        el.textContent = current.toFixed(1) + suffix;
+      }
+
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      } else {
+        el.textContent = target + suffix;
+      }
+    };
+
+    requestAnimationFrame(update);
+  };
+
+  if (statNumbers.length > 0 && 'IntersectionObserver' in window) {
+    const statsObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCount(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    statNumbers.forEach(num => statsObserver.observe(num));
+  } else {
+    // Fallback: immediate values if observer not supported
+    statNumbers.forEach(num => {
+      const count = num.getAttribute('data-count');
+      const suffix = num.getAttribute('data-suffix') || '';
+      num.textContent = count + suffix;
+    });
+  }
+
+
+  /* -------------------------------------------------------------
+     5. 3D TILT EFFECT ON CARDS
+     ------------------------------------------------------------- */
+  const tiltCards = document.querySelectorAll('.tilt-card');
+  
+  tiltCards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left; // Mouse X relative to card
+      const y = e.clientY - rect.top;  // Mouse Y relative to card
+      
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      // Calculate rotation (-10deg to 10deg)
+      const rotateX = ((centerY - y) / centerY) * 10;
+      const rotateY = ((x - centerX) / centerX) * 10;
+      
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+      
+      // Create reflect shininess relative positions
+      const percentX = (x / rect.width) * 100;
+      const percentY = (y / rect.height) * 100;
+      card.style.setProperty('--mouse-x', `${percentX}%`);
+      card.style.setProperty('--mouse-y', `${percentY}%`);
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
     });
   });
 
 
-  /* 3. MENU CATEGORY TAB SWITCHER */
+  /* -------------------------------------------------------------
+     6. FRIDAY PROMO COUNTDOWN TIMER
+     ------------------------------------------------------------- */
+  const countdownEl = document.getElementById('promo-countdown');
+  
+  const updateCountdown = () => {
+    if (!countdownEl) return;
+
+    const now = new Date();
+    
+    // Find next Friday (day 5 of week) at midnight 00:00:00
+    let nextFriday = new Date();
+    nextFriday.setHours(0, 0, 0, 0);
+    
+    // Get difference in days
+    const currentDay = now.getDay(); // 0 is Sunday, 5 is Friday, 6 is Saturday
+    let daysUntilFriday = 5 - currentDay;
+    
+    if (daysUntilFriday < 0) {
+      // It's Saturday, Friday is next week
+      daysUntilFriday += 7;
+    } else if (daysUntilFriday === 0) {
+      // It's Friday! Check if it's currently Friday
+      // If it's Friday, the promo is ACTIVE!
+      countdownEl.innerHTML = `
+        <div style="background: rgba(37, 211, 102, 0.1); border: 1px solid rgba(37, 211, 102, 0.3); padding: 12px 24px; border-radius: 12px; color: #25D366; text-align: center; font-weight: 600; width: 100%;">
+          <i class="fa-solid fa-circle-check"></i> PROMO SEDANG AKTIF HARI INI! Silakan pesan menu signature favorit Anda.
+        </div>
+      `;
+      return;
+    }
+
+    nextFriday.setDate(now.getDate() + daysUntilFriday);
+    const diff = nextFriday.getTime() - now.getTime();
+
+    // Time calculations
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    countdownEl.innerHTML = `
+      <div class="countdown-box">
+        <div class="countdown-value">${days}</div>
+        <div class="countdown-lbl">Hari</div>
+      </div>
+      <div class="countdown-box">
+        <div class="countdown-value">${String(hours).padStart(2, '0')}</div>
+        <div class="countdown-lbl">Jam</div>
+      </div>
+      <div class="countdown-box">
+        <div class="countdown-value">${String(minutes).padStart(2, '0')}</div>
+        <div class="countdown-lbl">Menit</div>
+      </div>
+      <div class="countdown-box">
+        <div class="countdown-value">${String(seconds).padStart(2, '0')}</div>
+        <div class="countdown-lbl">Detik</div>
+      </div>
+    `;
+  };
+
+  if (countdownEl) {
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  }
+
+
+  /* -------------------------------------------------------------
+     7. MENU CATEGORY TAB SWITCHER
+     ------------------------------------------------------------- */
   const tabButtons = document.querySelectorAll('.tab-btn');
   const menuPanels = document.querySelectorAll('.menu-panel');
 
@@ -54,7 +258,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 
-  /* 4. GALLERY FILTER & LIGHTBOX */
+  /* -------------------------------------------------------------
+     8. GALLERY FILTER & LIGHTBOX MODAL
+     ------------------------------------------------------------- */
   const filterButtons = document.querySelectorAll('.filter-btn');
   const galleryItems = document.querySelectorAll('.gallery-item');
   const lightbox = document.getElementById('lightbox');
@@ -62,7 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const lightboxCaption = document.getElementById('lightbox-caption');
   const lightboxClose = document.getElementById('lightbox-close');
 
-  // Filter logic
+  // Filtering Logic
   filterButtons.forEach(button => {
     button.addEventListener('click', () => {
       filterButtons.forEach(btn => btn.classList.remove('active'));
@@ -74,50 +280,57 @@ document.addEventListener('DOMContentLoaded', () => {
         const category = item.getAttribute('data-category');
         if (filter === 'all' || category === filter) {
           item.style.display = 'block';
-          // Small delay for fade-in effect
           setTimeout(() => {
             item.style.opacity = '1';
             item.style.transform = 'scale(1)';
-          }, 10);
+          }, 20);
         } else {
           item.style.opacity = '0';
-          item.style.transform = 'scale(0.8)';
+          item.style.transform = 'scale(0.85)';
           setTimeout(() => {
             item.style.display = 'none';
-          }, 400);
+          }, 350);
         }
       });
     });
   });
 
-  // Lightbox open logic
+  // Lightbox Open
   galleryItems.forEach(item => {
     item.addEventListener('click', () => {
       const src = item.getAttribute('data-src');
       const caption = item.getAttribute('data-caption');
 
-      lightboxImg.setAttribute('src', src);
-      lightboxCaption.textContent = caption;
-      lightbox.classList.add('active');
-      document.body.style.overflow = 'hidden'; // Disable page scrolling
+      if (lightboxImg && lightboxCaption && lightbox) {
+        lightboxImg.setAttribute('src', src);
+        lightboxCaption.textContent = caption;
+        lightbox.classList.add('active');
+        document.body.classList.add('no-scroll');
+      }
     });
   });
 
-  // Lightbox close logic
-  const closeLightboxFunc = () => {
-    lightbox.classList.remove('active');
-    document.body.style.overflow = 'auto'; // Enable page scrolling
+  // Lightbox Close
+  const closeLightbox = () => {
+    if (lightbox) {
+      lightbox.classList.remove('active');
+      document.body.classList.remove('no-scroll');
+    }
   };
 
-  lightboxClose.addEventListener('click', closeLightboxFunc);
-  lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox || e.target === lightbox.querySelector('.lightbox-content')) {
-      closeLightboxFunc();
-    }
-  });
+  if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+  if (lightbox) {
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox || e.target.classList.contains('lightbox-content')) {
+        closeLightbox();
+      }
+    });
+  }
 
 
-  /* 5. TESTIMONIALS SLIDER */
+  /* -------------------------------------------------------------
+     9. TESTIMONIALS SWIPE SLIDER
+     ------------------------------------------------------------- */
   const track = document.getElementById('testimonial-track');
   const slides = document.querySelectorAll('.testimonial-slide');
   const dots = document.querySelectorAll('.dot');
@@ -126,10 +339,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const updateSlider = (index) => {
     if (!track) return;
+    
+    // Bounds check
+    if (index < 0) index = slides.length - 1;
+    if (index >= slides.length) index = 0;
+
     currentIndex = index;
     track.style.transform = `translateX(-${currentIndex * 100}%)`;
     
-    // Update dots
+    // Update active dot
     dots.forEach((dot, idx) => {
       if (idx === currentIndex) {
         dot.classList.add('active');
@@ -139,7 +357,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  // Click dot to navigate
+  // Dot navigation
   dots.forEach(dot => {
     dot.addEventListener('click', () => {
       const index = parseInt(dot.getAttribute('data-index'), 10);
@@ -148,16 +366,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Autoplay functionality
+  // Autoplay Logic
   const startAutoplay = () => {
     if (slides.length <= 1) return;
     autoplayTimer = setInterval(() => {
-      let nextIndex = currentIndex + 1;
-      if (nextIndex >= slides.length) {
-        nextIndex = 0;
-      }
-      updateSlider(nextIndex);
-    }, 5000);
+      updateSlider(currentIndex + 1);
+    }, 5500);
   };
 
   const stopAutoplay = () => {
@@ -169,30 +383,66 @@ document.addEventListener('DOMContentLoaded', () => {
     startAutoplay();
   };
 
-  // Start autoplay on load
   startAutoplay();
 
-  // Pause on hover
+  // Hover pauses autoplay
   const sliderContainer = document.querySelector('.testimonial-slider');
   if (sliderContainer) {
     sliderContainer.addEventListener('mouseenter', stopAutoplay);
     sliderContainer.addEventListener('mouseleave', startAutoplay);
   }
 
+  // Touch Swipe Support for Mobile
+  let startX = 0;
+  let isSwiping = false;
 
-  /* 6. SCROLL REVEAL ANIMATIONS (INTERSECTION OBSERVER) */
+  if (sliderContainer) {
+    sliderContainer.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      isSwiping = true;
+      stopAutoplay();
+    }, { passive: true });
+
+    sliderContainer.addEventListener('touchmove', (e) => {
+      if (!isSwiping) return;
+      const currentX = e.touches[0].clientX;
+      const diffX = startX - currentX;
+      
+      // Minimum swipe threshold
+      if (Math.abs(diffX) > 60) {
+        if (diffX > 0) {
+          // Swipe left -> next slide
+          updateSlider(currentIndex + 1);
+        } else {
+          // Swipe right -> prev slide
+          updateSlider(currentIndex - 1);
+        }
+        isSwiping = false;
+      }
+    }, { passive: true });
+
+    sliderContainer.addEventListener('touchend', () => {
+      isSwiping = false;
+      startAutoplay();
+    });
+  }
+
+
+  /* -------------------------------------------------------------
+     10. SCROLL REVEAL ANIMATIONS (INTERSECTION OBSERVER)
+     ------------------------------------------------------------- */
   const revealElements = document.querySelectorAll('.reveal');
   
-  if ('IntersectionObserver' in window) {
+  if ('IntersectionObserver' in window && revealElements.length > 0) {
     const revealObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('active');
-          observer.unobserve(entry.target); // Trigger only once
+          observer.unobserve(entry.target); // Reveal only once
         }
       });
     }, {
-      threshold: 0.15,
+      threshold: 0.1,
       rootMargin: '0px 0px -50px 0px'
     });
 
@@ -200,26 +450,28 @@ document.addEventListener('DOMContentLoaded', () => {
       revealObserver.observe(element);
     });
   } else {
-    // Fallback if IntersectionObserver is not supported
+    // Fallback: immediately activate if IntersectionObserver is not supported
     revealElements.forEach(element => {
       element.classList.add('active');
     });
   }
 
 
-  /* 7. CONTACT FORM AJAX SUBMISSION */
+  /* -------------------------------------------------------------
+     11. CONTACT FORM AJAX SUBMISSION
+     ------------------------------------------------------------- */
   const contactForm = document.getElementById('contactForm');
   const submitBtn = document.getElementById('submitBtn');
   const formStatus = document.getElementById('formStatus');
 
-  if (contactForm) {
+  if (contactForm && submitBtn && formStatus) {
     contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
       
-      // Update UI to submitting state
+      // Update UI state
       submitBtn.disabled = true;
       const originalBtnText = submitBtn.innerHTML;
-      submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Mengirim...';
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengirim...';
       formStatus.style.display = 'none';
       formStatus.className = 'form-status';
 

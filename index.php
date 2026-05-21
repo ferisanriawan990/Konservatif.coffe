@@ -132,63 +132,135 @@ $wa_text = urlencode("Halo kak, saya mau tanya menu di Konservatif. Cikupa.");
   <!-- FontAwesome Icons for premium design details -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
-  <!-- Custom Stylesheet -->
+  <!-- Custom Stylesheets -->
   <link rel="stylesheet" href="assets/css/style.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☕</text></svg>">
 </head>
 <body>
 
-  <!-- Navigation Bar -->
+  <!-- ========== PRELOADER ========== -->
+  <div class="loader" id="loader">
+    <div class="loader-logo">konservatif.<span>coffee</span></div>
+    <div class="loader-bar"></div>
+  </div>
+
+  <!-- ========== NAVBAR ========== -->
   <nav class="navbar" id="navbar">
     <div class="nav-container">
       <a href="#" class="logo" id="nav-logo">
-        <i class="fa-solid fa-mug-hot" style="color: var(--accent-orange);"></i> <?= e($site_name) ?>
+        <i class="fa-solid fa-mug-hot"></i> konservatif.<span>coffee</span>
       </a>
       <ul class="nav-menu" id="nav-menu">
-        <li><a href="#" class="nav-link">Beranda</a></li>
+        <li><a href="#" class="nav-link active">Beranda</a></li>
         <li><a href="#tentang-kami" class="nav-link">Tentang Kami</a></li>
         <li><a href="#menu" class="nav-link">Menu</a></li>
         <li><a href="#galeri" class="nav-link">Galeri</a></li>
         <li><a href="#lokasi" class="nav-link">Lokasi</a></li>
         <li><a href="#kontak" class="nav-link">Kontak</a></li>
-        <li><a href="admin/login.php" class="nav-link" style="opacity: 0.7;"><i class="fa-solid fa-user-lock"></i> Admin</a></li>
+        <li class="nav-admin"><a href="admin/login.php" class="nav-link"><i class="fa-solid fa-user-lock"></i> Admin</a></li>
       </ul>
-      <button class="hamburger" id="hamburger-btn" aria-label="Toggle Menu">
+      <div class="nav-toggle" id="nav-toggle">
         <span></span>
         <span></span>
         <span></span>
-      </button>
+      </div>
     </div>
+    <div class="nav-overlay" id="nav-overlay"></div>
   </nav>
 
-  <!-- Hero Section -->
+  <!-- ========== HERO SECTION ========== -->
   <header class="hero" id="home">
     <div class="hero-bg" style="background-image: url('<?= e($hero_image) ?>');"></div>
+    <div class="hero-bg-overlay"></div>
+    <div class="hero-bg-glow"></div>
+
+    <!-- Floating Coffee Beans -->
+    <div class="hero-particles">
+      <div class="coffee-bean bean-1"></div>
+      <div class="coffee-bean bean-2"></div>
+      <div class="coffee-bean bean-3"></div>
+      <div class="coffee-bean bean-4"></div>
+      <div class="coffee-bean bean-5"></div>
+      <div class="coffee-bean bean-6"></div>
+    </div>
+
     <div class="container">
-      <div class="hero-content">
-        <span class="hero-subtitle"><?= e($hero_subtitle) ?></span>
-        <h1 class="hero-title"><?= e($hero_title) ?></h1>
-        <p class="hero-desc"><?= e($hero_desc) ?></p>
-        <div class="hero-buttons">
-          <a href="#menu" class="btn btn-primary"><i class="fa-solid fa-utensils"></i> Lihat Menu</a>
-          <a href="<?= e($maps_link) ?>" target="_blank" rel="noopener" class="btn btn-secondary"><i class="fa-solid fa-map-location-dot"></i> Buka Google Maps</a>
-          <a href="https://wa.me/<?= e($whatsapp_number) ?>?text=Halo%20konservatif.coffee,%20saya%20ingin%20tanya-tanya%20info%20menu/reservasi" target="_blank" rel="noopener" class="btn btn-outline" style="border-color: var(--accent-orange); color: var(--text-light);"><i class="fa-brands fa-whatsapp"></i> Chat WhatsApp</a>
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <i class="fa-solid fa-medal"></i> Premium Coffee Experience
+          </div>
+          <span class="hero-subtitle"><?= e($hero_subtitle) ?></span>
+          <h1 class="hero-title text-gradient"><?= e($hero_title) ?></h1>
+          <p class="hero-desc"><?= e($hero_desc) ?></p>
+          <div class="hero-buttons">
+            <a href="#menu" class="btn btn-primary"><i class="fa-solid fa-mug-hot"></i> Lihat Menu</a>
+            <a href="<?= e($maps_link) ?>" target="_blank" rel="noopener" class="btn btn-secondary"><i class="fa-solid fa-compass"></i> Buka Maps</a>
+            <a href="https://wa.me/<?= e($whatsapp_number) ?>?text=Halo%20konservatif.coffee,%20saya%20ingin%20tanya-tanya%20info%20menu/reservasi" target="_blank" rel="noopener" class="btn btn-outline"><i class="fa-brands fa-whatsapp"></i> Chat WhatsApp</a>
+          </div>
+          
+          <!-- Statistics Counter -->
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <div class="hero-stat-number" data-count="<?= count($menu_items) ?>" data-suffix="+">0</div>
+              <div class="hero-stat-label">Menu Pilihan</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-number" data-count="120" data-suffix="K+">0</div>
+              <div class="hero-stat-label">Pelanggan Puas</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-number" data-count="4" data-suffix=".8">0</div>
+              <div class="hero-stat-label">Rating Google</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-cup-wrapper">
+            <div class="hero-cup-glow"></div>
+            <img src="assets/images/hero-coffee.png" alt="Premium Coffee Cup" class="hero-cup-image">
+            <div class="hero-steam steam-container">
+              <div class="steam-line"></div>
+              <div class="steam-line"></div>
+              <div class="steam-line"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- Tentang Kami Section -->
-  <section id="tentang-kami">
+  <!-- ========== TENTANG KAMI SECTION ========== -->
+  <section class="section section-bg-alt" id="tentang-kami">
     <div class="container">
       <div class="about-grid">
         <div class="about-content reveal reveal-right">
           <span class="section-tag">Kisah Kami</span>
-          <h2 class="about-title">Tentang Kami</h2>
+          <h2 class="section-title text-gradient">Tentang Kami</h2>
           <p class="about-desc"><?= nl2br(e($about_text)) ?></p>
+          
+          <div class="about-highlights">
+            <div class="about-highlight-card">
+              <div class="icon"><i class="fa-solid fa-mug-hot"></i></div>
+              <h4>Fresh Roast</h4>
+              <p>Biji kopi nusantara pilihan diseduh segar setiap hari.</p>
+            </div>
+            <div class="about-highlight-card">
+              <div class="icon"><i class="fa-solid fa-couch"></i></div>
+              <h4>Cozy Space</h4>
+              <p>Suasana modern vintage yang hangat, pas untuk santai & WFC.</p>
+            </div>
+          </div>
+          
           <a href="#kontak" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Hubungi Kami</a>
         </div>
+        
         <div class="about-image-wrapper reveal reveal-left">
           <img src="<?= e($about_image) ?>" alt="Suasana konservatif.coffee" class="about-image" loading="lazy">
+          <div class="about-image-frame"></div>
           <div class="about-badge">
             <h4>konservatif.coffee</h4>
             <p>Modern Vintage Aesthetic</p>
@@ -198,13 +270,13 @@ $wa_text = urlencode("Halo kak, saya mau tanya menu di Konservatif. Cikupa.");
     </div>
   </section>
 
-  <!-- Menu Section -->
-  <section id="menu" style="background-color: var(--bone-white);">
+  <!-- ========== MENU SECTION ========== -->
+  <section class="section" id="menu">
     <div class="container">
       <div class="section-header reveal reveal-up">
         <span class="section-tag">Sajian Terbaik Kami</span>
-        <h2 class="section-title">Menu</h2>
-        <p>Nikmati pilihan sajian rasa autentik yang diseduh dan dimasak dengan penuh cinta.</p>
+        <h2 class="section-title text-gradient">Eksplorasi Menu</h2>
+        <p class="section-subtitle">Nikmati pilihan sajian rasa autentik yang diseduh dan dimasak dengan penuh cinta.</p>
       </div>
 
       <!-- Menu Category Tabs -->
@@ -224,85 +296,77 @@ $wa_text = urlencode("Halo kak, saya mau tanya menu di Konservatif. Cikupa.");
         <div class="menu-panel<?= $first ? ' active' : '' ?>" id="menu-<?= $key ?>">
           
           <?php if ($cfg['type'] === 'hot_ice'): ?>
-            <!-- Drink table with Hot/Ice columns -->
-            <div class="menu-table-wrap">
-              <table class="menu-table">
-                <thead>
-                  <tr>
-                    <th class="col-name">Menu</th>
-                    <th class="col-price"><i class="fa-solid fa-mug-hot"></i> Hot</th>
-                    <th class="col-price"><i class="fa-solid fa-snowflake"></i> Ice</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php if (empty($items)): ?>
-                    <tr><td colspan="3" style="text-align:center; padding:24px;">Belum ada menu tersedia.</td></tr>
-                  <?php else: ?>
-                    <?php foreach ($items as $item): ?>
-                      <tr>
-                        <td class="col-name">
-                          <span class="menu-item-name"><?= e($item['name']) ?></span>
-                          <?php if (!empty($item['description'])): ?>
-                            <span class="menu-item-desc"><?= e($item['description']) ?></span>
+            <!-- Drink Grid with Hot & Ice Options -->
+            <div class="menu-cards-grid">
+              <?php if (empty($items)): ?>
+                <p class="no-menu">Belum ada menu tersedia.</p>
+              <?php else: ?>
+                <?php foreach ($items as $item): ?>
+                  <div class="menu-premium-card tilt-card">
+                    <div class="menu-card-body">
+                      <div class="menu-card-header">
+                        <h3 class="menu-card-title"><?= e($item['name']) ?></h3>
+                        <div class="menu-card-price-pills">
+                          <?php if (!empty($item['hot_price']) && $item['hot_price'] > 0): ?>
+                            <span class="price-pill hot"><i class="fa-solid fa-mug-hot"></i> <?= format_k($item['hot_price']) ?></span>
                           <?php endif; ?>
-                        </td>
-                        <td class="col-price"><?= format_k($item['hot_price'] ?? 0) ?></td>
-                        <td class="col-price"><?= format_k($item['ice_price'] ?? 0) ?></td>
-                      </tr>
-                    <?php endforeach; ?>
-                  <?php endif; ?>
-                </tbody>
-              </table>
+                          <?php if (!empty($item['ice_price']) && $item['ice_price'] > 0): ?>
+                            <span class="price-pill ice"><i class="fa-solid fa-snowflake"></i> <?= format_k($item['ice_price']) ?></span>
+                          <?php endif; ?>
+                        </div>
+                      </div>
+                      <?php if (!empty($item['description'])): ?>
+                        <p class="menu-card-description"><?= e($item['description']) ?></p>
+                      <?php endif; ?>
+                    </div>
+                  </div>
+                <?php endforeach; ?>
+              <?php endif; ?>
             </div>
 
           <?php elseif ($cfg['type'] === 'single'): ?>
-            <!-- Single price drink (Signature / Mocktail) -->
-            <div class="menu-table-wrap">
-              <table class="menu-table">
-                <thead>
-                  <tr>
-                    <th class="col-name">Menu</th>
-                    <th class="col-price">Harga</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php if (empty($items)): ?>
-                    <tr><td colspan="2" style="text-align:center; padding:24px;">Belum ada menu tersedia.</td></tr>
-                  <?php else: ?>
-                    <?php foreach ($items as $item): ?>
-                      <tr>
-                        <td class="col-name">
-                          <span class="menu-item-name"><?= e($item['name']) ?></span>
-                          <?php if (!empty($item['description'])): ?>
-                            <span class="menu-item-desc"><?= e($item['description']) ?></span>
-                          <?php endif; ?>
-                        </td>
-                        <td class="col-price"><?= format_k($item['price'] ?? 0) ?></td>
-                      </tr>
-                    <?php endforeach; ?>
-                  <?php endif; ?>
-                </tbody>
-              </table>
+            <!-- Single Price Grid (Signature / Mocktails) -->
+            <div class="menu-cards-grid">
+              <?php if (empty($items)): ?>
+                <p class="no-menu">Belum ada menu tersedia.</p>
+              <?php else: ?>
+                <?php foreach ($items as $item): ?>
+                  <div class="menu-premium-card tilt-card highlighted">
+                    <div class="menu-card-badge">★ Favorite</div>
+                    <div class="menu-card-body">
+                      <div class="menu-card-header">
+                        <h3 class="menu-card-title"><?= e($item['name']) ?></h3>
+                        <span class="price-pill single-price"><?= format_k($item['price'] ?? 0) ?></span>
+                      </div>
+                      <?php if (!empty($item['description'])): ?>
+                        <p class="menu-card-description"><?= e($item['description']) ?></p>
+                      <?php endif; ?>
+                    </div>
+                  </div>
+                <?php endforeach; ?>
+              <?php endif; ?>
             </div>
 
           <?php else: ?>
-            <!-- Food / Snack cards -->
-            <div class="menu-food-grid">
+            <!-- Food / Snack Grid -->
+            <div class="menu-cards-grid food-grid">
               <?php if (empty($items)): ?>
-                <p style="grid-column: 1/-1; text-align: center;">Belum ada menu tersedia.</p>
+                <p class="no-menu">Belum ada menu tersedia.</p>
               <?php else: ?>
                 <?php foreach ($items as $item): ?>
-                  <div class="menu-food-card">
-                    <div class="food-card-info">
-                      <h3 class="food-card-name"><?= e($item['name']) ?></h3>
+                  <div class="menu-premium-card tilt-card food-card">
+                    <div class="menu-card-body">
+                      <div class="menu-card-header">
+                        <h3 class="menu-card-title"><?= e($item['name']) ?></h3>
+                        <span class="price-pill food-price"><?= format_k($item['price'] ?? 0) ?></span>
+                      </div>
                       <?php if (!empty($item['description'])): ?>
-                        <p class="food-card-desc"><?= e($item['description']) ?></p>
+                        <p class="menu-card-description"><?= e($item['description']) ?></p>
                       <?php endif; ?>
                       <?php if (!empty($item['variant'])): ?>
-                        <span class="food-card-variant">Varian: <?= e($item['variant']) ?></span>
+                        <span class="menu-card-variant">Varian: <?= e($item['variant']) ?></span>
                       <?php endif; ?>
                     </div>
-                    <span class="food-card-price"><?= format_k($item['price'] ?? 0) ?></span>
                   </div>
                 <?php endforeach; ?>
               <?php endif; ?>
@@ -311,7 +375,7 @@ $wa_text = urlencode("Halo kak, saya mau tanya menu di Konservatif. Cikupa.");
 
           <!-- WhatsApp Order Button -->
           <div class="menu-wa-btn-wrap">
-            <a href="https://wa.me/<?= e($whatsapp_number) ?>?text=<?= $wa_text ?>" target="_blank" rel="noopener" class="btn btn-wa-order">
+            <a href="https://wa.me/<?= e($whatsapp_number) ?>?text=<?= $wa_text ?>" target="_blank" rel="noopener" class="btn btn-whatsapp">
               <i class="fa-brands fa-whatsapp"></i> Pesan via WhatsApp
             </a>
           </div>
@@ -321,82 +385,82 @@ $wa_text = urlencode("Halo kak, saya mau tanya menu di Konservatif. Cikupa.");
     </div>
   </section>
 
-
-
-  <!-- Fitur Unggulan Section -->
-  <section class="features-section" id="keunggulan">
+  <!-- ========== FEATURE SECTION ========== -->
+  <section class="section section-bg-alt" id="keunggulan">
     <div class="container">
       <div class="section-header reveal reveal-up">
         <span class="section-tag">Kenapa Harus Kami</span>
-        <h2 class="section-title" style="color: var(--bone-white);">Fitur Unggulan</h2>
-        <p style="color: rgba(250,249,246,0.65);">Kami berkomitmen untuk memberikan pengalaman nongkrong terbaik dengan kualitas prima.</p>
+        <h2 class="section-title text-gradient">Fitur & Keunggulan</h2>
+        <p class="section-subtitle">Komitmen kami untuk memberikan pengalaman bersantai terbaik bagi Anda.</p>
       </div>
       
       <div class="features-grid">
-        <!-- Feature 1 -->
         <div class="feature-card reveal reveal-up">
-          <div class="feature-icon-box">
-            <i class="fa-solid fa-chair"></i>
-          </div>
+          <div class="feature-icon-box"><i class="fa-solid fa-couch"></i></div>
           <h3>Suasana Nyaman</h3>
-          <p>Interior modern vintage yang hangat, tempat duduk santai, dan dekorasi estetik yang pas untuk bersantai melepas penat.</p>
+          <p>Interior modern vintage yang hangat, tempat duduk santai, dan dekorasi estetik yang pas untuk melepas penat.</p>
         </div>
 
-        <!-- Feature 2 -->
         <div class="feature-card reveal reveal-up">
-          <div class="feature-icon-box">
-            <i class="fa-solid fa-laptop"></i>
-          </div>
-          <h3>Cocok untuk Kerja Santai</h3>
-          <p>Dilengkapi koneksi Wi-Fi yang stabil, colokan listrik di berbagai sudut, serta suasana tenang yang produktif untuk WFC (Work From Cafe).</p>
+          <div class="feature-icon-box"><i class="fa-solid fa-laptop"></i></div>
+          <h3>Cocok untuk WFC</h3>
+          <p>Dilengkapi koneksi Wi-Fi kencang, colokan melimpah, dan suasana tenang yang meningkatkan produktivitas Anda.</p>
         </div>
 
-        <!-- Feature 3 -->
         <div class="feature-card reveal reveal-up">
-          <div class="feature-icon-box">
-            <i class="fa-solid fa-seedling"></i>
-          </div>
-          <h3>Menu Kopi & Non-Kopi</h3>
-          <p>Kombinasi seduhan kopi nusantara yang aromatik serta varian minuman non-kopi manis segar untuk memanjakan selera Anda.</p>
+          <div class="feature-icon-box"><i class="fa-solid fa-seedling"></i></div>
+          <h3>Menu Kopi Pilihan</h3>
+          <p>Kombinasi seduhan biji kopi single-origin lokal aromatik dan minuman manis segar non-kopi yang memikat selera.</p>
         </div>
 
-        <!-- Feature 4 -->
         <div class="feature-card reveal reveal-up">
-          <div class="feature-icon-box">
-            <i class="fa-solid fa-map-pin"></i>
-          </div>
-          <h3>Lokasi Mudah Ditemukan</h3>
-          <p>Terletak strategis di Cikupa dengan akses jalan yang mudah serta area parkir yang memadai untuk kendaraan Anda.</p>
-        </div>
-
-        <!-- Feature 5 -->
-        <div class="feature-card reveal reveal-up">
-          <div class="feature-icon-box">
-            <i class="fa-solid fa-users"></i>
-          </div>
-          <h3>Kumpul Teman</h3>
-          <p>Layout ruang yang ramah kelompok, cocok untuk mengobrol santai, boardgames, kumpul alumni, hingga kumpul keluarga.</p>
-        </div>
-
-        <!-- Feature 6 -->
-        <div class="feature-card reveal reveal-up">
-          <div class="feature-icon-box">
-            <i class="fa-solid fa-calendar-check"></i>
-          </div>
-          <h3>Acara Kecil & Komunitas</h3>
-          <p>Area kami terbuka untuk disewa sebagai tempat pertemuan komunitas, workshop, arisan, hingga pesta ulang tahun mini.</p>
+          <div class="feature-icon-box"><i class="fa-solid fa-map-pin"></i></div>
+          <h3>Lokasi Strategis</h3>
+          <p>Terletak di Cikupa dengan akses rute sangat mudah serta area parkir yang aman dan memadai.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Galeri Section -->
-  <section id="galeri">
+  <!-- ========== PROMO SECTION ========== -->
+  <section class="section" id="promo">
+    <div class="container">
+      <div class="section-header reveal reveal-up">
+        <span class="section-tag">Spesial Untuk Anda</span>
+        <h2 class="section-title text-gradient">Promo Menarik</h2>
+        <p class="section-subtitle">Jangan lewatkan kesempatan promo seru hanya di konservatif.coffee!</p>
+      </div>
+
+      <div class="promo-grid">
+        <div class="promo-card reveal reveal-up">
+          <div class="promo-card-deco"></div>
+          <div class="promo-card-icon"><i class="fa-solid fa-percent"></i></div>
+          <h3>Diskon Hari Jumat</h3>
+          <p>Dapatkan penawaran potongan harga spesial 15% khusus untuk semua menu signature base pada hari Jumat!</p>
+          <span class="badge badge-promo">Setiap Hari Jumat</span>
+          <div class="promo-countdown" id="promo-countdown">
+            <!-- Countdown timer (JS rendered) -->
+          </div>
+        </div>
+
+        <div class="promo-card reveal reveal-up">
+          <div class="promo-card-deco"></div>
+          <div class="promo-card-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+          <h3>Promo Pelajar / Mahasiswa</h3>
+          <p>Tunjukkan kartu identitas pelajar/mahasiswa Anda dan dapatkan potongan harga langsung 10% untuk menu minuman.</p>
+          <span class="badge badge-promo">Berlaku Setiap Hari</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== GALERI SECTION ========== -->
+  <section class="section section-bg-alt" id="galeri">
     <div class="container">
       <div class="section-header reveal reveal-up">
         <span class="section-tag">Sudut Estetik Kami</span>
-        <h2 class="section-title">Galeri Foto</h2>
-        <p>Intip kehangatan sudut interior, kelezatan minuman, dan momen nongkrong seru di konservatif.coffee.</p>
+        <h2 class="section-title text-gradient">Galeri Foto</h2>
+        <p class="section-subtitle">Intip kehangatan interior, kelezatan sajian, dan momen seru di konservatif.coffee.</p>
       </div>
 
       <!-- Filter Buttons -->
@@ -404,20 +468,20 @@ $wa_text = urlencode("Halo kak, saya mau tanya menu di Konservatif. Cikupa.");
         <button class="filter-btn active" data-filter="all">Semua</button>
         <button class="filter-btn" data-filter="atmosphere">Suasana Cafe</button>
         <button class="filter-btn" data-filter="drinks">Minuman</button>
-        <button class="filter-btn" data-filter="food">Snack & Makanan</button>
-        <button class="filter-btn" data-filter="front">Storefront</button>
+        <button class="filter-btn" data-filter="food">Makanan & Snack</button>
+        <button class="filter-btn" data-filter="front">Tampak Depan</button>
       </div>
 
       <!-- Gallery Grid -->
       <div class="gallery-grid reveal reveal-up">
         <?php if (empty($gallery_items)): ?>
-          <p style="grid-column: 1/-1; text-align: center;">Belum ada foto galeri tersedia.</p>
+          <p class="no-gallery">Belum ada foto galeri tersedia.</p>
         <?php else: ?>
           <?php foreach ($gallery_items as $item): ?>
             <div class="gallery-item" data-category="<?= e($item['category']) ?>" data-src="<?= e($item['image']) ?>" data-caption="<?= e($item['caption']) ?>">
               <img src="<?= e($item['image']) ?>" alt="<?= e($item['caption']) ?>" loading="lazy">
               <div class="gallery-overlay">
-                <div class="gallery-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                <div class="gallery-icon"><i class="fa-solid fa-expand"></i></div>
                 <p class="gallery-item-title"><?= e($item['caption']) ?></p>
               </div>
             </div>
@@ -436,13 +500,13 @@ $wa_text = urlencode("Halo kak, saya mau tanya menu di Konservatif. Cikupa.");
     </div>
   </div>
 
-  <!-- Lokasi Section -->
-  <section id="lokasi" style="background-color: var(--bone-white);">
+  <!-- ========== LOKASI SECTION ========== -->
+  <section class="section" id="lokasi">
     <div class="container">
       <div class="location-grid">
         <div class="location-info reveal reveal-right">
           <span class="section-tag">Kunjungi Kami</span>
-          <h2 class="loc-title">Lokasi & Jam Operasional</h2>
+          <h2 class="loc-title text-gradient">Lokasi & Jam Buka</h2>
           
           <div class="info-item">
             <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
@@ -455,7 +519,7 @@ $wa_text = urlencode("Halo kak, saya mau tanya menu di Konservatif. Cikupa.");
           <div class="info-item">
             <div class="info-icon"><i class="fa-solid fa-clock"></i></div>
             <div class="info-text">
-              <h4>Jam Buka</h4>
+              <h4>Jam Operasional</h4>
               <p><?= e($opening_hours) ?></p>
             </div>
           </div>
@@ -463,13 +527,13 @@ $wa_text = urlencode("Halo kak, saya mau tanya menu di Konservatif. Cikupa.");
           <div class="info-item">
             <div class="info-icon"><i class="fa-solid fa-circle-info"></i></div>
             <div class="info-text">
-              <h4>Area</h4>
-              <p>Cikupa, Kabupaten Tangerang, Banten</p>
+              <h4>Area Wilayah</h4>
+              <p>Kecamatan Cikupa, Kabupaten Tangerang, Banten 15710</p>
             </div>
           </div>
 
           <div class="loc-buttons">
-            <a href="<?= e($maps_link) ?>" target="_blank" rel="noopener" class="btn btn-primary"><i class="fa-solid fa-directions"></i> Petunjuk Arah / Rute</a>
+            <a href="<?= e($maps_link) ?>" target="_blank" rel="noopener" class="btn btn-primary"><i class="fa-solid fa-map-location-dot"></i> Rute Navigasi</a>
           </div>
         </div>
 
@@ -483,8 +547,8 @@ $wa_text = urlencode("Halo kak, saya mau tanya menu di Konservatif. Cikupa.");
               title="konservatif.coffee Google Maps Location">
             </iframe>
           <?php else: ?>
-            <div style="display:flex; align-items:center; justify-content:center; height:100%; background:#e0e0e0;">
-              <p>Google Maps belum disematkan.</p>
+            <div class="no-map">
+              <p><i class="fa-solid fa-circle-exclamation"></i> Google Maps belum disematkan.</p>
             </div>
           <?php endif; ?>
         </div>
@@ -492,85 +556,90 @@ $wa_text = urlencode("Halo kak, saya mau tanya menu di Konservatif. Cikupa.");
     </div>
   </section>
 
-  <!-- Testimonial Section -->
-  <section class="testimonials-section" id="testimoni">
+  <!-- ========== TESTIMONIAL SECTION ========== -->
+  <section class="section section-bg-alt" id="testimoni">
     <div class="container">
       <div class="section-header reveal reveal-up">
         <span class="section-tag">Ulasan Pengunjung</span>
-        <h2 class="section-title">Apa Kata Mereka?</h2>
-        <p>Pendapat jujur dari para penikmat kopi setia konservatif.coffee.</p>
+        <h2 class="section-title text-gradient">Apa Kata Mereka?</h2>
+        <p class="section-subtitle">Pendapat jujur dari para penikmat setia kafe kami.</p>
       </div>
 
-      <div class="testimonial-slider reveal reveal-up">
-        <div class="testimonial-track" id="testimonial-track">
-          <?php if (empty($testimonials)): ?>
-            <div class="testimonial-slide">
-              <div class="quote-icon">“</div>
-              <p class="testimonial-text">Belum ada testimoni tersedia saat ini.</p>
-            </div>
-          <?php else: ?>
-            <?php foreach ($testimonials as $t): ?>
+      <div class="testimonial-slider-wrapper reveal reveal-up">
+        <div class="testimonial-slider">
+          <div class="testimonial-track" id="testimonial-track">
+            <?php if (empty($testimonials)): ?>
               <div class="testimonial-slide">
                 <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
-                <p class="testimonial-text">“<?= e($t['text']) ?>”</p>
-                <div class="testimonial-author">
-                  <p class="author-name"><?= e($t['name']) ?></p>
-                  <p class="author-role"><?= e($t['role'] ?? 'Pelanggan') ?></p>
-                </div>
+                <p class="testimonial-text">Belum ada testimoni tersedia saat ini.</p>
               </div>
+            <?php else: ?>
+              <?php foreach ($testimonials as $t): ?>
+                <div class="testimonial-slide">
+                  <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+                  <p class="testimonial-text">“<?= e($t['text']) ?>”</p>
+                  <div class="testimonial-author">
+                    <div class="testimonial-avatar"><?= substr(e($t['name']), 0, 1) ?></div>
+                    <div class="author-details">
+                      <p class="author-name"><?= e($t['name']) ?></p>
+                      <p class="author-role"><?= e($t['role'] ?? 'Pelanggan') ?></p>
+                    </div>
+                  </div>
+                </div>
+              <?php endforeach; ?>
+            <?php endif; ?>
+          </div>
+        </div>
+        
+        <?php if (!empty($testimonials) && count($testimonials) > 1): ?>
+          <div class="slider-dots" id="slider-dots">
+            <?php foreach ($testimonials as $index => $t): ?>
+              <button class="dot <?= $index === 0 ? 'active' : '' ?>" data-index="<?= $index ?>" aria-label="Slide <?= $index + 1 ?>"></button>
             <?php endforeach; ?>
-          <?php endif; ?>
-        </div>
+          </div>
+        <?php endif; ?>
       </div>
-      
-      <?php if (!empty($testimonials) && count($testimonials) > 1): ?>
-        <div class="slider-dots" id="slider-dots">
-          <?php foreach ($testimonials as $index => $t): ?>
-            <button class="dot <?= $index === 0 ? 'active' : '' ?>" data-index="<?= $index ?>" aria-label="Slide <?= $index + 1 ?>"></button>
-          <?php endforeach; ?>
-        </div>
-      <?php endif; ?>
     </div>
   </section>
 
-  <!-- Kontak Section -->
-  <section id="kontak">
+  <!-- ========== KONTAK & RESERVASI SECTION ========== -->
+  <section class="section" id="kontak">
     <div class="container">
       <div class="contact-grid">
         <div class="contact-quick reveal reveal-right">
           <span class="section-tag">Hubungi Kami</span>
-          <h3>Ada Pertanyaan?</h3>
-          <p>Kami selalu senang mendengar dari Anda! Silakan kirimkan pesan, pertanyaan, atau booking tempat untuk acara melalui form, atau gunakan link cepat di bawah ini.</p>
+          <h2 class="contact-title text-gradient">Ada Pertanyaan?</h2>
+          <p>Pintu kami selalu terbuka untuk masukan, kerja sama event, atau obrolan santai lainnya. Jangan ragu menghubungi kami melalui media sosial atau WhatsApp!</p>
           
           <div class="social-buttons">
             <a href="https://wa.me/<?= e($whatsapp_number) ?>" target="_blank" rel="noopener" class="social-btn">
-              <div class="social-icon" style="color: #25D366;"><i class="fa-brands fa-whatsapp"></i></div>
-              <div>
-                <p style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal; margin-bottom: 2px;">Kirim Pesan WhatsApp</p>
-                <p>Chat Langsung Admin</p>
+              <div class="social-icon wa"><i class="fa-brands fa-whatsapp"></i></div>
+              <div class="social-btn-text">
+                <span>Kirim Pesan WhatsApp</span>
+                <p>Chat Admin Langsung</p>
               </div>
             </a>
             
             <a href="<?= e($instagram_link) ?>" target="_blank" rel="noopener" class="social-btn">
-              <div class="social-icon" style="color: #E1306C;"><i class="fa-brands fa-instagram"></i></div>
-              <div>
-                <p style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal; margin-bottom: 2px;">Ikuti Instagram Kami</p>
+              <div class="social-icon ig"><i class="fa-brands fa-instagram"></i></div>
+              <div class="social-btn-text">
+                <span>Ikuti Instagram Kami</span>
                 <p>@konservatif.coffee</p>
               </div>
             </a>
 
             <a href="<?= e($maps_link) ?>" target="_blank" rel="noopener" class="social-btn">
-              <div class="social-icon" style="color: #4285F4;"><i class="fa-solid fa-map-location-dot"></i></div>
-              <div>
-                <p style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal; margin-bottom: 2px;">Buka di Google Maps</p>
-                <p>konservatif.coffee</p>
+              <div class="social-icon maps"><i class="fa-solid fa-map-location-dot"></i></div>
+              <div class="social-btn-text">
+                <span>Buka Rute Navigasi</span>
+                <p>Google Maps Lokasi</p>
               </div>
             </a>
           </div>
         </div>
 
         <div class="contact-form-container reveal reveal-left">
-          <h3>Kirim Pesan</h3>
+          <h3>Kirim Pesan Langsung</h3>
           <form id="contactForm" method="POST">
             <input type="hidden" name="action" value="submit_contact">
             
@@ -586,11 +655,11 @@ $wa_text = urlencode("Halo kak, saya mau tanya menu di Konservatif. Cikupa.");
 
             <div class="form-group">
               <label for="message" class="form-label">Pesan / Masukan</label>
-              <textarea id="message" name="message" class="form-control" placeholder="Tuliskan pesan Anda di sini..." required></textarea>
+              <textarea id="message" name="message" class="form-control" placeholder="Tuliskan pesan atau saran Anda di sini..." required></textarea>
             </div>
 
             <button type="submit" class="btn btn-primary" id="submitBtn" style="width: 100%;">
-              <i class="fa-solid fa-paper-plane"></i> Kirim Sekarang
+              <i class="fa-solid fa-paper-plane"></i> Kirim Pesan
             </button>
             
             <div id="formStatus" class="form-status"></div>
@@ -600,17 +669,17 @@ $wa_text = urlencode("Halo kak, saya mau tanya menu di Konservatif. Cikupa.");
     </div>
   </section>
 
-  <!-- Floating WhatsApp Button -->
+  <!-- Floating WhatsApp Action -->
   <a href="https://wa.me/<?= e($whatsapp_number) ?>" class="floating-whatsapp" target="_blank" rel="noopener" aria-label="Chat WhatsApp">
     <i class="fa-brands fa-whatsapp"></i>
   </a>
 
-  <!-- Footer -->
+  <!-- ========== FOOTER ========== -->
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-info">
-          <h3><?= e($site_name) ?></h3>
+          <h3>konservatif.<span>coffee</span></h3>
           <p><?= e($hero_desc) ?></p>
         </div>
         
@@ -619,7 +688,7 @@ $wa_text = urlencode("Halo kak, saya mau tanya menu di Konservatif. Cikupa.");
           <ul>
             <li><a href="#">Beranda</a></li>
             <li><a href="#tentang-kami">Tentang Kami</a></li>
-            <li><a href="#menu">Menu Favorit</a></li>
+            <li><a href="#menu">Sajian Menu</a></li>
             <li><a href="#galeri">Galeri Foto</a></li>
             <li><a href="#lokasi">Lokasi Kami</a></li>
             <li><a href="#kontak">Hubungi Kontak</a></li>
@@ -627,22 +696,22 @@ $wa_text = urlencode("Halo kak, saya mau tanya menu di Konservatif. Cikupa.");
         </div>
 
         <div class="footer-links">
-          <h4>Hubungi & Temukan</h4>
+          <h4>Temukan Kami</h4>
           <ul>
-            <li><a href="<?= e($maps_link) ?>" target="_blank" rel="noopener"><i class="fa-solid fa-compass"></i> Rute Google Maps</a></li>
+            <li><a href="<?= e($maps_link) ?>" target="_blank" rel="noopener"><i class="fa-solid fa-compass"></i> Arah Google Maps</a></li>
             <li><a href="https://wa.me/<?= e($whatsapp_number) ?>" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Chat WhatsApp</a></li>
-            <li><a href="<?= e($instagram_link) ?>" target="_blank" rel="noopener"><i class="fa-brands fa-instagram"></i> Instagram Profile</a></li>
+            <li><a href="<?= e($instagram_link) ?>" target="_blank" rel="noopener"><i class="fa-brands fa-instagram"></i> Ikuti di Instagram</a></li>
           </ul>
         </div>
       </div>
       
       <div class="footer-bottom">
-        <p>&copy; <?= date('Y') ?> <?= e($site_name) ?>. All Rights Reserved. Crafted with care.</p>
+        <p>&copy; <?= date('Y') ?> konservatif.coffee. All Rights Reserved. Crafted with visual excellence.</p>
       </div>
     </div>
   </footer>
 
-  <!-- Client-Side Interaction Script -->
+  <!-- Interactive JavaScript Scripts -->
   <script src="assets/js/main.js"></script>
 </body>
 </html>
