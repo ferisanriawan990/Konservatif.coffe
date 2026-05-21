@@ -1778,8 +1778,6 @@ a {
   width: 100%;
   height: 100%;
   border: none;
-  filter: grayscale(1) invert(0.92) contrast(1.1);
-  /* Dark map effect */
 }
 
 .no-map {
