@@ -2953,3 +2953,236 @@ textarea.form-control {
     padding: 24px !important; /* Elegant balanced form padding */
   }
 }
+
+/* -------------------------------------------------------------
+   ELEGANT BACKGROUND MUSIC PLAYER COMPONENT
+   ------------------------------------------------------------- */
+.music-player-container {
+  position: fixed;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  pointer-events: none; /* Let container be transparent to clicks */
+}
+
+/* Position Configurations */
+.music-player-container.bottom-left {
+  left: 30px;
+  bottom: 30px;
+}
+
+.music-player-container.bottom-right {
+  right: 95px; /* Offset to sit side-by-side with WhatsApp */
+  bottom: 30px;
+}
+
+/* Interactive Control Button */
+.music-toggle-btn {
+  pointer-events: auto; /* Re-enable clicks on button */
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(10, 7, 5, 0.75);
+  border: 1.5px solid var(--color-gold);
+  color: var(--color-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.music-toggle-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  border-color: var(--color-orange);
+  color: var(--color-orange);
+  box-shadow: 0 10px 28px rgba(212, 167, 74, 0.25);
+}
+
+.music-toggle-btn:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+/* Subtle Gold Pulse when Musik is Paused to grab attention elegantly */
+.music-player-container:has(#music-icon.fa-volume-xmark) .music-toggle-btn {
+  animation: goldGlowPulse 2.5s infinite;
+}
+
+@keyframes goldGlowPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(212, 167, 74, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(212, 167, 74, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(212, 167, 74, 0);
+  }
+}
+
+/* Icon & Waves Wrapper */
+.music-icon-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  width: 100%;
+  height: 100%;
+  padding-top: 4px;
+}
+
+.music-icon-wrapper i {
+  font-size: 1.05rem;
+  transition: transform 0.2s ease;
+}
+
+/* Sound Wave Columns */
+.music-wave {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 9px;
+  margin-top: 1px;
+}
+
+.music-wave .bar {
+  width: 2px;
+  height: 3px;
+  background-color: var(--color-gold);
+  border-radius: 1px;
+  transition: all 0.2s ease;
+}
+
+.music-toggle-btn:hover .music-wave .bar {
+  background-color: var(--color-orange);
+}
+
+/* Sound Wave Bouncing Columns Animation */
+.music-wave.active .bar-1 { animation: bounceBar 0.8s ease-in-out infinite alternate; }
+.music-wave.active .bar-2 { animation: bounceBar 0.5s ease-in-out infinite alternate 0.15s; }
+.music-wave.active .bar-3 { animation: bounceBar 0.7s ease-in-out infinite alternate 0.3s; }
+.music-wave.active .bar-4 { animation: bounceBar 0.6s ease-in-out infinite alternate 0.05s; }
+
+@keyframes bounceBar {
+  0% {
+    height: 2px;
+  }
+  100% {
+    height: 10px;
+  }
+}
+
+/* Elegant Hover Tooltips */
+.music-tooltip {
+  position: absolute;
+  bottom: 50%;
+  background: rgba(10, 7, 5, 0.92);
+  border: 1px solid rgba(212, 167, 74, 0.3);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  padding: 8px 16px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  pointer-events: none;
+  opacity: 0;
+  white-space: nowrap;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.tooltip-title {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-gold);
+  text-align: left;
+}
+
+.tooltip-status {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  text-align: left;
+  letter-spacing: 0.5px;
+}
+
+/* Slide configurations on hover */
+.music-player-container.bottom-left .music-tooltip {
+  left: 62px;
+  transform: translateY(50%) scale(0.9);
+  transform-origin: left center;
+}
+
+.music-player-container.bottom-left:hover .music-tooltip {
+  opacity: 1;
+  transform: translateY(50%) scale(1);
+}
+
+.music-player-container.bottom-right .music-tooltip {
+  right: 62px;
+  transform: translateY(50%) scale(0.9);
+  transform-origin: right center;
+}
+
+.music-player-container.bottom-right:hover .music-tooltip {
+  opacity: 1;
+  transform: translateY(50%) scale(1);
+}
+
+/* -------------------------------------------------------------
+   RESPONSIVE OVERRIDES (MOBILE PANE)
+   ------------------------------------------------------------- */
+@media (max-width: 767px) {
+  .music-player-container.bottom-left {
+    left: 20px !important;
+    bottom: 24px !important;
+  }
+
+  .music-player-container.bottom-right {
+    right: 88px !important; /* Perfect sidebar spacing next to 56px WhatsApp */
+    bottom: 24px !important;
+  }
+
+  .music-toggle-btn {
+    width: 48px !important;
+    height: 48px !important;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35) !important;
+  }
+
+  .music-icon-wrapper {
+    padding-top: 3px !important;
+  }
+
+  .music-icon-wrapper i {
+    font-size: 0.95rem !important;
+  }
+
+  /* Tooltip responsive offset adjustments */
+  .music-player-container.bottom-left .music-tooltip {
+    left: 56px !important;
+  }
+
+  .music-player-container.bottom-right .music-tooltip {
+    right: 56px !important;
+  }
+  
+  .music-tooltip {
+    padding: 6px 12px !important;
+  }
+  
+  .tooltip-title {
+    font-size: 0.75rem !important;
+  }
+  
+  .tooltip-status {
+    font-size: 0.65rem !important;
+  }
+}

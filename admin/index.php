@@ -47,6 +47,19 @@ function e($text) {
 }
 
 $data = get_settings($settings_file);
+if (!isset($data['music'])) {
+    $data['music'] = [
+        'enabled' => 'no',
+        'title' => 'Warm Coffee Shop Ambient',
+        'file_url' => '',
+        'url' => '',
+        'volume' => '50',
+        'loop' => 'yes',
+        'show_button' => 'yes',
+        'button_position' => 'bottom-left'
+    ];
+}
+$music = $data['music'];
 $contact = $data['contact'] ?? [];
 
 // Function to check if admin is logged in (session or cookie fallback)
@@ -168,6 +181,36 @@ function upload_gif($file_key) {
             if (move_uploaded_file($file_tmp, $dest_path)) {
                 return 'uploads/' . $new_name;
             }
+        }
+    }
+    return null;
+}
+
+function upload_audio($file_key) {
+    if (isset($_FILES[$file_key]) && $_FILES[$file_key]['error'] === UPLOAD_ERR_OK) {
+        if (is_on_vercel()) {
+            return null;
+        }
+        $file_tmp = $_FILES[$file_key]['tmp_name'];
+        $file_name = $_FILES[$file_key]['name'];
+        $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+        
+        $allowed_exts = ['mp3', 'wav', 'ogg'];
+        if (in_array($file_ext, $allowed_exts)) {
+            if ($_FILES[$file_key]['size'] > 10 * 1024 * 1024) {
+                return ['error' => 'Ukuran file audio terlalu besar! Maksimal 10MB.'];
+            }
+            $new_name = uniqid('audio_') . '.' . $file_ext;
+            $dest_dir = __DIR__ . '/../uploads/';
+            if (!is_dir($dest_dir)) {
+                mkdir($dest_dir, 0777, true);
+            }
+            $dest_path = $dest_dir . $new_name;
+            if (move_uploaded_file($file_tmp, $dest_path)) {
+                return ['path' => 'uploads/' . $new_name];
+            }
+        } else {
+            return ['error' => 'Format file audio tidak valid! Hanya diperbolehkan MP3, WAV, atau OGG.'];
         }
     }
     return null;
@@ -556,6 +599,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $alert_msg = 'Password saat ini salah. Perubahan ditolak!';
         }
     }
+
+    // 13. Save Music Settings
+    elseif ($action === 'save_music') {
+        $music_enabled = $_POST['music_enabled'] ?? 'no';
+        $music_title = trim($_POST['music_title'] ?? '');
+        $music_url = trim($_POST['music_url'] ?? '');
+        $music_volume = intval($_POST['music_volume'] ?? 50);
+        $music_loop = $_POST['music_loop'] ?? 'no';
+        $show_music_button = $_POST['show_music_button'] ?? 'yes';
+        $music_button_position = $_POST['music_button_position'] ?? 'bottom-left';
+        
+        if ($music_volume < 0) $music_volume = 0;
+        if ($music_volume > 100) $music_volume = 100;
+        
+        // Handle deletion of audio file if requested
+        if (isset($_POST['delete_music_file']) && $_POST['delete_music_file'] === 'yes') {
+            $old_file = $data['music']['file_url'] ?? '';
+            if (!empty($old_file) && file_exists(__DIR__ . '/../' . $old_file)) {
+                unlink(__DIR__ . '/../' . $old_file);
+            }
+            $data['music']['file_url'] = '';
+        }
+        
+        // Handle upload of new music file
+        $audio_upload = upload_audio('music_file');
+        if ($audio_upload !== null) {
+            if (isset($audio_upload['error'])) {
+                $alert_type = 'error';
+                $alert_msg = $audio_upload['error'];
+                $action = 'error_music';
+            } else {
+                $old_file = $data['music']['file_url'] ?? '';
+                if (!empty($old_file) && file_exists(__DIR__ . '/../' . $old_file)) {
+                    unlink(__DIR__ . '/../' . $old_file);
+                }
+                $data['music']['file_url'] = $audio_upload['path'];
+            }
+        }
+        
+        if ($action !== 'error_music') {
+            $data['music']['enabled'] = $music_enabled;
+            $data['music']['title'] = $music_title;
+            $data['music']['url'] = $music_url;
+            $data['music']['volume'] = $music_volume;
+            $data['music']['loop'] = $music_loop;
+            $data['music']['show_button'] = $show_music_button;
+            $data['music']['button_position'] = $music_button_position;
+            
+            if (save_settings($settings_file, $data)) {
+                $alert_type = 'success';
+                $alert_msg = 'Pengaturan musik berhasil diperbarui!';
+                $music = $data['music'];
+            } else {
+                $alert_type = 'error';
+                $alert_msg = 'Gagal menyimpan pengaturan musik.';
+            }
+        }
+    }
     
     // Vercel Read-Only override
     if (is_on_vercel()) {
@@ -624,6 +725,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
           <?php if ($total_messages > 0): ?>
             <span class="badge badge-msg"><?= $total_messages ?></span>
           <?php endif; ?>
+        </a>
+      </li>
+      <li>
+        <a href="#musik" class="tab-link" data-tab="tab-music">
+          <i class="fa-solid fa-music"></i> <span>Pengaturan Musik</span>
         </a>
       </li>
       <li>
@@ -1286,6 +1392,166 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 <?php endif; ?>
               </tbody>
             </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7b. TAB MUSIC SETTINGS -->
+      <div class="tab-content" id="tab-music">
+        <h1 class="page-title">Pengaturan Musik</h1>
+        <p class="page-subtitle">Kelola musik latar website, upload file audio (.mp3, .wav, .ogg), default volume, dan posisi tombol pemutar.</p>
+        
+        <div class="dashboard-split">
+          <!-- Settings Form Pane -->
+          <div class="form-panel-side">
+            <div class="card-dashboard">
+              <div class="card-header">Konfigurasi Audio Latar</div>
+              <div class="card-body">
+                <form id="musicSettingsForm" action="" method="POST" enctype="multipart/form-data">
+                  <input type="hidden" name="action" value="save_music">
+                  
+                  <div class="form-group">
+                    <label class="form-label">Aktifkan Musik Latar (Enable)</label>
+                    <select name="music_enabled" class="form-control">
+                      <option value="yes" <?= ($music['enabled'] ?? 'no') === 'yes' ? 'selected' : '' ?>>YA, Aktifkan</option>
+                      <option value="no" <?= ($music['enabled'] ?? 'no') === 'no' ? 'selected' : '' ?>>TIDAK, Nonaktifkan</option>
+                    </select>
+                    <small class="form-help">Jika dinonaktifkan, musik tidak akan dimuat dan dimainkan sama sekali.</small>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label class="form-label">Judul Musik (Music Title)</label>
+                    <input type="text" name="music_title" class="form-control" placeholder="Contoh: Warm Jazz Coffee Shop" value="<?= e($music['title'] ?? '') ?>" required>
+                    <small class="form-help">Judul yang muncul di label/tooltip tombol pemutar halaman utama.</small>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label class="form-label">Upload File Musik (.mp3, .wav, .ogg)</label>
+                    <input type="file" id="musicFileVal" name="music_file" class="form-file" accept=".mp3,.wav,.ogg">
+                    <small class="form-help">Ukuran maksimal file: 10MB. Format yang didukung: MP3, WAV, OGG.</small>
+                    
+                    <?php if (!empty($music['file_url'])): ?>
+                      <div style="margin-top: 15px; padding: 12px; background: rgba(234, 219, 200, 0.05); border: 1.5px solid rgba(234, 219, 200, 0.1); border-radius: var(--radius-sm); display: flex; flex-direction: column; gap: 8px;">
+                        <span style="font-size: 0.85rem; color: var(--cream-medium);"><i class="fa-solid fa-file-audio"></i> File Saat Ini: <strong><?= basename($music['file_url']) ?></strong></span>
+                        <label style="font-size: 0.8rem; color: var(--danger); display: flex; align-items: center; gap: 8px; cursor: pointer; margin-top: 5px;">
+                          <input type="checkbox" name="delete_music_file" value="yes"> Hapus file ini setelah menyimpan
+                        </label>
+                      </div>
+                    <?php endif; ?>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label class="form-label">URL Musik Alternatif (Opsional)</label>
+                    <input type="url" name="music_url" class="form-control" placeholder="https://domain.com/path-to-audio.mp3" value="<?= e($music['url'] ?? '') ?>">
+                    <small class="form-help">Gunakan ini jika ingin menggunakan link streaming eksternal daripada mengunggah file.</small>
+                  </div>
+                  
+                  <div class="form-group">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                      <label class="form-label" style="margin-bottom: 0;">Volume Default Musik (0 - 100%)</label>
+                      <span id="volume-val-display" style="font-weight: 700; color: var(--accent-orange); font-size: 0.95rem;"><?= e($music['volume'] ?? 50) ?>%</span>
+                    </div>
+                    <input type="range" id="music_volume_slider" name="music_volume" class="form-control" style="padding: 0; cursor: pointer;" min="0" max="100" value="<?= e($music['volume'] ?? 50) ?>">
+                    <small class="form-help">Pengunjung dapat menyesuaikan volume ini lewat pemutar frontend mereka.</small>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label class="form-label">Putar Berulang (Loop Audio)</label>
+                    <select name="music_loop" class="form-control">
+                      <option value="yes" <?= ($music['loop'] ?? 'yes') === 'yes' ? 'selected' : '' ?>>YA, Loop Berulang</option>
+                      <option value="no" <?= ($music['loop'] ?? 'yes') === 'no' ? 'selected' : '' ?>>TIDAK, Putar Sekali Saja</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label">Tampilkan Tombol Musik Di Website</label>
+                    <select name="show_music_button" class="form-control">
+                      <option value="yes" <?= ($music['show_button'] ?? 'yes') === 'yes' ? 'selected' : '' ?>>YA, Tampilkan Tombol</option>
+                      <option value="no" <?= ($music['show_button'] ?? 'yes') === 'no' ? 'selected' : '' ?>>TIDAK, Sembunyikan Tombol</option>
+                    </select>
+                    <small class="form-help">Jika disembunyikan, audio tetap dapat dimuat di background (apabila diizinkan browser).</small>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label">Posisi Tombol Musik</label>
+                    <select name="music_button_position" class="form-control">
+                      <option value="bottom-left" <?= ($music['button_position'] ?? 'bottom-left') === 'bottom-left' ? 'selected' : '' ?>>bottom-left (Kiri Bawah)</option>
+                      <option value="bottom-right" <?= ($music['button_position'] ?? 'bottom-left') === 'bottom-right' ? 'selected' : '' ?>>bottom-right (Kanan Bawah - Samping WhatsApp)</option>
+                    </select>
+                    <small class="form-help">Jika ditaruh di kanan bawah, posisi diatur sejajar agar tidak tumpang tindih dengan WhatsApp.</small>
+                  </div>
+                  
+                  <button type="submit" class="btn btn-save" style="width: 100%; margin-top: 10px;"><i class="fa-solid fa-floppy-disk"></i> Simpan Pengaturan Musik</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Audio Preview Widget Card -->
+          <div class="preview-panel-side">
+            <div class="card-dashboard">
+              <div class="card-header"><i class="fa-solid fa-play-pause"></i> Live Preview Musik</div>
+              <div class="card-body" style="display: flex; flex-direction: column; align-items: center; gap: 20px; text-align: center; padding: 40px 24px;">
+                
+                <!-- Coffee Cup Audio Disk Illustration -->
+                <div id="preview-disk-container" style="position: relative; width: 140px; height: 140px; border-radius: 50%; background: linear-gradient(135deg, #1e1510 0%, #0a0705 100%); display: flex; align-items: center; justify-content: center; border: 4px solid var(--primary-coffee); box-shadow: 0 8px 25px rgba(0,0,0,0.4); transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+                  <!-- Gold inner vinyl rings -->
+                  <div style="position: absolute; border-radius: 50%; width: 110px; height: 110px; border: 2.5px dashed rgba(234, 219, 200, 0.15);"></div>
+                  <div style="position: absolute; border-radius: 50%; width: 80px; height: 80px; border: 1.5px dashed rgba(234, 219, 200, 0.25);"></div>
+                  <div style="position: absolute; border-radius: 50%; width: 44px; height: 44px; background: var(--primary-coffee-dark); display: flex; align-items: center; justify-content: center;">
+                    <i id="preview-disk-icon" class="fa-solid fa-music" style="color: var(--cream-medium); font-size: 1.2rem;"></i>
+                  </div>
+                </div>
+                
+                <div>
+                  <h3 id="preview-music-title" style="color: var(--text-light); font-size: 1.15rem; margin-bottom: 6px;"><?= !empty($music['title']) ? e($music['title']) : 'Ambient Coffee Shop' ?></h3>
+                  <p id="preview-music-source" style="font-size: 0.8rem; color: var(--text-muted); word-break: break-all; max-width: 280px; margin-bottom: 20px;">
+                    <?php if (!empty($music['file_url'])): ?>
+                      <i class="fa-solid fa-server"></i> File: <?= basename($music['file_url']) ?>
+                    <?php elseif (!empty($music['url'])): ?>
+                      <i class="fa-solid fa-link"></i> URL: <?= basename($music['url']) ?>
+                    <?php else: ?>
+                      <i class="fa-solid fa-circle-question"></i> Belum ada musik yang diatur
+                    <?php endif; ?>
+                  </p>
+                </div>
+                
+                <!-- Native Audio element for Preview -->
+                <audio id="admin-preview-audio" 
+                       src="<?php 
+                         if (!empty($music['file_url'])) {
+                             echo '../' . e($music['file_url']);
+                         } elseif (!empty($music['url'])) {
+                             echo e($music['url']);
+                         }
+                       ?>" 
+                       <?= ($music['loop'] ?? 'yes') === 'yes' ? 'loop' : '' ?>></audio>
+                       
+                <!-- Custom Player Controls for elegant UI -->
+                <div style="display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 280px; background: rgba(0,0,0,0.15); padding: 18px; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                  <div style="display: flex; align-items: center; justify-content: center; gap: 20px;">
+                    <button type="button" id="btn-preview-play" class="btn btn-save" style="width: 50px; height: 50px; border-radius: 50%; padding: 0;" aria-label="Play Preview">
+                      <i id="preview-play-icon" class="fa-solid fa-play" style="font-size: 1.25rem;"></i>
+                    </button>
+                    <button type="button" id="btn-preview-stop" class="btn btn-cancel" style="width: 44px; height: 44px; border-radius: 50%; padding: 0; background: rgba(255,255,255,0.05);" aria-label="Stop Preview">
+                      <i class="fa-solid fa-stop" style="font-size: 1rem;"></i>
+                    </button>
+                  </div>
+                  
+                  <div style="display: flex; align-items: center; gap: 10px; font-size: 0.85rem; color: var(--text-muted);">
+                    <i class="fa-solid fa-volume-high"></i>
+                    <input type="range" id="preview_volume_slider" style="flex-grow: 1; height: 4px; accent-color: var(--accent-orange);" min="0" max="100" value="<?= e($music['volume'] ?? 50) ?>">
+                    <span id="preview-volume-text"><?= e($music['volume'] ?? 50) ?>%</span>
+                  </div>
+                </div>
+                
+                <div style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; max-width: 280px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px;">
+                  <span style="color: var(--accent-orange); font-weight: 600;"><i class="fa-solid fa-circle-info"></i> Info Preview:</span><br>
+                  Bila Anda memilih file musik baru lewat kolom sebelah kiri, file tersebut dapat **diputar langsung** di atas untuk didengarkan sebelum Anda mengklik simpan!
+                </div>
+                
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -511,4 +511,110 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  /* -------------------------------------------------------------
+     12. BACKGROUND MUSIC CONTROLLER
+     ------------------------------------------------------------- */
+  const musicContainer = document.getElementById('music-player-container');
+  const bgAudio = document.getElementById('bg-audio');
+  const musicToggleBtn = document.getElementById('music-toggle-btn');
+  const musicIcon = document.getElementById('music-icon');
+  const musicWave = document.getElementById('music-wave');
+  const musicTooltip = document.getElementById('music-tooltip');
+  
+  if (musicContainer && bgAudio && musicToggleBtn) {
+    const defaultVolume = parseFloat(musicContainer.getAttribute('data-volume') || '50') / 100;
+    const isLoop = musicContainer.getAttribute('data-loop') === 'true';
+    
+    // Set parameters
+    bgAudio.volume = defaultVolume;
+    bgAudio.loop = isLoop;
+    
+    // Read state from localStorage
+    let musicPref = localStorage.getItem('bg_music_pref');
+    
+    const updateUIState = (isPlaying) => {
+      if (isPlaying) {
+        musicIcon.className = 'fa-solid fa-volume-high';
+        if (musicWave) musicWave.classList.add('active');
+        if (musicTooltip) {
+          const statusText = musicTooltip.querySelector('.tooltip-status');
+          if (statusText) statusText.textContent = 'Musik: Aktif (Mute)';
+        }
+      } else {
+        musicIcon.className = 'fa-solid fa-volume-xmark';
+        if (musicWave) musicWave.classList.remove('active');
+        if (musicTooltip) {
+          const statusText = musicTooltip.querySelector('.tooltip-status');
+          if (statusText) statusText.textContent = 'Musik: Nonaktif (Play)';
+        }
+      }
+    };
+    
+    const playMusic = () => {
+      bgAudio.play()
+        .then(() => {
+          localStorage.setItem('bg_music_pref', 'playing');
+          updateUIState(true);
+        })
+        .catch(err => {
+          console.warn('Autoplay prevented or audio loading failed:', err);
+          updateUIState(false);
+        });
+    };
+    
+    const pauseMusic = () => {
+      bgAudio.pause();
+      localStorage.setItem('bg_music_pref', 'paused');
+      updateUIState(false);
+    };
+    
+    // Toggle button handler
+    musicToggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (bgAudio.paused) {
+        playMusic();
+      } else {
+        pauseMusic();
+      }
+    });
+    
+    // Browser compliance logic
+    if (musicPref === 'playing') {
+      bgAudio.play()
+        .then(() => {
+          updateUIState(true);
+        })
+        .catch(() => {
+          updateUIState(false);
+          
+          const startPlayOnInteraction = () => {
+            if (localStorage.getItem('bg_music_pref') === 'playing') {
+              playMusic();
+            }
+            window.removeEventListener('click', startPlayOnInteraction);
+            window.removeEventListener('scroll', startPlayOnInteraction);
+            window.removeEventListener('touchstart', startPlayOnInteraction);
+          };
+          
+          window.addEventListener('click', startPlayOnInteraction);
+          window.addEventListener('scroll', startPlayOnInteraction, { passive: true });
+          window.addEventListener('touchstart', startPlayOnInteraction, { passive: true });
+        });
+    } else {
+      updateUIState(false);
+    }
+    
+    bgAudio.addEventListener('ended', () => {
+      if (!isLoop) {
+        updateUIState(false);
+        localStorage.setItem('bg_music_pref', 'paused');
+      }
+    });
+
+    bgAudio.addEventListener('error', () => {
+      console.warn("Background audio source failed to load. Sound interface disabled.");
+      musicContainer.style.display = 'none';
+    });
+  }
+
 });

@@ -218,3 +218,158 @@ if (btnResetT) {
     btnReset.style.display = 'none';
   });
 }
+
+/* -------------------------------------------------------------
+   5. BACKGROUND MUSIC SETTINGS PANEL LOGIC
+   ------------------------------------------------------------- */
+document.addEventListener('DOMContentLoaded', () => {
+  const musicVolumeSlider = document.getElementById('music_volume_slider');
+  const volumeValDisplay = document.getElementById('volume-val-display');
+  
+  if (musicVolumeSlider && volumeValDisplay) {
+    musicVolumeSlider.addEventListener('input', () => {
+      volumeValDisplay.textContent = musicVolumeSlider.value + '%';
+      // Sync with preview slider if audio exists
+      const previewVolumeSlider = document.getElementById('preview_volume_slider');
+      const previewVolumeText = document.getElementById('preview-volume-text');
+      if (previewVolumeSlider && previewVolumeText) {
+        previewVolumeSlider.value = musicVolumeSlider.value;
+        previewVolumeText.textContent = musicVolumeSlider.value + '%';
+        const previewAudio = document.getElementById('admin-preview-audio');
+        if (previewAudio) {
+          previewAudio.volume = parseFloat(musicVolumeSlider.value) / 100;
+        }
+      }
+    });
+  }
+
+  // Preview Player Logic
+  const previewAudio = document.getElementById('admin-preview-audio');
+  const btnPlay = document.getElementById('btn-preview-play');
+  const playIcon = document.getElementById('preview-play-icon');
+  const btnStop = document.getElementById('btn-preview-stop');
+  const previewVolSlider = document.getElementById('preview_volume_slider');
+  const previewVolText = document.getElementById('preview-volume-text');
+  const diskContainer = document.getElementById('preview-disk-container');
+  const diskIcon = document.getElementById('preview-disk-icon');
+  
+  // Set default initial volume on load
+  if (previewAudio && previewVolSlider) {
+    previewAudio.volume = parseFloat(previewVolSlider.value) / 100;
+  }
+
+  const setPlayState = (isPlaying) => {
+    if (!playIcon || !diskContainer || !diskIcon) return;
+    if (isPlaying) {
+      playIcon.className = 'fa-solid fa-pause';
+      diskContainer.classList.add('spinning-vinyl');
+      diskIcon.className = 'fa-solid fa-compact-disc fa-spin';
+    } else {
+      playIcon.className = 'fa-solid fa-play';
+      diskContainer.classList.remove('spinning-vinyl');
+      diskIcon.className = 'fa-solid fa-music';
+    }
+  };
+
+  if (btnPlay && previewAudio) {
+    btnPlay.addEventListener('click', () => {
+      // Check if there is a valid src
+      if (!previewAudio.src || previewAudio.src === window.location.href) {
+        alert('Belum ada file musik atau URL audio yang diatur untuk diputar.');
+        return;
+      }
+      
+      if (previewAudio.paused) {
+        previewAudio.play()
+          .then(() => setPlayState(true))
+          .catch(err => {
+            console.error('Audio play error:', err);
+            alert('Gagal memutar audio preview. Periksa link audio Anda.');
+          });
+      } else {
+        previewAudio.pause();
+        setPlayState(false);
+      }
+    });
+  }
+
+  if (btnStop && previewAudio) {
+    btnStop.addEventListener('click', () => {
+      previewAudio.pause();
+      previewAudio.currentTime = 0;
+      setPlayState(false);
+    });
+  }
+
+  if (previewVolSlider && previewAudio) {
+    previewVolSlider.addEventListener('input', () => {
+      const vol = parseFloat(previewVolSlider.value);
+      previewAudio.volume = vol / 100;
+      if (previewVolText) {
+        previewVolText.textContent = vol + '%';
+      }
+      // Sync settings input slider
+      if (musicVolumeSlider && volumeValDisplay) {
+        musicVolumeSlider.value = vol;
+        volumeValDisplay.textContent = vol + '%';
+      }
+    });
+  }
+
+  if (previewAudio) {
+    previewAudio.addEventListener('ended', () => {
+      setPlayState(false);
+    });
+  }
+
+  // File Input Validation and Live Preview Streaming
+  const musicFileInput = document.getElementById('musicFileVal');
+  const previewTitle = document.getElementById('preview-music-title');
+  const previewSource = document.getElementById('preview-music-source');
+
+  if (musicFileInput) {
+    musicFileInput.addEventListener('change', () => {
+      const file = musicFileInput.files[0];
+      if (!file) return;
+
+      // Validate Format
+      const filename = file.name;
+      const extension = filename.split('.').pop().toLowerCase();
+      const allowedExts = ['mp3', 'wav', 'ogg'];
+      
+      if (!allowedExts.includes(extension)) {
+        alert('Format file tidak didukung! Hanya diperbolehkan file audio berformat .mp3, .wav, atau .ogg.');
+        musicFileInput.value = ''; // Reset input
+        return;
+      }
+
+      // Validate Size (max 10MB)
+      const maxSize = 10 * 1024 * 1024;
+      if (file.size > maxSize) {
+        alert('Ukuran file terlalu besar! Maksimal ukuran file audio adalah 10MB.');
+        musicFileInput.value = ''; // Reset input
+        return;
+      }
+
+      // Stream local preview
+      const objectUrl = URL.createObjectURL(file);
+      
+      // Stop current play if any
+      if (previewAudio) {
+        previewAudio.pause();
+        previewAudio.currentTime = 0;
+        previewAudio.src = objectUrl;
+        previewAudio.load();
+        setPlayState(false);
+      }
+
+      // Update text details
+      if (previewTitle) {
+        previewTitle.textContent = filename;
+      }
+      if (previewSource) {
+        previewSource.innerHTML = `<i class="fa-solid fa-file-arrow-up"></i> File Baru Seleksi: <strong>${filename}</strong>`;
+      }
+    });
+  }
+});

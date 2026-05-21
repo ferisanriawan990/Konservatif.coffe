@@ -98,6 +98,17 @@ $maps_embed = $contact['maps_embed'] ?? '';
 $whatsapp_number = $contact['whatsapp_number'] ?? '';
 $instagram_link = $contact['instagram_link'] ?? '#';
 
+$music = $data['music'] ?? [
+    'enabled' => 'no',
+    'title' => 'Warm Coffee Shop Ambient',
+    'file_url' => '',
+    'url' => '',
+    'volume' => '50',
+    'loop' => 'yes',
+    'show_button' => 'yes',
+    'button_position' => 'bottom-left'
+];
+
 if (empty($hero_cta2_link) && !empty($whatsapp_number)) {
     $hero_cta2_link = "https://wa.me/" . $whatsapp_number . "?text=Halo%20konservatif.coffee,%20saya%20ingin%20tanya-tanya%20info%20menu/reservasi";
 }
@@ -752,6 +763,39 @@ $wa_text = urlencode("Halo kak, saya mau tanya menu di Konservatif. Cikupa.");
       </div>
     </div>
   </footer>
+
+  <?php if (($music['enabled'] ?? 'no') === 'yes' && (!empty($music['file_url']) || !empty($music['url']))): ?>
+  <!-- Elegant Background Music Player Component -->
+  <div id="music-player-container" 
+       class="music-player-container <?= e($music['button_position'] ?? 'bottom-left') ?>" 
+       style="display: <?= ($music['show_button'] ?? 'yes') === 'yes' ? 'flex' : 'none' ?>;"
+       data-volume="<?= e($music['volume'] ?? 50) ?>"
+       data-loop="<?= ($music['loop'] ?? 'yes') === 'yes' ? 'true' : 'false' ?>"
+       data-title="<?= e($music['title'] ?? 'Ambient Music') ?>">
+       
+    <audio id="bg-audio" 
+           src="<?= !empty($music['file_url']) ? e($music['file_url']) : e($music['url']) ?>" 
+           preload="auto" 
+           <?= ($music['loop'] ?? 'yes') === 'yes' ? 'loop' : '' ?>></audio>
+           
+    <button id="music-toggle-btn" class="music-toggle-btn" aria-label="Toggle Background Music">
+      <div class="music-icon-wrapper">
+        <i id="music-icon" class="fa-solid fa-volume-xmark"></i>
+        <!-- Sound Wave Bouncing Columns -->
+        <div class="music-wave" id="music-wave">
+          <span class="bar bar-1"></span>
+          <span class="bar bar-2"></span>
+          <span class="bar bar-3"></span>
+          <span class="bar bar-4"></span>
+        </div>
+      </div>
+      <div class="music-tooltip" id="music-tooltip">
+        <span class="tooltip-title"><?= e($music['title'] ?? 'Warm Ambient') ?></span>
+        <span class="tooltip-status">Klik untuk memutar</span>
+      </div>
+    </button>
+  </div>
+  <?php endif; ?>
 
   <!-- Interactive JavaScript Scripts -->
   <script src="assets/js/main.js"></script>

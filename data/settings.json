@@ -12,7 +12,7 @@
         "title": "konservatif.coffee",
         "subtitle": "Tempat ngopi santai dengan suasana nyaman di Cikupa",
         "description": "Tempat yang tepat untuk menikmati kopi berkualitas, minuman favorit, nongkrong bersama teman, menyelesaikan pekerjaan ringan, atau sekadar melepas penat dalam suasana hangat dan modern-vintage.",
-        "hero_image": "uploads/img_6a0de4dc6062a.jpeg",
+        "hero_image": "uploads\/img_6a0de4dc6062a.jpeg",
         "hero_video": "",
         "hero_gif": "",
         "hero_bg_type": "image",
@@ -21,10 +21,10 @@
         "hero_cta1_link": "#menu",
         "hero_cta2_text": "Hubungi WhatsApp",
         "hero_cta2_link": "",
-        "hero_opening_hours": "Open Daily • 08.00 - 23.00",
-        "hero_highlight": "Coffee • Cozy Place • Free WiFi",
+        "hero_opening_hours": "Open Daily \u2022 08.00 - 23.00",
+        "hero_highlight": "Coffee \u2022 Cozy Place \u2022 Free WiFi",
         "about_text": "konservatif.coffee adalah coffee shop lokal dengan suasana hangat, santai, dan nyaman. Kami hadir sebagai tempat untuk menikmati kopi, minuman favorit, nongkrong bersama teman, bekerja ringan, atau sekadar melepas penat.",
-        "about_image": "uploads/img_6a0de4dc60735.jpeg"
+        "about_image": "uploads\/img_6a0de4dc60735.jpeg"
     },
     "contact": {
         "address": "konservatif.coffee, Jl. Raya Cikupa, Kec. Cikupa, Kabupaten Tangerang, Banten 15710",
@@ -604,5 +604,15 @@
             "role": "Mahasiswa",
             "text": "Salah satu coffee shop hidden gem di Cikupa. Paling suka nongkrong di sini pas malam minggu bersama teman-teman."
         }
-    ]
+    ],
+    "music": {
+        "enabled": "yes",
+        "title": "Warm Coffee Shop Ambient",
+        "file_url": "uploads\/audio_6a0f15b63b17d.mp3",
+        "url": "",
+        "volume": 50,
+        "loop": "yes",
+        "show_button": "yes",
+        "button_position": "bottom-left"
+    }
 }

@@ -709,3 +709,84 @@ select.form-control {
     padding: 24px 20px;
   }
 }
+
+/* -------------------------------------------------------------
+   BACKGROUND MUSIC CONTROLLER ADMIN STYLES
+   ------------------------------------------------------------- */
+@keyframes spinVinyl {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinning-vinyl {
+  animation: spinVinyl 6s linear infinite !important;
+  border-color: var(--accent-orange) !important;
+  box-shadow: 0 8px 30px rgba(211, 84, 0, 0.3) !important;
+}
+
+#preview-disk-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+#preview-disk-container:hover {
+  transform: scale(1.03);
+}
+
+/* Custom range inputs */
+#music_volume_slider,
+#preview_volume_slider {
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(234, 219, 200, 0.08) !important;
+  height: 6px !important;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(234, 219, 200, 0.15) !important;
+  padding: 0 !important;
+  outline: none;
+}
+
+#music_volume_slider::-webkit-slider-thumb,
+#preview_volume_slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent-orange) !important;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#music_volume_slider::-webkit-slider-thumb:hover,
+#preview_volume_slider::-webkit-slider-thumb:hover {
+  transform: scale(1.25);
+}
+
+#btn-preview-play {
+  box-shadow: 0 4px 15px rgba(211, 84, 0, 0.25);
+  transition: all 0.2s ease;
+}
+
+#btn-preview-play:hover {
+  transform: scale(1.06);
+  box-shadow: 0 6px 20px rgba(211, 84, 0, 0.35);
+}
+
+#btn-preview-stop {
+  transition: all 0.2s ease;
+}
+
+#btn-preview-stop:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  transform: scale(1.05);
+}
+
