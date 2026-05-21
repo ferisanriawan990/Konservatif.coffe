@@ -2116,10 +2116,57 @@ textarea.form-control {
 }
 
 @media (max-width: 900px) {
+  /* Prevent horizontal scroll globally on mobile viewports */
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+  }
 
-  /* Navigation mobile slide-in menu */
+  /* Section padding for tablet/mobile */
+  section {
+    padding: 80px 20px;
+  }
+
+  /* Smooth reveal adjustments to prevent horizontal overflow */
+  .reveal-left {
+    transform: translateY(20px);
+  }
+  .reveal-right {
+    transform: translateY(20px);
+  }
+
+  /* Fixed/sticky mobile header with transparent dark background & blur */
+  .navbar {
+    padding: 12px 0;
+    background: rgba(10, 7, 5, 0.82);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .navbar.scrolled {
+    padding: 10px 0;
+    background: rgba(10, 7, 5, 0.92);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+  }
+
+  .nav-container {
+    padding: 0 20px; /* Header: 20px padding left/right */
+  }
+
+  .logo {
+    font-size: 1.25rem; /* Logo max height around 32-40px */
+    max-height: 40px;
+  }
+
+  /* Navigation mobile toggle / hamburger menu */
   .nav-toggle {
     display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    margin: 0;
   }
 
   .nav-menu {
@@ -2128,7 +2175,7 @@ textarea.form-control {
     right: -100%;
     width: 280px;
     height: 100vh;
-    background: rgba(10, 7, 5, 0.96);
+    background: rgba(10, 7, 5, 0.98);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     flex-direction: column;
@@ -2154,21 +2201,89 @@ textarea.form-control {
     margin-top: 10px;
   }
 
-  /* Hero section adjustments */
+  /* Premium Responsive Hero Section adjustments */
   .hero {
+    min-height: 100dvh;
+    min-height: 100svh;
     height: auto;
-    padding-top: 140px;
-    padding-bottom: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 100px;
+    padding-bottom: 60px;
+    padding-left: 24px;  /* Hero content: 24px padding left/right */
+    padding-right: 24px;
+  }
+
+  .hero-bg {
+    background-size: cover;
+    background-position: center;
+    object-fit: cover;
+    filter: brightness(0.48) contrast(1.05); /* Overlay lebih terang, ambient terlihat */
+  }
+
+  .hero-bg-overlay {
+    background: linear-gradient(180deg,
+        rgba(10, 7, 5, 0.35) 0%,
+        rgba(10, 7, 5, 0.50) 60%,
+        var(--bg-primary) 100%); /* 40% - 55% overlay gelap */
   }
 
   .hero-grid {
     grid-template-columns: 1fr;
     text-align: center;
-    gap: 40px;
+    gap: 35px;
   }
 
   .hero-content {
     order: 1;
+    padding: 0;
+  }
+
+  .hero-badge {
+    font-size: 0.75rem;
+    padding: 6px 12px;
+    margin-bottom: 15px;
+    display: inline-flex;
+  }
+
+  .hero-subtitle {
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 7vw, 2.5rem); /* mobile font size: 32px-40px */
+    line-height: 1.25;
+    margin-bottom: 16px;
+  }
+
+  .hero-desc {
+    font-size: clamp(0.95rem, 4vw, 1.05rem); /* mobile font size: 15px-17px */
+    line-height: 1.6;
+    margin-bottom: 28px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 35px;
+  }
+
+  .hero-buttons .btn {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .hero-stats {
+    justify-content: center;
+    gap: 25px;
+    padding-top: 24px;
   }
 
   .hero-visual {
@@ -2176,21 +2291,19 @@ textarea.form-control {
   }
 
   .hero-cup-wrapper {
-    max-width: 260px;
+    max-width: 250px;
     margin: 0 auto;
   }
 
-  .hero-desc {
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .hero-buttons {
-    justify-content: center;
-  }
-
-  .hero-stats {
-    justify-content: center;
+  /* Floating action WhatsApp button consistent size */
+  .floating-whatsapp {
+    bottom: 24px !important;
+    right: 20px !important;
+    width: 56px !important;
+    height: 56px !important;
+    font-size: 1.7rem !important;
+    box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+    z-index: 999;
   }
 
   /* Grid adjustments */
@@ -2198,6 +2311,7 @@ textarea.form-control {
   .location-grid,
   .contact-grid {
     grid-template-columns: 1fr;
+    gap: 40px;
   }
 
   .about-image-wrapper {
@@ -2256,17 +2370,31 @@ textarea.form-control {
 
 @media (max-width: 480px) {
   section {
-    padding: 80px 16px;
+    padding: 60px 16px;
+  }
+
+  .nav-container {
+    padding: 0 16px;
+  }
+
+  .hero {
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 90px;
   }
 
   .hero-stats {
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 15px;
     justify-content: space-around;
   }
 
   .hero-stat-number {
-    font-size: 1.85rem;
+    font-size: 1.65rem;
+  }
+
+  .hero-stat-label {
+    font-size: 0.75rem;
   }
 
   .menu-cards-grid {
@@ -2275,16 +2403,17 @@ textarea.form-control {
 
   .about-image,
   .about-image-frame {
-    height: 380px;
+    height: 340px;
   }
 
   .about-badge {
-    padding: 12px 20px;
-    left: -10px;
+    padding: 10px 18px;
+    left: -5px;
+    bottom: 10px;
   }
 
   .about-badge h4 {
-    font-size: 1.05rem;
+    font-size: 0.95rem;
   }
 
   .about-highlights {
@@ -2293,14 +2422,14 @@ textarea.form-control {
   }
 
   .contact-form-container {
-    padding: 24px 20px;
+    padding: 24px 16px;
   }
 
   .floating-whatsapp {
-    bottom: 20px;
-    right: 20px;
-    width: 48px;
-    height: 48px;
-    font-size: 1.5rem;
+    bottom: 24px !important;
+    right: 20px !important;
+    width: 56px !important;
+    height: 56px !important;
+    font-size: 1.7rem !important;
   }
 }
