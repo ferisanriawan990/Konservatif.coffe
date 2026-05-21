@@ -2118,311 +2118,410 @@ textarea.form-control {
 @media (max-width: 900px) {
   /* Prevent horizontal scroll globally on mobile viewports */
   html, body {
-    overflow-x: hidden;
-    width: 100%;
+    overflow-x: hidden !important;
+    width: 100% !important;
   }
 
   /* Section padding for tablet/mobile */
   section {
-    padding: 80px 20px;
+    padding: 60px 20px !important; /* Standard safe gutters for sections */
   }
 
   /* Smooth reveal adjustments to prevent horizontal overflow */
   .reveal-left {
-    transform: translateY(20px);
+    transform: translateY(20px) !important;
+  }
+  .reveal-left.active {
+    transform: translateY(0) !important;
   }
   .reveal-right {
-    transform: translateY(20px);
+    transform: translateY(20px) !important;
+  }
+  .reveal-right.active {
+    transform: translateY(0) !important;
   }
 
   /* Fixed/sticky mobile header with transparent dark background & blur */
   .navbar {
-    padding: 12px 0;
-    background: rgba(10, 7, 5, 0.82);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 60px !important;
+    padding: 10px 0 !important;
+    background: rgba(10, 7, 5, 0.85) !important; /* Sleek dark tint */
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-bottom: 1px solid rgba(212, 167, 74, 0.08) !important;
+    z-index: 1000 !important;
+    display: flex !important;
+    align-items: center !important;
+    box-shadow: var(--shadow-sm) !important;
   }
 
   .navbar.scrolled {
-    padding: 10px 0;
-    background: rgba(10, 7, 5, 0.92);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
+    padding: 8px 0 !important;
+    background: rgba(10, 7, 5, 0.95) !important; /* High contrast on scroll */
+    backdrop-filter: blur(25px) !important;
+    -webkit-backdrop-filter: blur(25px) !important;
   }
 
   .nav-container {
-    padding: 0 20px; /* Header: 20px padding left/right */
+    width: 100% !important;
+    padding: 0 20px !important; /* Header: EXACTLY 20px padding left/right */
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    height: 100% !important;
   }
 
   .logo {
-    font-size: 1.25rem; /* Logo max height around 32-40px */
-    max-height: 40px;
+    font-size: 1.2rem !important; /* Elegant compact logo size */
+    font-weight: 700 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    max-height: 40px !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important; /* Highly readable logo */
+  }
+  
+  .logo i {
+    font-size: 1.15rem !important;
   }
 
-  /* Navigation mobile toggle / hamburger menu */
+  /* Centered and vertically aligned Hamburger menu */
   .nav-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 40px;
-    margin: 0;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 5px !important;
+    width: 32px !important;
+    height: 32px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    cursor: pointer !important;
+    z-index: 1001 !important;
+  }
+
+  .nav-toggle span {
+    display: block !important;
+    width: 20px !important;
+    height: 2px !important;
+    background-color: var(--text-primary) !important;
+    border-radius: 2px !important;
+    transition: var(--transition-normal) !important;
+  }
+
+  .nav-toggle.active span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg) !important;
+  }
+
+  .nav-toggle.active span:nth-child(2) {
+    opacity: 0 !important;
+    transform: scaleX(0) !important;
+  }
+
+  .nav-toggle.active span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg) !important;
   }
 
   .nav-menu {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 280px;
-    height: 100vh;
-    background: rgba(10, 7, 5, 0.98);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    flex-direction: column;
-    justify-content: center;
-    gap: 30px;
-    padding: 40px;
-    transition: right var(--transition-normal);
-    z-index: 1000;
-    box-shadow: var(--shadow-lg);
-    border-left: 1px solid var(--glass-border);
+    position: fixed !important;
+    top: 0 !important;
+    right: -100% !important;
+    width: 280px !important;
+    height: 100vh !important;
+    background: rgba(10, 7, 5, 0.98) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    gap: 30px !important;
+    padding: 40px !important;
+    transition: right var(--transition-normal) !important;
+    z-index: 1000 !important;
+    box-shadow: var(--shadow-lg) !important;
+    border-left: 1px solid var(--glass-border) !important;
   }
 
   .nav-menu.active {
-    right: 0;
+    right: 0 !important;
   }
 
   .nav-link {
-    font-size: 1.1rem;
+    font-size: 1.1rem !important;
   }
 
   .nav-admin {
-    margin-left: 0;
-    margin-top: 10px;
+    margin-left: 0 !important;
+    margin-top: 10px !important;
   }
 
   /* Premium Responsive Hero Section adjustments */
   .hero {
-    min-height: 100dvh;
-    min-height: 100svh;
-    height: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: 100px;
-    padding-bottom: 60px;
-    padding-left: 24px;  /* Hero content: 24px padding left/right */
-    padding-right: 24px;
+    min-height: 100svh !important;
+    min-height: 100dvh !important;
+    height: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding-top: 90px !important;
+    padding-bottom: 40px !important;
+    padding-left: 24px !important;  /* Hero content: EXACTLY 24px padding left/right */
+    padding-right: 24px !important;
   }
 
   .hero-bg {
-    background-size: cover;
-    background-position: center;
-    object-fit: cover;
-    filter: brightness(0.48) contrast(1.05); /* Overlay lebih terang, ambient terlihat */
+    background-size: cover !important;
+    background-position: center !important;
+    object-fit: cover !important;
+    filter: brightness(0.68) contrast(1.05) !important; /* Increased brightness for ambient coffee details */
   }
 
   .hero-bg-overlay {
     background: linear-gradient(180deg,
-        rgba(10, 7, 5, 0.35) 0%,
-        rgba(10, 7, 5, 0.50) 60%,
-        var(--bg-primary) 100%); /* 40% - 55% overlay gelap */
+        rgba(10, 7, 5, 0.40) 0%,
+        rgba(10, 7, 5, 0.55) 60%,
+        var(--bg-primary) 100%) !important; /* Exactly 40%-55% readable overlay */
   }
 
   .hero-grid {
-    grid-template-columns: 1fr;
-    text-align: center;
-    gap: 35px;
+    grid-template-columns: 1fr !important;
+    text-align: center !important;
+    gap: 20px !important;
+    width: 100% !important;
   }
 
   .hero-content {
-    order: 1;
-    padding: 0;
+    order: 1 !important;
+    padding: 0 !important;
   }
 
   .hero-badge {
-    font-size: 0.75rem;
-    padding: 6px 12px;
-    margin-bottom: 15px;
-    display: inline-flex;
+    font-size: 0.75rem !important;
+    padding: 6px 12px !important;
+    margin-bottom: 12px !important;
+    display: inline-flex !important;
   }
 
   .hero-subtitle {
-    font-size: 0.85rem;
-    letter-spacing: 2px;
-    margin-bottom: 12px;
+    font-size: 0.85rem !important;
+    letter-spacing: 2px !important;
+    margin-bottom: 8px !important;
   }
 
   .hero-title {
-    font-size: clamp(2rem, 7vw, 2.5rem); /* mobile font size: 32px-40px */
-    line-height: 1.25;
-    margin-bottom: 16px;
+    font-size: clamp(34px, 8vw, 42px) !important; /* Clamped mobile title size: 34px-42px */
+    line-height: 1.25 !important;
+    margin-bottom: 12px !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4) !important;
   }
 
   .hero-desc {
-    font-size: clamp(0.95rem, 4vw, 1.05rem); /* mobile font size: 15px-17px */
-    line-height: 1.6;
-    margin-bottom: 28px;
-    margin-left: auto;
-    margin-right: auto;
+    font-size: clamp(15px, 4vw, 17px) !important; /* Clamped mobile description size: 15px-17px */
+    line-height: 1.65 !important;
+    margin-bottom: 24px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    max-width: 480px !important;
   }
 
+  /* Beautifully aligned side-by-side CTA buttons on mobile */
   .hero-buttons {
-    justify-content: center;
-    gap: 12px;
-    margin-bottom: 35px;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+    margin-bottom: 25px !important;
   }
 
   .hero-buttons .btn {
-    padding: 12px 24px;
-    font-size: 0.9rem;
-    width: 100%;
-    max-width: 280px;
+    flex: 1 !important;
+    padding: 12px 8px !important;
+    font-size: 0.85rem !important;
+    border-radius: 30px !important;
+    white-space: nowrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    min-width: 0 !important;
+    max-width: 155px !important; /* Perfect side-by-side fit on screen widths as low as 360px */
+  }
+
+  .hero-buttons .btn-secondary {
+    display: none !important; /* Hide secondary "Buka Maps" in hero to prioritize conversion */
+  }
+
+  .hero-buttons .btn-outline {
+    background-color: transparent !important;
+    color: #25D366 !important; /* High contrast whatsapp color for readable secondary option */
+    border: 1.5px solid rgba(37, 211, 102, 0.35) !important;
+  }
+
+  .hero-buttons .btn-outline:hover {
+    background: rgba(37, 211, 102, 0.08) !important;
+    border-color: #25D366 !important;
   }
 
   .hero-stats {
-    justify-content: center;
-    gap: 25px;
-    padding-top: 24px;
+    justify-content: center !important;
+    gap: 25px !important;
+    padding-top: 20px !important;
+    border-top: 1px solid rgba(250, 249, 246, 0.05) !important;
   }
 
   .hero-visual {
-    order: 2;
+    order: 2 !important;
+    margin-top: 15px !important;
   }
 
   .hero-cup-wrapper {
-    max-width: 250px;
-    margin: 0 auto;
+    max-width: 210px !important;
+    margin: 0 auto !important;
   }
 
-  /* Floating action WhatsApp button consistent size */
+  /* Floating action WhatsApp button exact mobile coordinates */
   .floating-whatsapp {
     bottom: 24px !important;
     right: 20px !important;
     width: 56px !important;
     height: 56px !important;
     font-size: 1.7rem !important;
-    box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
-    z-index: 999;
+    box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4) !important;
+    z-index: 999 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 
   /* Grid adjustments */
   .about-grid,
   .location-grid,
   .contact-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
   }
 
   .about-image-wrapper {
-    order: -1;
-    transform: translateY(30px);
+    order: -1 !important;
+    transform: translateY(30px) !important;
   }
 
   .about-image-wrapper.active {
-    transform: translateY(0);
+    transform: translateY(0) !important;
   }
 
   .about-content,
   .location-info,
   .contact-quick,
   .contact-form-container {
-    transform: translateY(30px);
+    transform: translateY(30px) !important;
   }
 
   .about-content.active,
   .location-info.active,
   .contact-quick.active,
   .contact-form-container.active {
-    transform: translateY(0);
+    transform: translateY(0) !important;
   }
 
   .map-wrapper {
-    height: 320px;
-    transform: translateY(30px);
+    height: 300px !important;
+    transform: translateY(30px) !important;
   }
 
   .map-wrapper.active {
-    transform: translateY(0);
+    transform: translateY(0) !important;
   }
 
   .promo-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
   }
 
   .testimonial-slider {
-    padding: 35px 0;
+    padding: 35px 0 !important;
   }
 
   .testimonial-slide {
-    padding: 0 24px;
+    padding: 0 24px !important;
   }
 
   .testimonial-text {
-    font-size: 1.15rem;
+    font-size: 1.1rem !important;
   }
 
   .footer-grid {
-    grid-template-columns: 1fr;
-    gap: 35px;
+    grid-template-columns: 1fr !important;
+    gap: 35px !important;
   }
 }
 
 @media (max-width: 480px) {
   section {
-    padding: 60px 16px;
+    padding: 60px 20px !important; /* Header: 20px padding left/right */
   }
 
   .nav-container {
-    padding: 0 16px;
+    padding: 0 20px !important; /* Header: exactly 20px left/right */
   }
 
   .hero {
-    padding-left: 16px;
-    padding-right: 16px;
-    padding-top: 90px;
+    padding-left: 24px !important; /* Hero content: exactly 24px left/right */
+    padding-right: 24px !important;
+    padding-top: 90px !important;
+    padding-bottom: 30px !important;
   }
 
   .hero-stats {
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: space-around;
+    flex-wrap: wrap !important;
+    gap: 15px !important;
+    justify-content: space-around !important;
   }
 
   .hero-stat-number {
-    font-size: 1.65rem;
+    font-size: 1.6rem !important;
   }
 
   .hero-stat-label {
-    font-size: 0.75rem;
+    font-size: 0.72rem !important;
+  }
+
+  .hero-cup-wrapper {
+    max-width: 160px !important; /* Compact diameter to perfectly fit small viewports */
   }
 
   .menu-cards-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
+  }
+  
+  .menu-premium-card {
+    padding: 20px !important; /* Reduced padding on extremely small screens */
   }
 
   .about-image,
   .about-image-frame {
-    height: 340px;
+    height: 280px !important;
   }
 
   .about-badge {
-    padding: 10px 18px;
-    left: -5px;
-    bottom: 10px;
+    padding: 8px 14px !important;
+    left: -5px !important;
+    bottom: 10px !important;
   }
 
   .about-badge h4 {
-    font-size: 0.95rem;
+    font-size: 0.88rem !important;
   }
 
   .about-highlights {
-    grid-template-columns: 1fr;
-    gap: 16px;
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
   }
 
   .contact-form-container {
-    padding: 24px 16px;
+    padding: 24px !important; /* Elegant balanced form padding */
   }
 
   .floating-whatsapp {
