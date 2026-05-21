@@ -749,7 +749,10 @@ a {
   position: relative;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid rgba(212, 167, 74, 0.25);
+  box-shadow: 0 0 40px rgba(212, 167, 74, 0.15);
   z-index: 2;
   filter: drop-shadow(0 25px 45px rgba(0, 0, 0, 0.85));
 }
@@ -1547,7 +1550,7 @@ a {
   background: var(--gradient-card);
   border: 1px solid var(--glass-border);
   box-shadow: var(--shadow-md);
-  padding: 50px;
+  padding: 50px 0;
 }
 
 .testimonial-track {
@@ -1562,6 +1565,7 @@ a {
   flex-direction: column;
   align-items: center;
   text-align: center;
+  padding: 0 50px;
 }
 
 .quote-icon {
@@ -1988,15 +1992,20 @@ textarea.form-control {
   .hero-grid {
     grid-template-columns: 1fr;
     text-align: center;
-    gap: 50px;
+    gap: 40px;
   }
   
   .hero-content {
-    order: 2;
+    order: 1;
   }
   
   .hero-visual {
-    order: 1;
+    order: 2;
+  }
+
+  .hero-cup-wrapper {
+    max-width: 260px;
+    margin: 0 auto;
   }
   
   .hero-desc {
@@ -2048,7 +2057,11 @@ textarea.form-control {
   }
   
   .testimonial-slider {
-    padding: 35px 24px;
+    padding: 35px 0;
+  }
+
+  .testimonial-slide {
+    padding: 0 24px;
   }
   
   .testimonial-text {
