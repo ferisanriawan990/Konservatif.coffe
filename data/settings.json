@@ -573,6 +573,30 @@
             "image": "uploads\/mix_platter.png",
             "category": "food",
             "caption": "Mix Platter lezat untuk dinikmati beramai-ramai saat kumpul teman."
+        },
+        {
+            "id": "g6",
+            "image": "assets\/images\/gallery-blue-lemon.jpg",
+            "category": "drinks",
+            "caption": "Segarnya racikan Blue Lemonade dingin dengan irisan lemon segar khas Konservatif."
+        },
+        {
+            "id": "g7",
+            "image": "assets\/images\/gallery-blue-backyard.jpg",
+            "category": "drinks",
+            "caption": "Red Blue Ocean Mocktail berlapis warna cantik berlatar suasana halaman belakang yang asri."
+        },
+        {
+            "id": "g8",
+            "image": "assets\/images\/gallery-team-batik.jpg",
+            "category": "atmosphere",
+            "caption": "Sambutan hangat dari kru barista ramah kami yang siap menyajikan kopi terbaik untuk Anda."
+        },
+        {
+            "id": "g9",
+            "image": "assets\/images\/gallery-friends-backyard.jpg",
+            "category": "atmosphere",
+            "caption": "Momen kebersamaan seru dan santai bersama sahabat di area outdoor backyard favorit."
         }
     ],
     "testimonials": [
