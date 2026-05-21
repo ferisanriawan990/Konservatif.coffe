@@ -545,30 +545,6 @@
     ],
     "gallery": [
         {
-            "id": "g1",
-            "image": "uploads\/hero_cozy_cafe.png",
-            "category": "atmosphere",
-            "caption": "Suasana interior cafe yang hangat dan nyaman dengan detail vintage kayu."
-        },
-        {
-            "id": "g2",
-            "image": "uploads\/cafe_front_sign.png",
-            "category": "front",
-            "caption": "Tampilan depan konservatif.coffee di malam hari yang estetik dan bersahabat."
-        },
-        {
-            "id": "g3",
-            "image": "uploads\/iced_coffee_susu.png",
-            "category": "drinks",
-            "caption": "Es Kopi Susu Konservatif dengan gula aren legit khas kami."
-        },
-        {
-            "id": "g4",
-            "image": "uploads\/matcha_latte.png",
-            "category": "drinks",
-            "caption": "Matcha Latte hangat dengan foam lembut dan seni latte yang indah."
-        },
-        {
             "id": "g5",
             "image": "uploads\/mix_platter.png",
             "category": "food",
