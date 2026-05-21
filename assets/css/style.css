@@ -2739,6 +2739,179 @@ textarea.form-control {
   }
 }
 
+@media (max-width: 767px) {
+  /* 8. Cegah horizontal scroll secara global */
+  html, body {
+    overflow-x: hidden !important;
+    width: 100% !important;
+  }
+
+  /* 1. & 10. Wrapper utama hero mobile & vertical spacing */
+  .hero {
+    display: block !important;
+    min-height: auto !important;
+    height: auto !important;
+    padding-top: 100px !important; /* Spacing di bawah sticky header */
+    padding-bottom: 20px !important; /* Tighter padding bottom */
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .hero .container {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    box-sizing: border-box !important;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+    text-align: center !important;
+    gap: 20px !important;
+    width: 100% !important;
+  }
+
+  /* 2. Konten hero mobile */
+  .hero-content {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  /* 3. Penyelarasan elemen hero mobile ke tengah */
+  .hero-badge {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    transform: none !important;
+    display: inline-flex !important;
+  }
+
+  .hero-subtitle {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    transform: none !important;
+    display: block !important;
+  }
+
+  .hero-title {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    transform: none !important;
+    width: 100% !important;
+  }
+
+  .hero-desc {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    transform: none !important;
+    max-width: 320px !important;
+  }
+
+  /* 6. Perbaiki tombol CTA */
+  .hero-buttons {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+    max-width: 320px !important;
+    margin: 0 auto 20px auto !important;
+  }
+
+  .hero-buttons .btn {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .hero-info-footer {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin: 0 auto 20px auto !important;
+    width: 100% !important;
+    max-width: 320px !important;
+  }
+
+  /* 5. Perbaiki statistik mobile */
+  .hero-stats {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 12px !important;
+    width: 100% !important;
+    max-width: 340px !important;
+    margin: 24px auto 0 auto !important;
+    padding-top: 18px !important;
+    border-top: 1px solid rgba(212, 167, 74, 0.15) !important;
+  }
+
+  @media (max-width: 359px) {
+    .hero-stats {
+      grid-template-columns: 1fr !important;
+      gap: 18px !important;
+    }
+  }
+
+  /* 4. & 9. Perbaiki card Best Seller mobile & kosongkan aspect ratio */
+  .hero-visual {
+    order: 2 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    margin-top: 16px !important;
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+  }
+
+  .hero-cup-wrapper {
+    width: 100% !important;
+    max-width: 320px !important;
+    height: auto !important;
+    aspect-ratio: auto !important; /* Menghapus tinggi kosong dari aspect-ratio desktop */
+    margin: 0 auto !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    position: relative !important;
+    animation: none !important;
+  }
+
+  .hero-floating-card {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 300px !important;
+    margin: 24px auto 0 auto !important;
+    animation: floatingCardMobile 3s ease-in-out infinite alternate !important;
+  }
+
+  /* 7. Perbaiki floating WhatsApp */
+  .floating-whatsapp {
+    position: fixed !important;
+    right: 20px !important;
+    bottom: 24px !important;
+    width: 56px !important;
+    height: 56px !important;
+    z-index: 99999 !important;
+  }
+}
+
 @media (max-width: 480px) {
   section {
     padding: 60px 20px !important; /* Header: 20px padding left/right */
