@@ -123,6 +123,56 @@ function upload_image($file_key) {
     return null;
 }
 
+function upload_video($file_key) {
+    if (isset($_FILES[$file_key]) && $_FILES[$file_key]['error'] === UPLOAD_ERR_OK) {
+        if (is_on_vercel()) {
+            return null;
+        }
+        $file_tmp = $_FILES[$file_key]['tmp_name'];
+        $file_name = $_FILES[$file_key]['name'];
+        $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+        
+        $allowed_exts = ['mp4', 'webm'];
+        if (in_array($file_ext, $allowed_exts)) {
+            $new_name = uniqid('vid_') . '.' . $file_ext;
+            $dest_dir = __DIR__ . '/../uploads/';
+            if (!is_dir($dest_dir)) {
+                mkdir($dest_dir, 0777, true);
+            }
+            $dest_path = $dest_dir . $new_name;
+            if (move_uploaded_file($file_tmp, $dest_path)) {
+                return 'uploads/' . $new_name;
+            }
+        }
+    }
+    return null;
+}
+
+function upload_gif($file_key) {
+    if (isset($_FILES[$file_key]) && $_FILES[$file_key]['error'] === UPLOAD_ERR_OK) {
+        if (is_on_vercel()) {
+            return null;
+        }
+        $file_tmp = $_FILES[$file_key]['tmp_name'];
+        $file_name = $_FILES[$file_key]['name'];
+        $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+        
+        $allowed_exts = ['gif'];
+        if (in_array($file_ext, $allowed_exts)) {
+            $new_name = uniqid('gif_') . '.' . $file_ext;
+            $dest_dir = __DIR__ . '/../uploads/';
+            if (!is_dir($dest_dir)) {
+                mkdir($dest_dir, 0777, true);
+            }
+            $dest_path = $dest_dir . $new_name;
+            if (move_uploaded_file($file_tmp, $dest_path)) {
+                return 'uploads/' . $new_name;
+            }
+        }
+    }
+    return null;
+}
+
 // Handle Form Submissions
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     $action = $_POST['action'];
@@ -138,10 +188,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         $data['general']['description'] = trim($_POST['hero_desc'] ?? '');
         $data['general']['about_text'] = trim($_POST['about_text'] ?? '');
         
+        // Dynamic Hero settings
+        $data['general']['hero_bg_type'] = trim($_POST['hero_bg_type'] ?? 'image');
+        $data['general']['hero_badge'] = trim($_POST['hero_badge'] ?? 'Premium Coffee Experience');
+        $data['general']['hero_cta1_text'] = trim($_POST['hero_cta1_text'] ?? 'Lihat Menu');
+        $data['general']['hero_cta1_link'] = trim($_POST['hero_cta1_link'] ?? '#menu');
+        $data['general']['hero_cta2_text'] = trim($_POST['hero_cta2_text'] ?? 'Hubungi WhatsApp');
+        $data['general']['hero_cta2_link'] = trim($_POST['hero_cta2_link'] ?? '');
+        $data['general']['hero_opening_hours'] = trim($_POST['hero_opening_hours'] ?? 'Open Daily • 08.00 - 23.00');
+        $data['general']['hero_highlight'] = trim($_POST['hero_highlight'] ?? 'Coffee • Cozy Place • Free WiFi');
+        
         // Handle hero photo upload
         $hero_upload = upload_image('hero_image');
         if ($hero_upload) {
             $data['general']['hero_image'] = $hero_upload;
+        }
+
+        // Handle video background upload
+        $video_upload = upload_video('hero_video');
+        if ($video_upload) {
+            $data['general']['hero_video'] = $video_upload;
+        }
+
+        // Handle GIF background upload
+        $gif_upload = upload_gif('hero_gif');
+        if ($gif_upload) {
+            $data['general']['hero_gif'] = $gif_upload;
         }
 
         // Handle about photo upload
@@ -690,26 +762,99 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 <input type="text" name="site_name" class="form-control" value="<?= e($data['general']['site_name'] ?? '') ?>" required>
               </div>
               <div class="form-group">
-                <label class="form-label">Judul Utama Hero (H1)</label>
-                <input type="text" name="hero_title" class="form-control" value="<?= e($data['general']['title'] ?? '') ?>" required>
+                <label class="form-label">Badge Hero (Teks kecil paling atas)</label>
+                <input type="text" name="hero_badge" class="form-control" value="<?= e($data['general']['hero_badge'] ?? 'Premium Coffee Experience') ?>" required>
               </div>
               <div class="form-group">
                 <label class="form-label">Subjudul Hero</label>
                 <input type="text" name="hero_subtitle" class="form-control" value="<?= e($data['general']['subtitle'] ?? '') ?>" required>
               </div>
               <div class="form-group">
+                <label class="form-label">Judul Utama Hero (H1)</label>
+                <input type="text" name="hero_title" class="form-control" value="<?= e($data['general']['title'] ?? '') ?>" required>
+              </div>
+              <div class="form-group">
                 <label class="form-label">Deskripsi Ringkas Hero</label>
                 <textarea name="hero_desc" class="form-control" rows="3" required><?= e($data['general']['description'] ?? '') ?></textarea>
               </div>
-              <div class="form-group">
-                <label class="form-label">Foto Latar Belakang Hero (Ukuran besar, min 1920x1080px)</label>
-                <?php if (!empty($data['general']['hero_image'])): ?>
-                  <div class="preview-img-wrapper">
-                    <img src="../<?= e($data['general']['hero_image']) ?>" alt="Hero Preview">
-                  </div>
-                <?php endif; ?>
-                <input type="file" name="hero_image" class="form-file">
-                <small class="form-help">Biarkan kosong jika tidak ingin mengganti foto latar saat ini.</small>
+
+              <!-- CTA Settings -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px; margin-top: 15px;">
+                <div class="form-group">
+                  <label class="form-label">Tombol Utama: Teks</label>
+                  <input type="text" name="hero_cta1_text" class="form-control" value="<?= e($data['general']['hero_cta1_text'] ?? 'Lihat Menu') ?>" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Tombol Utama: Link/Tujuan</label>
+                  <input type="text" name="hero_cta1_link" class="form-control" value="<?= e($data['general']['hero_cta1_link'] ?? '#menu') ?>" required>
+                </div>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div class="form-group">
+                  <label class="form-label">Tombol Kedua (WhatsApp): Teks</label>
+                  <input type="text" name="hero_cta2_text" class="form-control" value="<?= e($data['general']['hero_cta2_text'] ?? 'Hubungi WhatsApp') ?>" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Tombol Kedua: Link (Kosongkan untuk otomatis WhatsApp)</label>
+                  <input type="text" name="hero_cta2_link" class="form-control" value="<?= e($data['general']['hero_cta2_link'] ?? '') ?>">
+                </div>
+              </div>
+
+              <!-- Opening Hours & Highlights -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px; margin-top: 15px;">
+                <div class="form-group">
+                  <label class="form-label">Teks Informasi Jam Buka</label>
+                  <input type="text" name="hero_opening_hours" class="form-control" value="<?= e($data['general']['hero_opening_hours'] ?? 'Open Daily • 08.00 - 23.00') ?>" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Teks Informasi Highlight Cafe</label>
+                  <input type="text" name="hero_highlight" class="form-control" value="<?= e($data['general']['hero_highlight'] ?? 'Coffee • Cozy Place • Free WiFi') ?>" required>
+                </div>
+              </div>
+
+              <!-- Background Media Configuration -->
+              <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px; margin-top: 15px;">
+                <div class="form-group">
+                  <label class="form-label">Tipe Latar Belakang Hero</label>
+                  <select name="hero_bg_type" class="form-control" style="background-color: #1a1512; color: #FAF9F6; border: 1px solid rgba(212, 167, 74, 0.2); padding: 10px; border-radius: 6px;">
+                    <option value="image" <?= ($data['general']['hero_bg_type'] ?? 'image') === 'image' ? 'selected' : '' ?>>Gambar</option>
+                    <option value="video" <?= ($data['general']['hero_bg_type'] ?? 'image') === 'video' ? 'selected' : '' ?>>Video (MP4/WebM)</option>
+                    <option value="gif" <?= ($data['general']['hero_bg_type'] ?? 'image') === 'gif' ? 'selected' : '' ?>>GIF Animasi</option>
+                  </select>
+                </div>
+                
+                <div class="form-group">
+                  <label class="form-label">Foto Latar Belakang Hero (Fallback Video/GIF)</label>
+                  <?php if (!empty($data['general']['hero_image'])): ?>
+                    <div class="preview-img-wrapper" style="max-width: 250px; margin-bottom: 10px;">
+                      <img src="../<?= e($data['general']['hero_image']) ?>" alt="Hero Preview" style="width: 100%; height: auto; border-radius: 4px;">
+                    </div>
+                  <?php endif; ?>
+                  <input type="file" name="hero_image" class="form-file">
+                  <small class="form-help">Pilih gambar untuk background utama atau fallback ketika video gagal dimuat.</small>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Video Latar Belakang Hero (.mp4 / .webm)</label>
+                  <?php if (!empty($data['general']['hero_video'])): ?>
+                    <div class="preview-img-wrapper" style="max-width: 250px; margin-bottom: 10px;">
+                      <video autoplay muted loop playsinline src="../<?= e($data['general']['hero_video']) ?>" style="width: 100%; height: auto; border-radius: 4px; border: 1px solid rgba(212,167,74,0.2);"></video>
+                    </div>
+                  <?php endif; ?>
+                  <input type="file" name="hero_video" class="form-file">
+                  <small class="form-help">Disarankan video MP4 dengan durasi pendek dan ukuran file terkompresi (< 10MB).</small>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">GIF Latar Belakang Hero (.gif)</label>
+                  <?php if (!empty($data['general']['hero_gif'])): ?>
+                    <div class="preview-img-wrapper" style="max-width: 150px; margin-bottom: 10px;">
+                      <img src="../<?= e($data['general']['hero_gif']) ?>" alt="GIF Preview" style="width: 100%; height: auto; border-radius: 4px;">
+                    </div>
+                  <?php endif; ?>
+                  <input type="file" name="hero_gif" class="form-file">
+                  <small class="form-help">GIF berulang dengan resolusi proporsional untuk background.</small>
+                </div>
               </div>
             </div>
           </div>

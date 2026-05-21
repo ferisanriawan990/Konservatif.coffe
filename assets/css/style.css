@@ -618,17 +618,18 @@ a {
 }
 
 .nav-admin .nav-link {
-  background: rgba(212, 167, 74, 0.08);
-  border: 1px solid rgba(212, 167, 74, 0.2);
-  padding: 8px 18px;
-  border-radius: 30px;
-  color: var(--color-gold);
+  background: transparent;
+  border: none;
+  padding: 6px 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  transition: color var(--transition-fast);
 }
 
 .nav-admin .nav-link:hover {
-  background: var(--color-gold);
-  color: var(--bg-primary);
-  border-color: var(--color-gold);
+  background: transparent;
+  color: var(--color-gold);
+  border-color: transparent;
 }
 
 .nav-admin .nav-link::after {
@@ -690,14 +691,31 @@ a {
    HERO SECTION
    ------------------------------------------------------------- */
 .hero {
+  min-height: 90vh;
   height: 100vh;
-  min-height: 800px;
   display: flex;
   align-items: center;
   position: relative;
   background-color: var(--bg-primary);
   overflow: hidden;
   padding-top: 100px;
+}
+
+.hero .container {
+  max-width: 1320px;
+  padding: 0 80px;
+  width: 100%;
+}
+
+.hero-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  object-fit: cover;
+  filter: brightness(0.45) contrast(1.05);
 }
 
 .hero-bg {
@@ -710,7 +728,7 @@ a {
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  filter: brightness(0.22) contrast(1.1);
+  filter: brightness(0.45) contrast(1.05);
   transform: scale(1.02);
 }
 
@@ -720,10 +738,10 @@ a {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(180deg,
-      rgba(10, 7, 5, 0.4) 0%,
-      rgba(10, 7, 5, 0.7) 60%,
-      var(--bg-primary) 100%);
+  background: linear-gradient(90deg, 
+    rgba(10, 7, 5, 0.75) 0%, 
+    rgba(10, 7, 5, 0.55) 50%, 
+    rgba(10, 7, 5, 0.35) 100%);
   z-index: 2;
 }
 
@@ -741,17 +759,18 @@ a {
 
 .hero-grid {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 40px;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
   align-items: center;
   position: relative;
   z-index: 3;
+  width: 100%;
 }
 
 .hero-content {
   opacity: 0;
   transform: translateY(40px);
-  animation: heroReveal 1s var(--transition-normal) forwards 0.3s;
+  animation: heroReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.3s;
 }
 
 @keyframes heroReveal {
@@ -799,7 +818,7 @@ a {
 .hero-desc {
   font-size: 1.1rem;
   line-height: 1.8;
-  margin-bottom: 44px;
+  margin-bottom: 30px;
   max-width: 580px;
   color: var(--text-secondary);
 }
@@ -808,7 +827,34 @@ a {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
-  margin-bottom: 50px;
+  margin-bottom: 25px;
+}
+
+/* Info footer under buttons */
+.hero-info-footer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 35px;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.hero-info-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hero-info-item i {
+  color: var(--color-gold);
+}
+
+.hero-info-divider {
+  color: var(--color-gold);
+  opacity: 0.5;
 }
 
 /* Statistics Counter */
@@ -853,7 +899,7 @@ a {
 .hero-cup-wrapper {
   position: relative;
   width: 100%;
-  max-width: 400px;
+  max-width: 380px;
   aspect-ratio: 1;
   animation: float 6s ease-in-out infinite;
 }
@@ -880,7 +926,68 @@ a {
   border: 4px solid rgba(212, 167, 74, 0.25);
   box-shadow: 0 0 40px rgba(212, 167, 74, 0.15);
   z-index: 2;
-  filter: drop-shadow(0 25px 45px rgba(0, 0, 0, 0.85));
+  filter: drop-shadow(0 20px 35px rgba(0, 0, 0, 0.75));
+}
+
+/* Floating menu preview card */
+.hero-floating-card {
+  position: absolute;
+  bottom: 25px;
+  right: -25px;
+  background: rgba(25, 20, 16, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(212, 167, 74, 0.2);
+  padding: 12px 18px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: var(--shadow-lg), 0 0 20px rgba(212, 167, 74, 0.08);
+  z-index: 10;
+  animation: floatReverse 6s ease-in-out infinite;
+  max-width: 260px;
+}
+
+.hero-floating-card .card-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--gradient-gold);
+  color: var(--bg-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.hero-floating-card .card-content {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.hero-floating-card .card-tag {
+  font-size: 0.65rem;
+  color: var(--color-orange);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.hero-floating-card .card-title {
+  font-size: 0.9rem;
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  margin: 1px 0;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.hero-floating-card .card-price {
+  font-size: 0.8rem;
+  color: var(--color-gold);
+  font-weight: 600;
 }
 
 /* Steam lines */
@@ -1959,18 +2066,18 @@ textarea.form-control {
    ------------------------------------------------------------- */
 .floating-whatsapp {
   position: fixed;
-  bottom: 30px;
-  right: 30px;
-  width: 55px;
-  height: 55px;
+  bottom: 25px;
+  right: 25px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   background-color: #25D366;
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.75rem;
-  box-shadow: 0 10px 25px rgba(37, 211, 102, 0.35);
+  font-size: 1.5rem;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
   z-index: 999;
   transition: transform var(--transition-fast);
   animation: pulseWhatsapp 2s infinite;

@@ -74,6 +74,16 @@ $hero_title = $data['general']['title'] ?? 'konservatif.coffee';
 $hero_subtitle = $data['general']['subtitle'] ?? 'Tempat ngopi santai dengan suasana nyaman di Cikupa';
 $hero_desc = $data['general']['description'] ?? 'Tempat ngopi, nongkrong, kerja santai, dan kumpul teman.';
 $hero_image = $data['general']['hero_image'] ?? 'uploads/hero_cozy_cafe.png';
+$hero_badge = $data['general']['hero_badge'] ?? 'Premium Coffee Experience';
+$hero_bg_type = $data['general']['hero_bg_type'] ?? 'image';
+$hero_video = $data['general']['hero_video'] ?? '';
+$hero_gif = $data['general']['hero_gif'] ?? '';
+$hero_cta1_text = $data['general']['hero_cta1_text'] ?? 'Lihat Menu';
+$hero_cta1_link = $data['general']['hero_cta1_link'] ?? '#menu';
+$hero_cta2_text = $data['general']['hero_cta2_text'] ?? 'Hubungi WhatsApp';
+$hero_cta2_link = $data['general']['hero_cta2_link'] ?? '';
+$hero_opening_hours = $data['general']['hero_opening_hours'] ?? 'Open Daily • 08.00 - 23.00';
+$hero_highlight = $data['general']['hero_highlight'] ?? 'Coffee • Cozy Place • Free WiFi';
 $about_text = $data['general']['about_text'] ?? 'konservatif.coffee adalah coffee shop lokal dengan suasana hangat, santai, dan nyaman.';
 $about_image = $data['general']['about_image'] ?? 'uploads/hero_cozy_cafe.png';
 
@@ -87,6 +97,10 @@ $maps_link = $contact['maps_link'] ?? '#';
 $maps_embed = $contact['maps_embed'] ?? '';
 $whatsapp_number = $contact['whatsapp_number'] ?? '';
 $instagram_link = $contact['instagram_link'] ?? '#';
+
+if (empty($hero_cta2_link) && !empty($whatsapp_number)) {
+    $hero_cta2_link = "https://wa.me/" . $whatsapp_number . "?text=Halo%20konservatif.coffee,%20saya%20ingin%20tanya-tanya%20info%20menu/reservasi";
+}
 
 $menu_items = $data['menu'] ?? [];
 $gallery_items = $data['gallery'] ?? [];
@@ -172,7 +186,17 @@ $wa_text = urlencode("Halo kak, saya mau tanya menu di Konservatif. Cikupa.");
 
   <!-- ========== HERO SECTION ========== -->
   <header class="hero" id="home">
-    <div class="hero-bg" style="background-image: url('<?= e($hero_image) ?>');"></div>
+    <?php if ($hero_bg_type === 'video' && !empty($hero_video)): ?>
+      <video class="hero-video" autoplay muted loop playsinline poster="<?= e($hero_image) ?>">
+        <source src="<?= e($hero_video) ?>" type="video/mp4">
+        <!-- Fallback background image if video fails to play -->
+        <div class="hero-bg" style="background-image: url('<?= e($hero_image) ?>');"></div>
+      </video>
+    <?php elseif ($hero_bg_type === 'gif' && !empty($hero_gif)): ?>
+      <div class="hero-bg" style="background-image: url('<?= e($hero_gif) ?>');"></div>
+    <?php else: ?>
+      <div class="hero-bg" style="background-image: url('<?= e($hero_image) ?>');"></div>
+    <?php endif; ?>
     <div class="hero-bg-overlay"></div>
     <div class="hero-bg-glow"></div>
 
@@ -190,15 +214,23 @@ $wa_text = urlencode("Halo kak, saya mau tanya menu di Konservatif. Cikupa.");
       <div class="hero-grid">
         <div class="hero-content">
           <div class="hero-badge">
-            <i class="fa-solid fa-medal"></i> Premium Coffee Experience
+            <i class="fa-solid fa-medal"></i> <?= e($hero_badge) ?>
           </div>
           <span class="hero-subtitle"><?= e($hero_subtitle) ?></span>
           <h1 class="hero-title text-gradient"><?= e($hero_title) ?></h1>
           <p class="hero-desc"><?= e($hero_desc) ?></p>
+          
           <div class="hero-buttons">
-            <a href="#menu" class="btn btn-primary"><i class="fa-solid fa-mug-hot"></i> Lihat Menu</a>
-            <a href="<?= e($maps_link) ?>" target="_blank" rel="noopener" class="btn btn-secondary"><i class="fa-solid fa-compass"></i> Buka Maps</a>
-            <a href="https://wa.me/<?= e($whatsapp_number) ?>?text=Halo%20konservatif.coffee,%20saya%20ingin%20tanya-tanya%20info%20menu/reservasi" target="_blank" rel="noopener" class="btn btn-outline"><i class="fa-brands fa-whatsapp"></i> Chat WhatsApp</a>
+            <a href="<?= e($hero_cta1_link) ?>" class="btn btn-primary"><i class="fa-solid fa-mug-hot"></i> <?= e($hero_cta1_text) ?></a>
+            <a href="<?= e($hero_cta2_link) ?>" target="_blank" rel="noopener" class="btn btn-outline"><i class="fa-brands fa-whatsapp"></i> <?= e($hero_cta2_text) ?></a>
+            <a href="<?= e($maps_link) ?>" target="_blank" rel="noopener" class="btn btn-secondary"><i class="fa-solid fa-compass"></i> Lokasi Cafe</a>
+          </div>
+
+          <!-- Open hours and highlight badge row under the buttons -->
+          <div class="hero-info-footer">
+            <span class="hero-info-item"><i class="fa-solid fa-clock"></i> <?= e($hero_opening_hours) ?></span>
+            <span class="hero-info-divider">•</span>
+            <span class="hero-info-item"><i class="fa-solid fa-circle-check"></i> <?= e($hero_highlight) ?></span>
           </div>
           
           <!-- Statistics Counter -->
@@ -226,6 +258,16 @@ $wa_text = urlencode("Halo kak, saya mau tanya menu di Konservatif. Cikupa.");
               <div class="steam-line"></div>
               <div class="steam-line"></div>
               <div class="steam-line"></div>
+            </div>
+            
+            <!-- Best Seller floating card -->
+            <div class="hero-floating-card">
+              <div class="card-icon"><i class="fa-solid fa-star"></i></div>
+              <div class="card-content">
+                <span class="card-tag">Best Seller</span>
+                <h4 class="card-title">Kopi Susu Gula Aren</h4>
+                <p class="card-price">Rp 24.000</p>
+              </div>
             </div>
           </div>
         </div>
